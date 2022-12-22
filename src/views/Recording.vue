@@ -29,7 +29,7 @@
 	import ExploreContainer from '@/components/ExploreContainer.vue';
 
 	export default defineComponent({
-		name: 'Tab3Page',
+		name: 'Recording',
 		components: {
 			ExploreContainer,
 			IonHeader,

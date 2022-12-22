@@ -27,6 +27,14 @@ const routes: Array<RouteRecordRaw> = [
 				path: 'recording',
 				component: () => import('@/views/Recording.vue'),
 			},
+			{
+				path: 'basket',
+				component: () => import('@/views/Basket.vue'),
+			},
+			{
+				path: 'profile',
+				component: () => import('@/views/Profile.vue'),
+			},
 		],
 	},
 ];
