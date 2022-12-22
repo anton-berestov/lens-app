@@ -1,7 +1,7 @@
 {
-  "name": "LensApp",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "vue"
+	"name": "lens-app",
+	"integrations": {
+		"capacitor": {}
+	},
+	"type": "vue"
 }
