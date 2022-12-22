@@ -2,8 +2,8 @@
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-buttons slot="start" class="button-box" v-if="back">
-        <ion-button>
-          <ion-icon icon="assets/location.svg"/>
+        <ion-button @click.prevent="onBack">
+          <ion-icon :icon="chevronBackOutline"/>
         </ion-button>
       </ion-buttons>
 
@@ -15,7 +15,7 @@
       </span>
       </div>
 
-      <ion-buttons slot="end" class="button-box">
+      <ion-buttons slot="end" class="button-box" v-if="contact">
         <ion-button>
           <ion-icon icon="assets/location.svg"/>
         </ion-button>
@@ -35,9 +35,9 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import {IonHeader, IonToolbar, IonTitle, IonIcon, IonButtons, IonButton} from '@ionic/vue';
+import {chevronBackOutline} from 'ionicons/icons'
 
 export default defineComponent({
-  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Header',
   props: {
     title: {
@@ -51,6 +51,10 @@ export default defineComponent({
     back: {
       type: Boolean,
       default: false
+    },
+    contact: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
@@ -60,6 +64,14 @@ export default defineComponent({
     IonIcon,
     IonButtons,
     IonButton
+  },
+  data: () => ({
+    chevronBackOutline
+  }),
+  methods: {
+    onBack() {
+      this.$router.back();
+    }
   }
 });
 </script>
@@ -81,11 +93,13 @@ export default defineComponent({
     margin-left: 10px;
     color: var(--ion-color-primary);
     width: 130px;
+    font-weight: 400;
   }
 }
 
 .title {
   font-size: 14px;
+  font-weight: 600;
 }
 
 .button-box {

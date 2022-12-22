@@ -19,4 +19,9 @@ export default defineComponent({
 
 <style lang="scss">
 @import './theme/main.scss';
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./assets/fonts/Montserrat-Regular.ttf');
+}
 </style>
