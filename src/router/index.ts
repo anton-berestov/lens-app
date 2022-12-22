@@ -5,15 +5,15 @@ import FooterTabs from '../views/FooterTabs.vue';
 const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
-		redirect: '/tabs/home',
+		redirect: '/main/home',
 	},
 	{
-		path: '/tabs/',
+		path: '/main/',
 		component: FooterTabs,
 		children: [
 			{
 				path: '',
-				redirect: '/tabs/home',
+				redirect: '/main/home',
 			},
 			{
 				path: 'home',
