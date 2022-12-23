@@ -1,10 +1,10 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-	appId: 'io.ionic.starter',
-	appName: 'lens-app',
-	webDir: 'dist',
-	bundledWebRuntime: false,
+  appId: 'a.berestov.test',
+  appName: 'Оптика ОЗ',
+  webDir: 'dist',
+  bundledWebRuntime: false,
 };
 
 export default config;
