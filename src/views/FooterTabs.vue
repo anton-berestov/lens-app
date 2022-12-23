@@ -1,8 +1,8 @@
 <template>
   <ion-page>
-    <ion-tabs class="tab-bar">
+    <ion-tabs >
       <ion-router-outlet></ion-router-outlet>
-      <ion-tab-bar slot="bottom">
+      <ion-tab-bar slot="bottom" class="tab-bar">
         <ion-tab-button :selected="checkPath(PATH_HOME)" @click.prevent="changePath(PATH_HOME)">
           <ion-icon :icon="changeHome" class="icon"/>
           <ion-label class="label">Главная</ion-label>

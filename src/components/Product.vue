@@ -13,7 +13,7 @@
 
 <script>
 import {defineComponent} from "vue";
-import {IonCard, IonCardHeader, IonCardTitle, IonRow} from "@ionic/vue";
+import {IonCard, IonCardHeader, IonCardTitle, IonRow, IonCardSubtitle} from "@ionic/vue";
 
 export default defineComponent({
   name: "Product",
@@ -43,7 +43,8 @@ export default defineComponent({
     IonCard,
     IonCardHeader,
     IonCardTitle,
-    IonRow
+    IonRow,
+    IonCardSubtitle
   }
 })
 </script>
@@ -52,6 +53,7 @@ export default defineComponent({
 .card {
   width: 150px;
   height: 170px;
+  margin: 12px 15px;
 
   .image {
     width: 100%;

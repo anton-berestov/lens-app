@@ -1,5 +1,5 @@
 <template>
-  <ion-header collapse="condense">
+  <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start" class="button-box" v-if="back">
         <ion-button @click.prevent="onBack">
@@ -8,6 +8,8 @@
       </ion-buttons>
 
       <ion-title class="title" v-if="!custom">{{ title }}</ion-title>
+
+
       <div class="box" v-if="custom">
         <ion-icon icon="assets/logo_brand.svg" class="logo"/>
         <span class="custom-title">
