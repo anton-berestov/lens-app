@@ -98,6 +98,8 @@ export default defineComponent({
     margin-left: 10px;
     color: var(--ion-color-primary);
     width: 130px;
+    font-size: 12px;
+    font-weight: 400;
   }
 }
 

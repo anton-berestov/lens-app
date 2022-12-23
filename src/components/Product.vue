@@ -7,9 +7,9 @@
       <ion-card-title class="title">{{ title }}</ion-card-title>
       <ion-row class="ion-align-items-center row">
         <ion-card-subtitle class="price">{{ price }}</ion-card-subtitle>
-        <ion-card-subtitle class="old-price" v-if="oldPrice">{{
-          oldPrice
-        }}</ion-card-subtitle>
+        <ion-card-subtitle class="old-price" v-if="oldPrice"
+          >{{ oldPrice }}
+        </ion-card-subtitle>
       </ion-row>
     </ion-card-header>
   </ion-card>
@@ -72,6 +72,11 @@ export default defineComponent({
 
   .header {
     padding: 10px 15px;
+
+    .title {
+      font-size: 12px;
+      font-weight: 400;
+    }
 
     .row {
       margin-top: 6px;
