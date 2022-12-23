@@ -7,12 +7,16 @@
 		"build": "vue-cli-service build",
 		"test:unit": "vue-cli-service test:unit",
 		"test:e2e": "vue-cli-service test:e2e",
-		"lint": "vue-cli-service lint"
+		"lint": "vue-cli-service lint",
+		"dev": "vue-cli-service build --mode production && npx cap sync",
+		"dev-ios": "vue-cli-service build && npx cap sync && npx cap run ios"
 	},
 	"dependencies": {
+		"@capacitor/android": "^4.6.1",
 		"@capacitor/app": "4.1.1",
-		"@capacitor/core": "4.6.1",
+		"@capacitor/core": "^4.6.1",
 		"@capacitor/haptics": "4.1.0",
+		"@capacitor/ios": "^4.6.1",
 		"@capacitor/keyboard": "4.1.0",
 		"@capacitor/status-bar": "4.1.1",
 		"@ionic/vue": "^6.0.0",
@@ -23,7 +27,7 @@
 		"vue-router": "^4.0.12"
 	},
 	"devDependencies": {
-		"@capacitor/cli": "4.6.1",
+		"@capacitor/cli": "^4.6.1",
 		"@types/jest": "^27.0.2",
 		"@typescript-eslint/eslint-plugin": "^5.6.0",
 		"@typescript-eslint/parser": "^5.6.0",
