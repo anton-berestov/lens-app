@@ -2,22 +2,22 @@
   <ion-button class="custom-btn">{{ title }}</ion-button>
 </template>
 
-<script>
-import {defineComponent} from "vue";
-import {IonButton} from "@ionic/vue";
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { IonButton } from '@ionic/vue';
 
 export default defineComponent({
-  name: "Button",
+  name: 'Button',
   props: {
     title: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   components: {
-    IonButton
-  }
-})
+    IonButton,
+  },
+});
 </script>
 
 <style scoped>

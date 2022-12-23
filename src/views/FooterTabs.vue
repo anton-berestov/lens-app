@@ -1,30 +1,45 @@
 <template>
   <ion-page>
-    <ion-tabs >
+    <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar slot="bottom" class="tab-bar">
-        <ion-tab-button :selected="checkPath(PATH_HOME)" @click.prevent="changePath(PATH_HOME)">
-          <ion-icon :icon="changeHome" class="icon"/>
+        <ion-tab-button
+          :selected="checkPath(PATH_HOME)"
+          @click.prevent="changePath(PATH_HOME)"
+        >
+          <ion-icon :icon="changeHome" class="icon" />
           <ion-label class="label">Главная</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button :selected="checkPath(PATH_CATALOG)" @click.prevent="changePath(PATH_CATALOG)">
-          <ion-icon :icon="changeCatalog" class="icon"/>
+        <ion-tab-button
+          :selected="checkPath(PATH_CATALOG)"
+          @click.prevent="changePath(PATH_CATALOG)"
+        >
+          <ion-icon :icon="changeCatalog" class="icon" />
           <ion-label class="label">Каталог</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button :selected="checkPath(PATH_RECORDING)" @click.prevent="changePath(PATH_RECORDING)">
-          <ion-icon :icon="changeRecording" class="icon"/>
+        <ion-tab-button
+          :selected="checkPath(PATH_RECORDING)"
+          @click.prevent="changePath(PATH_RECORDING)"
+        >
+          <ion-icon :icon="changeRecording" class="icon" />
           <ion-label class="label">Запись</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button :selected="checkPath(PATH_BASKET)" @click.prevent="changePath(PATH_BASKET)">
-          <ion-icon :icon="changeBasket" class="icon"/>
+        <ion-tab-button
+          :selected="checkPath(PATH_BASKET)"
+          @click.prevent="changePath(PATH_BASKET)"
+        >
+          <ion-icon :icon="changeBasket" class="icon" />
           <ion-label class="label">Корзина</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button :selected="checkPath(PATH_PROFILE)" @click.prevent="changePath(PATH_PROFILE)">
-          <ion-icon :icon="changeProfile" class="icon"/>
+        <ion-tab-button
+          :selected="checkPath(PATH_PROFILE)"
+          @click.prevent="changePath(PATH_PROFILE)"
+        >
+          <ion-icon :icon="changeProfile" class="icon" />
           <ion-label class="label">Профиль</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
@@ -33,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import { defineComponent } from 'vue';
 import {
   IonTabBar,
   IonTabButton,
@@ -43,9 +58,14 @@ import {
   IonPage,
   IonRouterOutlet,
 } from '@ionic/vue';
-import {PATH_CATALOG, PATH_HOME, PATH_BASKET, PATH_RECORDING, PATH_PROFILE} from "@/router/constants";
-import {RouteLocationRaw} from 'vue-router';
-
+import {
+  PATH_CATALOG,
+  PATH_HOME,
+  PATH_BASKET,
+  PATH_RECORDING,
+  PATH_PROFILE,
+} from '@/router/constants';
+import { RouteLocationRaw } from 'vue-router';
 
 export default defineComponent({
   name: 'FooterTabs',
@@ -63,24 +83,34 @@ export default defineComponent({
     PATH_CATALOG,
     PATH_BASKET,
     PATH_RECORDING,
-    PATH_PROFILE
+    PATH_PROFILE,
   }),
   computed: {
     changeHome() {
-      return this.$route.path === PATH_HOME ? 'assets/home-active.svg' : 'assets/home.svg'
+      return this.$route.path === PATH_HOME
+        ? 'assets/home-active.svg'
+        : 'assets/home.svg';
     },
     changeCatalog() {
-      return this.$route.path === PATH_CATALOG ? 'assets/catalog-active.svg' : 'assets/catalog.svg'
+      return this.$route.path === PATH_CATALOG
+        ? 'assets/catalog-active.svg'
+        : 'assets/catalog.svg';
     },
     changeRecording() {
-      return this.$route.path === PATH_RECORDING ? 'assets/recording-active.svg' : 'assets/recording.svg'
+      return this.$route.path === PATH_RECORDING
+        ? 'assets/recording-active.svg'
+        : 'assets/recording.svg';
     },
     changeBasket() {
-      return this.$route.path === PATH_BASKET ? 'assets/basket-active.svg' : 'assets/basket.svg'
+      return this.$route.path === PATH_BASKET
+        ? 'assets/basket-active.svg'
+        : 'assets/basket.svg';
     },
     changeProfile() {
-      return this.$route.path === PATH_PROFILE ? 'assets/profile-active.svg' : 'assets/profile.svg'
-    }
+      return this.$route.path === PATH_PROFILE
+        ? 'assets/profile-active.svg'
+        : 'assets/profile.svg';
+    },
   },
   methods: {
     checkPath(path: string) {
@@ -89,7 +119,7 @@ export default defineComponent({
     changePath(path: RouteLocationRaw) {
       this.$router.replace(path);
     },
-  }
+  },
 });
 </script>
 
@@ -106,5 +136,4 @@ export default defineComponent({
     height: 20px;
   }
 }
-
 </style>

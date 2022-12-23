@@ -1,6 +1,10 @@
-
 ion-content {
-  --background: #DEDEDE;
+  --background: #dedede;
   font-family: Montserrat !important;
+  font-weight: 400;
+}
+
+ion-title {
+  font-size: 12px;
   font-weight: 400;
 }

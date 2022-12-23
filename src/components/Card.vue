@@ -1,32 +1,34 @@
 <template>
   <ion-card class="card">
-    <img :src="img" class="image"/>
+    <img :src="img" class="image" />
     <ion-card-header class="header-card">
       <ion-card-subtitle class="title">{{ title }}</ion-card-subtitle>
     </ion-card-header>
   </ion-card>
 </template>
 
-<script>
-import {defineComponent} from "vue";
-import {IonCard, IonCardHeader, IonCardSubtitle} from "@ionic/vue";
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { IonCard, IonCardHeader, IonCardSubtitle } from '@ionic/vue';
 
 export default defineComponent({
-  name: "Card",
+  name: 'Card',
   props: {
     title: {
       type: String,
-      default: ''
+      default: '',
     },
     img: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   components: {
-    IonCard, IonCardHeader, IonCardSubtitle
-  }
-})
+    IonCard,
+    IonCardHeader,
+    IonCardSubtitle,
+  },
+});
 </script>
 
 <style scoped lang="scss">
@@ -48,6 +50,4 @@ export default defineComponent({
     }
   }
 }
-
-
 </style>

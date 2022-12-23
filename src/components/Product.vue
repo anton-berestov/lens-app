@@ -1,52 +1,62 @@
 <template>
   <ion-card class="card">
     <ion-row class="ion-justify-content-center ion-align-items-center">
-      <img src="assets/image/product.png" class="image"/>
+      <img src="assets/image/product.png" class="image" />
     </ion-row>
     <ion-card-header class="header">
       <ion-card-title class="title">{{ title }}</ion-card-title>
-      <ion-card-subtitle class="price">{{ price }}</ion-card-subtitle>
+      <ion-row class="ion-align-items-center row">
+        <ion-card-subtitle class="price">{{ price }}</ion-card-subtitle>
+        <ion-card-subtitle class="old-price" v-if="oldPrice">{{
+          oldPrice
+        }}</ion-card-subtitle>
+      </ion-row>
     </ion-card-header>
   </ion-card>
-
 </template>
 
-<script>
-import {defineComponent} from "vue";
-import {IonCard, IonCardHeader, IonCardTitle, IonRow, IonCardSubtitle} from "@ionic/vue";
+<script lang="ts">
+import { defineComponent } from 'vue';
+import {
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonRow,
+  IonCardSubtitle,
+} from '@ionic/vue';
 
 export default defineComponent({
-  name: "Product",
+  name: 'Product',
   props: {
     title: {
       type: String,
-      default: ''
+      default: '',
     },
     price: {
       type: String,
-      default: ''
+      default: '',
     },
     oldPrice: {
       type: String,
-      default: ''
+      default: '',
     },
     img: {
       type: String,
-      default: ''
+      default: '',
     },
     sale: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   components: {
     IonCard,
     IonCardHeader,
     IonCardTitle,
     IonRow,
-    IonCardSubtitle
-  }
-})
+    IonCardSubtitle,
+  },
+});
 </script>
 
 <style scoped lang="scss">
@@ -63,17 +73,21 @@ export default defineComponent({
   .header {
     padding: 10px 15px;
 
-    .title {
-      font-size: 12px;
-      font-weight: 400;
-    }
+    .row {
+      margin-top: 6px;
 
-    .price {
-      color: #000000;
-      font-size: 14px;
-      font-weight: 600;;
+      .price {
+        color: #000000;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .old-price {
+        margin-left: 12px;
+        font-size: 12px;
+        text-decoration: line-through;
+      }
     }
   }
 }
-
 </style>

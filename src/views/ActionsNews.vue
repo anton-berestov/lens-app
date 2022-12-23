@@ -1,44 +1,50 @@
 <template>
   <ion-page>
-    <Header title="Акции" back/>
+    <Header title="Акции" back />
     <ion-content :fullscreen="true">
       <div class="wrapper">
         <div class="image-box">
-          <img src="assets/image/action.png" class="image"/>
+          <img src="assets/image/action.png" class="image" />
         </div>
         <div class="text-box">
           <div class="header">
-            <ion-icon icon="assets/sale.svg" class="icon"/>
-            <p class="title">Акция «Скидка 10% при заказе двух упаковок линз»</p>
+            <ion-icon icon="assets/sale.svg" class="icon" />
+            <p class="title">
+              Акция «Скидка 10% при заказе двух упаковок линз»
+            </p>
           </div>
 
           <span class="description">
-          Акция действует с 10 по 31 октября 2022 г. Закажите 2 упаковки линз в приложении и получите скидку размером 10%
-        </span>
+            Акция действует с 10 по 31 октября 2022 г. Закажите 2 упаковки линз
+            в приложении и получите скидку размером 10%
+          </span>
         </div>
 
-        <ion-row class="ion-justify-content-center ">
-          <Button title="Перейти в каталог" class="custom-btn"/>
+        <ion-row class="ion-justify-content-center">
+          <Button title="Перейти в каталог" class="custom-btn" />
         </ion-row>
       </div>
-
     </ion-content>
   </ion-page>
 </template>
 
-<script>
-import {defineComponent} from "vue";
-import {IonContent, IonPage, IonIcon, IonRow} from "@ionic/vue";
-import Header from "@/components/Header.vue";
-import Button from "@/components/Button.vue";
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { IonContent, IonPage, IonIcon, IonRow } from '@ionic/vue';
+import Header from '@/components/Header.vue';
+import Button from '@/components/Button.vue';
 
 export default defineComponent({
-  name: "ActionsNews",
+  name: 'ActionsNews',
   components: {
     Button,
-    IonContent, IonPage, Header, IonIcon, IonRow
-  }
-})
+    IonContent,
+    IonPage,
+    Header,
+    IonIcon,
+    IonRow,
+  },
+});
 </script>
 
 <style scoped lang="scss">
@@ -73,7 +79,6 @@ export default defineComponent({
         font-weight: 600;
         font-size: 14px;
       }
-
     }
 
     .description {
@@ -84,6 +89,4 @@ export default defineComponent({
     margin-bottom: 40px;
   }
 }
-
-
 </style>
