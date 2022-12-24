@@ -1,7 +1,7 @@
 <template>
   <ion-page>
-    <Header title='Запись к врачу' custom contact back />
-    <ion-content :fullscreen='true'>
+    <Header title="Запись к врачу" contact />
+    <ion-content :fullscreen="true">
       <ion-item-group>
         <ion-item-divider>
           <ion-label>Выберите дату</ion-label>
@@ -14,30 +14,30 @@
         </ion-item-divider>
 
         <TimeSelect></TimeSelect>
-
       </ion-item-group>
-      <ion-item-group id='service'>
+      <ion-item-group id="service">
         <ion-item-divider>
           <ion-label>Выберите услугу</ion-label>
         </ion-item-divider>
         <ion-grid>
           <ion-row>
-            <ion-col size='6'>
+            <ion-col size="6">
               <ion-button>Подбор очковой коррекции</ion-button>
             </ion-col>
-            <ion-col size='6'>
-              <ion-button fill='outline'>Подбор контактной коррекции</ion-button>
+            <ion-col size="6">
+              <ion-button fill="outline"
+                >Подбор контактной коррекции</ion-button
+              >
             </ion-col>
           </ion-row>
         </ion-grid>
-
       </ion-item-group>
-      <Button title='Продолжить' id='next-step'></Button>
+      <Button title="Продолжить" id="next-step"></Button>
     </ion-content>
   </ion-page>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import { defineComponent } from 'vue';
 import {
   IonPage,
@@ -49,7 +49,7 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonButton
+  IonButton,
 } from '@ionic/vue';
 import Header from '@/components/Header.vue';
 import TimeSelect from '@/components/TimeSelect.vue';
@@ -70,13 +70,12 @@ export default defineComponent({
     IonGrid,
     IonRow,
     IonCol,
-    IonButton
-  }
+    IonButton,
+  },
 });
 </script>
 
-<style lang='scss'>
-
+<style lang="scss" scoped>
 ion-item-divider {
   background: transparent;
   margin: 16px 0 12px 0;
@@ -86,11 +85,8 @@ ion-label {
   color: var(--ion-color-dark-contrast);
 }
 
-
 #service {
-
   ion-col {
-
     ion-button {
       width: 100%;
       white-space: pre-wrap;
@@ -128,5 +124,4 @@ ion-label {
 #next-step {
   width: 98%;
 }
-
 </style>
