@@ -3,22 +3,22 @@
     <Header title="Приморский центр охраны зрения" custom contact />
     <ion-content :fullscreen="true">
       <Card
-        :class="{ pressed: isCatalog }"
+        class="pressed"
         title="Заказать контактные линзы"
         img="assets/image/ordering_contact_lenses.png"
-        @click="toCatalog"
+        @click="$router.push({ name: 'Catalog' })"
       />
       <Card
-        :class="{ pressed: isRecording }"
+        class="pressed"
         title="Записаться к врачу"
         img="assets/image/recording_with_a_doctor.png"
-        @click="toRecording"
+        @click="$router.push({ name: 'Recording' })"
       />
       <Card
-        :class="{ pressed: isActionNews }"
+        class="pressed"
         title="Акции и новости"
         img="assets/image/actions_news.png"
-        @click="toActionsNews"
+        @click="$router.push({ name: 'ActionsNews' })"
       />
     </ion-content>
   </ion-page>
@@ -33,38 +33,11 @@ import Card from '@/components/Card.vue';
 export default defineComponent({
   name: 'Home',
   components: { Card, Header, IonContent, IonPage },
-  data() {
-    return {
-      isCatalog: false,
-      isRecording: false,
-      isActionNews: false,
-    };
-  },
-  methods: {
-    toCatalog() {
-      this.isCatalog = !this.isCatalog;
-      this.$router.push({
-        name: 'Catalog',
-      });
-    },
-    toRecording() {
-      this.isRecording = !this.isRecording;
-      this.$router.push({
-        name: 'Recording',
-      });
-    },
-    toActionsNews() {
-      this.isActionNews = !this.isActionNews;
-      this.$router.push({
-        name: 'ActionsNews',
-      });
-    },
-  },
 });
 </script>
 
 <style scoped lang="scss">
-.pressed:before {
+.pressed:hover {
   --background: #deeeea;
 }
 </style>
