@@ -1,7 +1,9 @@
 <template>
   <ion-card class="card">
     <ion-row class="ion-justify-content-center ion-align-items-center">
-      <img src="assets/image/product.png" class="image" />
+      <div class="image-box">
+        <img :src="img" class="image" />
+      </div>
     </ion-row>
     <ion-card-header class="header">
       <ion-card-title class="title">{{ title }}</ion-card-title>
@@ -65,9 +67,17 @@ export default defineComponent({
   height: 170px;
   margin: 12px 15px;
 
-  .image {
-    width: 100%;
-    margin: 10px;
+  .image-box {
+    height: 85px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+
+    .image {
+      width: 100%;
+    }
   }
 
   .header {

@@ -1,0 +1,48 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Biofinity toric (3 шт)",
+      "price": "1200",
+      "old_price": "",
+      "image": "mocha/products/product.png",
+      "sale": "30%"
+    },
+    {
+      "id": 2,
+      "name": "Biofinity toric (6 шт)",
+      "price": "2400",
+      "old_price": "",
+      "image": "mocha/products/product2.png"
+    },
+    {
+      "id": 3,
+      "name": "Biofinity toric (3 шт)",
+      "price": "1200",
+      "old_price": "1500",
+      "image": "mocha/products/product.png"
+    },
+    {
+      "id": 4,
+      "name": "Acuvue (6 шт)",
+      "price": "2600",
+      "old_price": "",
+      "image": "mocha/products/product3.png"
+    },
+    {
+      "id": 5,
+      "name": "Biofinity toric (30 шт)",
+      "price": "5100",
+      "old_price": "",
+      "image": "mocha/products/product4.png"
+    },
+    {
+      "id": 6,
+      "name": "Biofinity toric (3 шт)",
+      "price": "1200",
+      "old_price": "",
+      "image": "mocha/products/product.png"
+    }
+  ]
+}
+

@@ -10,7 +10,7 @@
       <ion-title class="title" v-if="!custom">{{ title }}</ion-title>
 
       <div class="box" v-if="custom">
-        <ion-icon icon="assets/logo_brand.svg" class="logo" />
+        <ion-icon icon="assets/icon/logo_brand.svg" class="logo" />
         <span class="custom-title">
           {{ title }}
         </span>
@@ -18,13 +18,13 @@
 
       <ion-buttons slot="end" class="button-box" v-if="contact">
         <ion-button>
-          <ion-icon icon="assets/location.svg" />
+          <ion-icon icon="assets/icon/location.svg" />
         </ion-button>
         <ion-button>
-          <ion-icon icon="assets/call.svg" />
+          <ion-icon icon="assets/icon/call.svg" />
         </ion-button>
         <ion-button>
-          <ion-icon icon="assets/message.svg" />
+          <ion-icon icon="assets/icon/message.svg" />
         </ion-button>
       </ion-buttons>
     </ion-toolbar>

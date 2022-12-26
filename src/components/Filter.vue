@@ -5,27 +5,105 @@
     @didDismiss="$emit('hide')"
     class="filter-modal"
   >
-    <Header title="Фильтры" />
-    <ion-content class="ion-padding">
-      <ion-row>
-        <IonTitle class="title">Срок замены</IonTitle>
-      </ion-row>
-      <ion-row class="ion-justify-content-between">
-        <ion-buttons>
-          <ion-button fill="outline">Однодневные</ion-button>
-          <ion-button fill="outline">На 2 недели</ion-button>
-        </ion-buttons>
-        <ion-buttons>
-          <ion-button fill="outline">На 1 месяц</ion-button>
-          <ion-button fill="outline">На 3 месяца</ion-button>
-        </ion-buttons>
-      </ion-row>
+    <ion-content :fullscreen="true">
+      <div>
+        <ion-row class="ion-justify-content-center">
+          <ion-icon icon="assets/icon/line-menu.svg" class="icon" />
+          <ion-title class="title">Фильтры</ion-title>
+        </ion-row>
+        <ion-row class="ion-margin">
+          <ion-title class="text">Срок замены</ion-title>
+        </ion-row>
+        <ion-row class="ion-margin">
+          <ion-buttons>
+            <ion-button fill="outline" class="btn">Однодневные</ion-button>
+          </ion-buttons>
+          <ion-buttons>
+            <ion-button fill="outline" class="btn" style="margin-left: 16px"
+              >На 2 недели
+            </ion-button>
+          </ion-buttons>
+        </ion-row>
+        <ion-row class="ion-margin">
+          <ion-buttons>
+            <ion-button fill="outline" class="btn">На 1 месяц</ion-button>
+          </ion-buttons>
+          <ion-buttons>
+            <ion-button fill="outline" class="btn" style="margin-left: 16px">
+              На 3 месяца
+            </ion-button>
+          </ion-buttons>
+        </ion-row>
+
+        <ion-row class="ion-margin">
+          <ion-title class="text">Тип линз</ion-title>
+        </ion-row>
+        <ion-row class="ion-margin">
+          <ion-buttons>
+            <ion-button fill="outline">Торические</ion-button>
+          </ion-buttons>
+          <ion-buttons>
+            <ion-button fill="outline" style="margin-left: 16px"
+              >Мультифокальные
+            </ion-button>
+          </ion-buttons>
+          <ion-buttons>
+            <ion-button fill="outline" style="margin-left: 16px"
+              >Простые
+            </ion-button>
+          </ion-buttons>
+        </ion-row>
+
+        <ion-row class="ion-margin" :class="{ activeClass: isActive }">
+          <ion-col style="padding-left: 0">
+            <ion-title class="text">Сфера</ion-title>
+            <Select
+              :options="options"
+              placeholder="Выбрать"
+              class="ion-margin-top"
+              @isOpen="openItems($event)"
+            />
+          </ion-col>
+          <ion-col style="padding-right: 0">
+            <ion-title class="text">Радиус кривизны</ion-title>
+            <Select
+              :options="options"
+              placeholder="Выбрать"
+              class="ion-margin-top"
+              @isOpen="openItems($event)"
+            />
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-margin ion-justify-content-center">
+          <Button title="Закрыть" />
+        </ion-row>
+
+        <ion-row
+          class="ion-margin ion-justify-content-between ion-margin-buttom"
+        >
+          <ion-buttons>
+            <ion-button
+              fill="solid"
+              style="color: #ffffff"
+              class="action-button"
+              >Применить
+            </ion-button>
+          </ion-buttons>
+          <ion-buttons>
+            <ion-button fill="outline" class="action-button"
+              >Сбросить
+            </ion-button>
+          </ion-buttons>
+        </ion-row>
+      </div>
+      <div></div>
     </ion-content>
   </ion-modal>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="js">
+import {defineComponent} from 'vue';
 import {
   IonModal,
   IonContent,
@@ -33,8 +111,12 @@ import {
   IonTitle,
   IonButtons,
   IonButton,
+  IonCol,
+  IonIcon,
 } from '@ionic/vue';
-import Header from '@/components/Header.vue';
+import Select from '@/components/Select.vue';
+import Button from '@/components/Button.vue'
+
 
 export default defineComponent({
   name: 'Filter',
@@ -46,13 +128,39 @@ export default defineComponent({
   },
   emits: ['hide'],
   components: {
-    Header,
+    Select,
+    Button,
     IonModal,
     IonContent,
     IonRow,
     IonTitle,
     IonButtons,
     IonButton,
+    IonCol,
+    IonIcon,
+  },
+  data: () => ({
+    options: [
+      {id: 1, value: '-20,00'},
+      {id: 2, value: '-20,00'},
+      {id: 3, value: '-20,00'},
+      {id: 4, value: '-20,00'},
+      {id: 5, value: '-20,00'},
+      {id: 6, value: '-20,00'},
+      {id: 7, value: '-20,00'},
+      {id: 8, value: '-20,00'},
+      {id: 9, value: '-20,00'},
+      {id: 10, value: '-20,00'},
+      {id: 11, value: '-20,00'},
+      {id: 12, value: '-20,00'},
+      {id: 13, value: '-20,00'},
+    ],
+    isActive: false,
+  }),
+  methods: {
+    openItems(e) {
+      this.isActive = e;
+    },
   },
 });
 </script>
@@ -62,9 +170,60 @@ export default defineComponent({
   ion-content {
     --background: #ffffff !important;
   }
+
+  .icon {
+    width: 46px;
+    height: 3px;
+    margin-top: -5px;
+    margin-bottom: 10px;
+  }
+
   .title {
+    display: contents;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .text {
+    text-align: start;
+    display: contents;
     font-size: 14px;
     font-weight: 500;
   }
+
+  ion-button {
+    color: #000000;
+  }
+
+  .btn {
+    width: 130px;
+  }
+
+  .select {
+    width: 150px;
+
+    .icon-check-mark {
+      width: 8px;
+      height: 4px;
+    }
+  }
+
+  .action-button {
+    width: 150px;
+    height: 40px;
+  }
+
+  .activeClass {
+    margin-bottom: 170px;
+  }
+}
+
+.button-outline {
+  border: 1px solid #e7e7e7 !important;
+  border-radius: 10px !important;
+}
+
+.button-native {
+  border: none !important;
 }
 </style>

@@ -11,26 +11,24 @@
         ></ion-searchbar>
         <ion-buttons style="padding-bottom: 6px">
           <ion-button class="filter" @click="filter = true">
-            <ion-icon icon="assets/filter.svg" class="icon-filter"></ion-icon>
+            <ion-icon
+              icon="assets/icon/filter.svg"
+              class="icon-filter"
+            ></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-row>
 
       <div class="wrapper">
         <Product
-          title="Biofinity toric (3 шт)"
-          price="1 200 ₽"
+          v-for="products in products.data"
+          :key="products.id"
+          :title="products.name"
+          :price="products.price"
+          :img="products.image"
+          :old-price="products.old_price"
           class="product"
         />
-        <Product title="Biofinity toric (6 шт)" price="2 400 ₽" />
-        <Product
-          title="Biofinity toric (3 шт)"
-          price="1 200 ₽"
-          old-price="1 500 ₽"
-        />
-        <Product title="Acuvue (6 шт)" price="2 600 ₽" />
-        <Product title="Biofinity toric (30 шт)" price="5 100 ₽" />
-        <Product title="Biofinity toric (3 шт)" price="1200 ₽" />
       </div>
 
       <Filter :show="filter" @hide="hide" />
@@ -52,6 +50,7 @@ import {
 import Header from '@/components/Header.vue';
 import Product from '@/components/Product.vue';
 import Filter from '@/components/Filter.vue';
+import json from '../../public/mocha/products/products.json';
 
 export default defineComponent({
   name: 'Catalog',
@@ -69,6 +68,7 @@ export default defineComponent({
   },
   data: () => ({
     filter: false,
+    products: json,
   }),
   methods: {
     hide() {

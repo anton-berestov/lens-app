@@ -12,8 +12,8 @@ export default defineComponent({
   name: 'App',
   components: {
     IonApp,
-    IonRouterOutlet
-  }
+    IonRouterOutlet,
+  },
 });
 </script>
 
@@ -22,6 +22,6 @@ export default defineComponent({
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('./assets/fonts/Montserrat-Regular.ttf');
+  src: url('../public/assets/fonts/Montserrat-Regular.ttf');
 }
 </style>

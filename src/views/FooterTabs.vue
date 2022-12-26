@@ -88,28 +88,28 @@ export default defineComponent({
   computed: {
     changeHome() {
       return this.$route.path === PATH_HOME
-        ? 'assets/home-active.svg'
-        : 'assets/home.svg';
+        ? 'assets/icon/home-active.svg'
+        : 'assets/icon/home.svg';
     },
     changeCatalog() {
       return this.$route.path === PATH_CATALOG
-        ? 'assets/catalog-active.svg'
-        : 'assets/catalog.svg';
+        ? 'assets/icon/catalog-active.svg'
+        : 'assets/icon/catalog.svg';
     },
     changeRecording() {
       return this.$route.path === PATH_RECORDING
-        ? 'assets/recording-active.svg'
-        : 'assets/recording.svg';
+        ? 'assets/icon/recording-active.svg'
+        : 'assets/icon/recording.svg';
     },
     changeBasket() {
       return this.$route.path === PATH_BASKET
-        ? 'assets/basket-active.svg'
-        : 'assets/basket.svg';
+        ? 'assets/icon/basket-active.svg'
+        : 'assets/icon/basket.svg';
     },
     changeProfile() {
       return this.$route.path === PATH_PROFILE
-        ? 'assets/profile-active.svg'
-        : 'assets/profile.svg';
+        ? 'assets/icon/profile-active.svg'
+        : 'assets/icon/profile.svg';
     },
   },
   methods: {
