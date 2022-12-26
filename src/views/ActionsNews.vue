@@ -8,7 +8,7 @@
         </div>
         <div class="text-box">
           <div class="header">
-            <ion-icon icon="assets/sale.svg" class="icon" />
+            <ion-icon icon="assets/icon/sale.svg" class="icon" />
             <p class="title">
               Акция «Скидка 10% при заказе двух упаковок линз»
             </p>
@@ -21,7 +21,15 @@
         </div>
 
         <ion-row class="ion-justify-content-center">
-          <Button title="Перейти в каталог" class="custom-btn" />
+          <Button
+            title="Перейти в каталог"
+            class="custom-btn"
+            @click="
+              $router.push({
+                name: 'Catalog',
+              })
+            "
+          />
         </ion-row>
       </div>
     </ion-content>

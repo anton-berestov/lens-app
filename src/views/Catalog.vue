@@ -30,9 +30,9 @@
           class="product"
         />
       </div>
-
       <Filter :show="filter" @hide="hide" />
     </ion-content>
+    <ModalCard :show="false" @hide="visible = false" v-if="false" />
   </ion-page>
 </template>
 
@@ -50,6 +50,7 @@ import {
 import Header from '@/components/Header.vue';
 import Product from '@/components/Product.vue';
 import Filter from '@/components/Filter.vue';
+import ModalCard from '@/components/ModalCard.vue';
 import json from '../../public/mocha/products/products.json';
 
 export default defineComponent({
@@ -65,10 +66,12 @@ export default defineComponent({
     IonButton,
     IonButtons,
     IonSearchbar,
+    ModalCard,
   },
   data: () => ({
     filter: false,
     products: json,
+    visible: true,
   }),
   methods: {
     hide() {
