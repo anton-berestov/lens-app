@@ -32,4 +32,7 @@ export default defineComponent({
   font-size: 14px;
   font-weight: 600;
 }
+.custom-btn:hover {
+  --background: #00795d;
+}
 </style>
