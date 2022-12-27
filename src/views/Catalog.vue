@@ -1,5 +1,4 @@
 <template>
-  <Popover />
   <ion-page>
     <Header title="Каталог" />
     <ion-content :fullscreen="true">
@@ -50,7 +49,6 @@ import {
 import Header from '@/components/Header.vue';
 import Product from '@/components/Product.vue';
 import Filter from '@/components/Filter.vue';
-import Popover from '@/components/Popover.vue';
 import json from '../../public/mocha/products/products.json';
 
 export default defineComponent({
@@ -66,12 +64,10 @@ export default defineComponent({
     IonButton,
     IonButtons,
     IonSearchbar,
-    Popover,
   },
   data: () => ({
     filter: false,
     products: json,
-    visible: true,
   }),
   methods: {
     hide() {

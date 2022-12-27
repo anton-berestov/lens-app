@@ -14,23 +14,14 @@
         <ion-row class="ion-margin">
           <ion-title class="text">Срок замены</ion-title>
         </ion-row>
-        <ion-row class="ion-margin">
-          <ion-buttons>
-            <ion-button fill="outline" class="btn">Однодневные</ion-button>
-          </ion-buttons>
-          <ion-buttons>
-            <ion-button fill="outline" class="btn" style="margin-left: 16px"
-              >На 2 недели
-            </ion-button>
-          </ion-buttons>
-        </ion-row>
-        <ion-row class="ion-margin">
-          <ion-buttons>
-            <ion-button fill="outline" class="btn">На 1 месяц</ion-button>
-          </ion-buttons>
-          <ion-buttons>
-            <ion-button fill="outline" class="btn" style="margin-left: 16px">
-              На 3 месяца
+        <ion-row>
+          <ion-buttons
+            v-for="period in periods"
+            :key="period.key"
+            class="buttons"
+          >
+            <ion-button fill="outline" class="btn"
+              >{{ period.name }}
             </ion-button>
           </ion-buttons>
         </ion-row>
@@ -47,19 +38,9 @@
             </ion-button>
           </ion-buttons>
         </ion-row>
-        <ion-row class="ion-margin">
-          <ion-buttons>
-            <ion-button fill="outline">Торические</ion-button>
-          </ion-buttons>
-          <ion-buttons>
-            <ion-button fill="outline" style="margin-left: 16px"
-              >Мультифокальные
-            </ion-button>
-          </ion-buttons>
-          <ion-buttons>
-            <ion-button fill="outline" style="margin-left: 16px"
-              >Простые
-            </ion-button>
+        <ion-row>
+          <ion-buttons v-for="type in types" :key="type.id" class="buttons">
+            <ion-button fill="outline">{{ type.name }}</ion-button>
           </ion-buttons>
         </ion-row>
 
@@ -67,7 +48,7 @@
           <ion-col style="padding-left: 0">
             <ion-title class="text">Сфера</ion-title>
             <Select
-              :options="options"
+              :options="sphere"
               placeholder="Выбрать"
               class="ion-margin-top"
               @isOpen="openItems($event)"
@@ -76,7 +57,7 @@
           <ion-col style="padding-right: 0">
             <ion-title class="text">Радиус кривизны</ion-title>
             <Select
-              :options="options"
+              :options="radius"
               placeholder="Выбрать"
               class="ion-margin-top"
               @isOpen="openItems($event)"
@@ -84,13 +65,21 @@
           </ion-col>
         </ion-row>
 
-        <ion-row class="ion-margin ion-justify-content-center">
-          <Button title="Закрыть" @click="$emit('hide')" />
+        <ion-row
+          class="ion-margin ion-justify-content-center"
+          v-if="!selected.length"
+        >
+          <Button
+            title="Закрыть"
+            @click="$emit('hide')"
+            class="ion-margin-top"
+          />
         </ion-row>
 
         <ion-row
           class="ion-margin ion-justify-content-between"
           style="margin-bottom: 200px"
+          v-if="selected.length"
         >
           <ion-buttons>
             <ion-button
@@ -109,6 +98,7 @@
       </ion-col>
     </ion-content>
   </ion-modal>
+  <Popover :types="types" />
 </template>
 
 <script lang="js">
@@ -125,7 +115,12 @@ import {
 } from '@ionic/vue';
 import Select from '@/components/Select.vue';
 import Button from '@/components/Button.vue'
+import Popover from "@/components/Popover.vue";
 import {mapMutations} from "vuex";
+import types from '../../public/mocha/types.json';
+import periods from '../../public/mocha/periods.json';
+import sphere from '../../public/mocha/sphere.json';
+import radius from '../../public/mocha/radius.json';
 
 
 export default defineComponent({
@@ -137,7 +132,7 @@ export default defineComponent({
     },
 
   },
-  emits: ['hide', 'visible'],
+  emits: ['hide'],
   components: {
     Select,
     Button,
@@ -148,32 +143,23 @@ export default defineComponent({
     IonButtons,
     IonButton,
     IonCol,
-    IonIcon
+    IonIcon,
+    Popover
   },
   data: () => ({
-    options: [
-      {id: 1, value: '-20,00'},
-      {id: 2, value: '-20,00'},
-      {id: 3, value: '-20,00'},
-      {id: 4, value: '-20,00'},
-      {id: 5, value: '-20,00'},
-      {id: 6, value: '-20,00'},
-      {id: 7, value: '-20,00'},
-      {id: 8, value: '-20,00'},
-      {id: 9, value: '-20,00'},
-      {id: 10, value: '-20,00'},
-      {id: 11, value: '-20,00'},
-      {id: 12, value: '-20,00'},
-      {id: 13, value: '-20,00'},
-    ],
     isActive: false,
+    types: types,
+    periods: periods,
+    sphere: sphere,
+    radius: radius,
+    selected: []
   }),
   methods: {
     ...mapMutations(['SET_POPOVER']),
     openItems(e) {
       this.isActive = e;
     },
-    openPopover(){
+    openPopover() {
       this.SET_POPOVER(true)
     }
   },
@@ -184,6 +170,10 @@ export default defineComponent({
 .filter-modal {
   ion-content {
     --background: #ffffff !important;
+  }
+
+  .buttons {
+    margin: 8px;
   }
 
   .show-hide-icon {

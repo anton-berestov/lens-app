@@ -1,16 +1,14 @@
 <template>
   <ion-modal :is-open="popover" class="popover" :animated="false">
     <div id="box">
-      <p class="text">
+      <p class="text" v-if="text">
         Торические линзы предназначены для людей с астигматизмом.
       </p>
-      <p class="text">
-        Мультифокальные линзы предназначены для людей с несколькими нарушениями
-        зрения.
-      </p>
-      <p class="text">
-        Простые предназначены для людей без вышеописанных нарушений зрения
-      </p>
+      <div v-if="types">
+        <p class="text" v-for="type in types" :key="type.id">
+          {{ type.desc }}
+        </p>
+      </div>
 
       <div class="btn-wrapper">
         <ion-buttons>
@@ -28,7 +26,16 @@ import { mapGetters, mapMutations } from 'vuex';
 
 export default defineComponent({
   name: 'Popover',
-  props: {},
+  props: {
+    text: {
+      type: String,
+      default: '',
+    },
+    types: {
+      type: Array,
+      default: () => [],
+    },
+  },
   components: {
     IonButtons,
     IonButton,
