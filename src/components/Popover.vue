@@ -1,7 +1,6 @@
 <template>
-  <ion-backdrop :visible="true"></ion-backdrop>
-  <div class="ion-page" id="box">
-    <ion-content :scroll-y="false">
+  <ion-modal :is-open="popover" class="popover" :animated="false">
+    <div id="box">
       <p class="text">
         Торические линзы предназначены для людей с астигматизмом.
       </p>
@@ -15,45 +14,45 @@
 
       <div class="btn-wrapper">
         <ion-buttons>
-          <ion-button class="btn" @click="$emit('hide')">ОК</ion-button>
+          <ion-button class="btn" @click="hide">ОК</ion-button>
         </ion-buttons>
       </div>
-      <div></div>
-    </ion-content>
-  </div>
+    </div>
+  </ion-modal>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import { IonBackdrop, IonButtons, IonButton, IonContent } from '@ionic/vue';
+import { IonButtons, IonButton, IonModal } from '@ionic/vue';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default defineComponent({
   name: 'Popover',
-  props: {
-    show: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  emits: ['hide'],
+  props: {},
   components: {
-    IonBackdrop,
     IonButtons,
     IonButton,
-    IonContent,
+    IonModal,
+  },
+  computed: {
+    ...mapGetters(['popover']),
+  },
+  methods: {
+    ...mapMutations(['SET_POPOVER']),
+    hide() {
+      this.SET_POPOVER(false);
+    },
   },
 });
 </script>
 
 <style lang="scss">
-ion-backdrop {
-  opacity: 0.9;
-  background: rgba(37, 32, 32, 0.5);
-  z-index: 99999 !important;
+.popover {
+  --background: rgba(37, 32, 32, 0.5);
 }
 
 #box {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);

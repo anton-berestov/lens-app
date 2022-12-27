@@ -38,7 +38,7 @@
         <ion-row class="ion-margin" style="position: relative">
           <ion-title class="text">Тип линз</ion-title>
           <ion-buttons class="btn-question">
-            <ion-button>
+            <ion-button @click="openPopover">
               <ion-icon
                 icon="assets/icon/question.svg"
                 slot="icon-only"
@@ -125,6 +125,7 @@ import {
 } from '@ionic/vue';
 import Select from '@/components/Select.vue';
 import Button from '@/components/Button.vue'
+import {mapMutations} from "vuex";
 
 
 export default defineComponent({
@@ -168,9 +169,13 @@ export default defineComponent({
     isActive: false,
   }),
   methods: {
+    ...mapMutations(['SET_POPOVER']),
     openItems(e) {
       this.isActive = e;
     },
+    openPopover(){
+      this.SET_POPOVER(true)
+    }
   },
 });
 </script>

@@ -1,4 +1,5 @@
 <template>
+  <Popover />
   <ion-page>
     <Header title="Каталог" />
     <ion-content :fullscreen="true">
@@ -32,7 +33,6 @@
       </div>
       <Filter :show="filter" @hide="hide" />
     </ion-content>
-    <Popover :show="false" @hide="visible = false" v-if="false" />
   </ion-page>
 </template>
 
