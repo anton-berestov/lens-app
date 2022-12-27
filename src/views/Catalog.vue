@@ -49,7 +49,7 @@ import {
 import Header from '@/components/Header.vue';
 import Product from '@/components/Product.vue';
 import Filter from '@/components/Filter.vue';
-import json from '../../public/mocha/products/products.json';
+import products from '../../public/mocha/products/products.json';
 
 export default defineComponent({
   name: 'Catalog',
@@ -67,7 +67,7 @@ export default defineComponent({
   },
   data: () => ({
     filter: false,
-    products: json,
+    products: products,
   }),
   methods: {
     hide() {
