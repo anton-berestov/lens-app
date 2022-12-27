@@ -14,25 +14,30 @@
         <ion-row class="ion-margin">
           <ion-title class="text">Срок замены</ion-title>
         </ion-row>
+
         <ion-row class="ion-margin">
           <MultipleButton
             v-model="filter.period"
             :options="periods"
             :checked="filter.period"
+            type="period"
           />
         </ion-row>
-
-        {{ filter.period }}
 
         <ion-row class="ion-margin" style="position: relative">
           <ion-title class="text">Тип линз</ion-title>
+          <ion-buttons class="btn-question">
+            <ion-button @click="openPopover">
+              <ion-icon
+                icon="assets/icon/question.svg"
+                slot="icon-only"
+                class="icon-for-type"
+              />
+            </ion-button>
+          </ion-buttons>
         </ion-row>
         <ion-row class="ion-margin">
-          <MultipleButton
-            :options="types"
-            :checked="filter.type"
-            v-model="filter.type"
-          />
+          <MultipleButton :options="types" :checked="type" type="type" />
         </ion-row>
 
         <ion-row class="ion-margin" :class="{ activeClass: isActive }">
@@ -108,7 +113,7 @@ import Select from '@/components/Select.vue';
 import Button from '@/components/Button.vue'
 import Popover from "@/components/Popover.vue";
 import MultipleButton from "@/components/MultipleButton.vue";
-import {mapMutations} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import types from '../../public/mocha/types.json';
 import periods from '../../public/mocha/periods.json';
 import sphere from '../../public/mocha/sphere.json';
@@ -152,6 +157,9 @@ export default defineComponent({
     selectedPeriod: [],
     activePeriod: false
   }),
+  computed: {
+   ...mapGetters(['period', 'type'])
+  },
   methods: {
     ...mapMutations(['SET_POPOVER']),
     openItems(e) {

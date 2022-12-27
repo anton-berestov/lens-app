@@ -1,12 +1,8 @@
 <template>
   <ul class="multiple-buttons">
     <li v-for="(option, index) in options" :key="index">
-      <label :class="{ checked: checked.includes(option.id) }">
-        <input
-          type="checkbox"
-          :value="option.name"
-          @click="onChange(option.id)"
-        />
+      <label :class="{ checked: checked.includes(option) }">
+        <input type="checkbox" :value="option.name" @click="onChange(option)" />
         <span>{{ option.name }}</span>
       </label>
     </li>
@@ -15,12 +11,14 @@
 
 <script>
 import { defineComponent } from 'vue';
+import { mapMutations } from 'vuex';
 
 export default defineComponent({
   name: 'MultipleButton',
-  props: ['checked', 'options'],
+  props: ['checked', 'options', 'type'],
   emits: ['update:modelValue'],
   methods: {
+    ...mapMutations(['SET_FILTER']),
     onChange(value) {
       let checked = [].concat(this.checked);
       if (checked.includes(value)) {
@@ -28,6 +26,8 @@ export default defineComponent({
       } else {
         checked.push(value);
       }
+      this.SET_FILTER({ type: this.type, value: checked });
+
       this.$emit('update:modelValue', checked);
     },
   },
