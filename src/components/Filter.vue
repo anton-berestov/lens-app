@@ -5,10 +5,10 @@
     @didDismiss="$emit('hide')"
     class="filter-modal"
   >
-    <ion-content :fullscreen="true">
-      <div>
+    <ion-content scroll-y>
+      <ion-col>
         <ion-row class="ion-justify-content-center">
-          <ion-icon icon="assets/icon/line-menu.svg" class="icon" />
+          <ion-icon icon="assets/icon/line-menu.svg" class="show-hide-icon" />
           <ion-title class="title">Фильтры</ion-title>
         </ion-row>
         <ion-row class="ion-margin">
@@ -35,8 +35,17 @@
           </ion-buttons>
         </ion-row>
 
-        <ion-row class="ion-margin">
+        <ion-row class="ion-margin" style="position: relative">
           <ion-title class="text">Тип линз</ion-title>
+          <ion-buttons class="btn-question">
+            <ion-button @click="visible = true">
+              <ion-icon
+                icon="assets/icon/question.svg"
+                slot="icon-only"
+                class="icon-for-type"
+              />
+            </ion-button>
+          </ion-buttons>
         </ion-row>
         <ion-row class="ion-margin">
           <ion-buttons>
@@ -76,11 +85,12 @@
         </ion-row>
 
         <ion-row class="ion-margin ion-justify-content-center">
-          <Button title="Закрыть" />
+          <Button title="Закрыть" @click="$emit('hide')" />
         </ion-row>
 
         <ion-row
-          class="ion-margin ion-justify-content-between ion-margin-buttom"
+          class="ion-margin ion-justify-content-between"
+          style="margin-bottom: 200px"
         >
           <ion-buttons>
             <ion-button
@@ -96,8 +106,7 @@
             </ion-button>
           </ion-buttons>
         </ion-row>
-      </div>
-      <div></div>
+      </ion-col>
     </ion-content>
   </ion-modal>
 </template>
@@ -125,8 +134,9 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+
   },
-  emits: ['hide'],
+  emits: ['hide', 'visible'],
   components: {
     Select,
     Button,
@@ -137,7 +147,7 @@ export default defineComponent({
     IonButtons,
     IonButton,
     IonCol,
-    IonIcon,
+    IonIcon
   },
   data: () => ({
     options: [
@@ -171,7 +181,7 @@ export default defineComponent({
     --background: #ffffff !important;
   }
 
-  .icon {
+  .show-hide-icon {
     width: 46px;
     height: 3px;
     margin-top: -5px;
@@ -211,6 +221,21 @@ export default defineComponent({
   .action-button {
     width: 150px;
     height: 40px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .btn-question {
+    position: absolute;
+    margin: 0 auto;
+    left: 60px;
+    top: -17px;
+
+    .icon-for-type {
+      width: 15px;
+      height: 15px;
+    }
   }
 
   .activeClass {
