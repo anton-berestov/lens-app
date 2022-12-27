@@ -14,34 +14,25 @@
         <ion-row class="ion-margin">
           <ion-title class="text">Срок замены</ion-title>
         </ion-row>
-        <ion-row>
-          <ion-buttons
-            v-for="period in periods"
-            :key="period.key"
-            class="buttons"
-          >
-            <ion-button fill="outline" class="btn"
-              >{{ period.name }}
-            </ion-button>
-          </ion-buttons>
+        <ion-row class="ion-margin">
+          <MultipleButton
+            v-model="filter.period"
+            :options="periods"
+            :checked="filter.period"
+          />
         </ion-row>
+
+        {{ filter.period }}
 
         <ion-row class="ion-margin" style="position: relative">
           <ion-title class="text">Тип линз</ion-title>
-          <ion-buttons class="btn-question">
-            <ion-button @click="openPopover">
-              <ion-icon
-                icon="assets/icon/question.svg"
-                slot="icon-only"
-                class="icon-for-type"
-              />
-            </ion-button>
-          </ion-buttons>
         </ion-row>
-        <ion-row>
-          <ion-buttons v-for="type in types" :key="type.id" class="buttons">
-            <ion-button fill="outline">{{ type.name }}</ion-button>
-          </ion-buttons>
+        <ion-row class="ion-margin">
+          <MultipleButton
+            :options="types"
+            :checked="filter.type"
+            v-model="filter.type"
+          />
         </ion-row>
 
         <ion-row class="ion-margin" :class="{ activeClass: isActive }">
@@ -67,7 +58,7 @@
 
         <ion-row
           class="ion-margin ion-justify-content-center"
-          v-if="!selected.length"
+          v-if="!selectedPeriod.length"
         >
           <Button
             title="Закрыть"
@@ -79,7 +70,7 @@
         <ion-row
           class="ion-margin ion-justify-content-between"
           style="margin-bottom: 200px"
-          v-if="selected.length"
+          v-if="selectedPeriod.length"
         >
           <ion-buttons>
             <ion-button
@@ -116,6 +107,7 @@ import {
 import Select from '@/components/Select.vue';
 import Button from '@/components/Button.vue'
 import Popover from "@/components/Popover.vue";
+import MultipleButton from "@/components/MultipleButton.vue";
 import {mapMutations} from "vuex";
 import types from '../../public/mocha/types.json';
 import periods from '../../public/mocha/periods.json';
@@ -135,6 +127,7 @@ export default defineComponent({
   emits: ['hide'],
   components: {
     Select,
+    MultipleButton,
     Button,
     IonModal,
     IonContent,
@@ -152,7 +145,12 @@ export default defineComponent({
     periods: periods,
     sphere: sphere,
     radius: radius,
-    selected: []
+    filter: {
+      period: [],
+      type: [],
+    },
+    selectedPeriod: [],
+    activePeriod: false
   }),
   methods: {
     ...mapMutations(['SET_POPOVER']),
@@ -161,7 +159,7 @@ export default defineComponent({
     },
     openPopover() {
       this.SET_POPOVER(true)
-    }
+    },
   },
 });
 </script>
@@ -219,6 +217,10 @@ export default defineComponent({
     border-radius: 5px;
     font-weight: 600;
     font-size: 14px;
+  }
+
+  .active {
+    background: #005944;
   }
 
   .btn-question {
