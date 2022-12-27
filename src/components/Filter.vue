@@ -38,7 +38,7 @@
         <ion-row class="ion-margin" style="position: relative">
           <ion-title class="text">Тип линз</ion-title>
           <ion-buttons class="btn-question">
-            <ion-button @click="visible = true">
+            <ion-button>
               <ion-icon
                 icon="assets/icon/question.svg"
                 slot="icon-only"
