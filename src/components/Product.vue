@@ -105,4 +105,8 @@ export default defineComponent({
     }
   }
 }
+
+.card:hover {
+  --background: #deeeea;
+}
 </style>
