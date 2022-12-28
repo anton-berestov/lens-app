@@ -11,14 +11,12 @@
 
 <script>
 import { defineComponent } from 'vue';
-import { mapMutations } from 'vuex';
 
 export default defineComponent({
   name: 'MultipleButton',
-  props: ['checked', 'options', 'type'],
+  props: ['checked', 'options'],
   emits: ['update:modelValue'],
   methods: {
-    ...mapMutations(['SET_FILTER']),
     onChange(value) {
       let checked = [].concat(this.checked);
       if (checked.includes(value)) {
@@ -26,8 +24,6 @@ export default defineComponent({
       } else {
         checked.push(value);
       }
-      this.SET_FILTER({ type: this.type, value: checked });
-
       this.$emit('update:modelValue', checked);
     },
   },

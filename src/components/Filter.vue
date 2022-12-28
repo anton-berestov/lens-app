@@ -5,7 +5,7 @@
     @didDismiss="$emit('hide')"
     class="filter-modal"
   >
-    <ion-content scroll-y>
+    <ion-content :scroll-y="true">
       <ion-col>
         <ion-row class="ion-justify-content-center">
           <ion-icon icon="assets/icon/line-menu.svg" class="show-hide-icon" />
@@ -17,10 +17,9 @@
 
         <ion-row class="ion-margin">
           <MultipleButton
-            v-model="filter.period"
             :options="periods"
             :checked="filter.period"
-            type="period"
+            v-model="filter.period"
           />
         </ion-row>
 
@@ -37,7 +36,11 @@
           </ion-buttons>
         </ion-row>
         <ion-row class="ion-margin">
-          <MultipleButton :options="types" :checked="type" type="type" />
+          <MultipleButton
+            :options="types"
+            :checked="filter.type"
+            v-model="filter.type"
+          />
         </ion-row>
 
         <ion-row class="ion-margin" :class="{ activeClass: isActive }">
@@ -47,7 +50,8 @@
               :options="sphere"
               placeholder="Выбрать"
               class="ion-margin-top"
-              @isOpen="openItems($event)"
+              @isOpen="openSelect"
+              v-model="filter.sphere"
             />
           </ion-col>
           <ion-col style="padding-right: 0">
@@ -56,42 +60,55 @@
               :options="radius"
               placeholder="Выбрать"
               class="ion-margin-top"
-              @isOpen="openItems($event)"
+              @isOpen="openSelect"
+              v-model="filter.radius"
             />
           </ion-col>
         </ion-row>
-
-        <ion-row
-          class="ion-margin ion-justify-content-center"
-          v-if="!selectedPeriod.length"
-        >
-          <Button
-            title="Закрыть"
-            @click="$emit('hide')"
-            class="ion-margin-top"
-          />
-        </ion-row>
-
-        <ion-row
-          class="ion-margin ion-justify-content-between"
-          style="margin-bottom: 200px"
-          v-if="selectedPeriod.length"
-        >
-          <ion-buttons>
-            <ion-button
-              fill="solid"
-              style="color: #ffffff"
-              class="action-button"
-              >Применить
-            </ion-button>
-          </ion-buttons>
-          <ion-buttons>
-            <ion-button fill="outline" class="action-button"
-              >Сбросить
-            </ion-button>
-          </ion-buttons>
-        </ion-row>
       </ion-col>
+
+      <ion-row
+        :class="{ openSelect: isActive }"
+        class="ion-margin ion-justify-content-center"
+        v-if="
+          !(
+            filter.period.length ||
+            filter.type.length ||
+            filter.sphere ||
+            filter.radius
+          )
+        "
+      >
+        <Button title="Закрыть" @click="$emit('hide')" />
+      </ion-row>
+
+      <ion-row
+        class="ion-margin ion-justify-content-between"
+        :class="{ openSelect: isActive }"
+        v-if="
+          !!(
+            filter.period.length ||
+            filter.type.length ||
+            filter.sphere ||
+            filter.radius
+          )
+        "
+      >
+        <ion-buttons>
+          <ion-button
+            fill="solid"
+            style="color: #ffffff"
+            class="action-button"
+            @click="apply"
+            >Применить
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons>
+          <ion-button fill="outline" class="action-button" @click="clear"
+            >Сбросить
+          </ion-button>
+        </ion-buttons>
+      </ion-row>
     </ion-content>
   </ion-modal>
   <Popover :types="types" />
@@ -113,7 +130,7 @@ import Select from '@/components/Select.vue';
 import Button from '@/components/Button.vue'
 import Popover from "@/components/Popover.vue";
 import MultipleButton from "@/components/MultipleButton.vue";
-import {mapGetters, mapMutations} from "vuex";
+import {mapMutations} from "vuex";
 import types from '../../public/mocha/types.json';
 import periods from '../../public/mocha/periods.json';
 import sphere from '../../public/mocha/sphere.json';
@@ -151,23 +168,31 @@ export default defineComponent({
     sphere: sphere,
     radius: radius,
     filter: {
-      period: [],
       type: [],
+      period: [],
+      sphere: {},
+      radius: {}
     },
-    selectedPeriod: [],
-    activePeriod: false
   }),
-  computed: {
-   ...mapGetters(['period', 'type'])
-  },
   methods: {
-    ...mapMutations(['SET_POPOVER']),
-    openItems(e) {
+    ...mapMutations(['SET_POPOVER', 'SET_FILTER']),
+    openSelect(e) {
       this.isActive = e;
     },
     openPopover() {
       this.SET_POPOVER(true)
     },
+    apply() {
+      this.SET_FILTER(this.filter)
+      this.$emit('hide')
+    },
+    clear() {
+      this.filter.type = []
+      this.filter.period = []
+      this.filter.sphere = {}
+      this.filter.radius = {}
+      this.SET_FILTER({})
+    }
   },
 });
 </script>
@@ -245,6 +270,10 @@ export default defineComponent({
 
   .activeClass {
     margin-bottom: 170px;
+  }
+
+  .openSelect {
+    margin-bottom: 250px;
   }
 }
 

@@ -5,24 +5,15 @@ const modules = {};
 export default createStore({
   state: {
     popover: false,
-    filter: {
-      period: [],
-      type: [],
-    },
+    filter: {},
   },
   getters: {
     popover: (state) => state.popover,
-    period: (state) => state.filter.period,
-    type: (state) => state.filter.type,
+    filter: (state) => state.filter,
   },
   mutations: {
-    SET_TYPE: (state, payload) => (state.filter.type = payload),
-    SET_FILTER: (state, payload) =>
-      payload.type === 'period'
-        ? (state.filter.period = payload.value)
-        : payload.type === 'type'
-        ? (state.filter.type = payload.value)
-        : [],
+    SET_POPOVER: (state, payload) => (state.popover = payload),
+    SET_FILTER: (state, payload) => (state.filter = payload),
   },
   actions: {},
   modules,

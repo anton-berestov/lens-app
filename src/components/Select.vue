@@ -1,5 +1,5 @@
 <template>
-  <div class="custom-select" :tabindex="tabindex" @blur="hide">
+  <div class="custom-select" @blur="hide">
     <div class="selected" :class="{ open: open }" @click="show">
       {{ selected }}
     </div>
@@ -17,31 +17,31 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'Select',
   props: {
+    modelValue: {
+      type: Object,
+      default: null,
+    },
     options: {
       type: Array,
       required: true,
+      default: () => [],
     },
     placeholder: {
       type: String,
       required: false,
       default: '',
     },
-    tabindex: {
-      type: Number,
-      required: false,
-      default: 0,
-    },
   },
-  emits: ['isOpen', 'input'],
+  emits: ['isOpen', 'update:modelValue'],
   data() {
     return {
-      selected: this.placeholder
-        ? this.placeholder
-        : this.options.length > 0
-        ? this.options[0]
-        : null,
       open: false,
     };
+  },
+  computed: {
+    selected() {
+      return this.modelValue.value ? this.modelValue.value : this.placeholder;
+    },
   },
   methods: {
     show() {
@@ -53,14 +53,12 @@ export default defineComponent({
       this.$emit('isOpen', this.open);
     },
     select(option: any) {
-      this.selected = option.value;
       this.open = false;
-      this.$emit('input', option);
+      if (typeof option !== 'string') {
+        this.$emit('update:modelValue', option);
+      }
       this.$emit('isOpen', this.open);
     },
-  },
-  mounted() {
-    this.$emit('input', this.selected);
   },
 });
 </script>
