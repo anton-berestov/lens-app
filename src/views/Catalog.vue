@@ -22,27 +22,27 @@
         <FilterElement
           :options="filter.type"
           parent="type"
-          v-if="filter.type"
+          v-if="filter.type.length"
           @close="close"
         />
         <FilterElement
           :options="filter.period"
           parent="period"
-          v-if="filter.period"
+          v-if="filter.period.length"
           @close="close"
         />
         <FilterElement
           :options="filter.sphere"
           parent="sphere"
           type
-          v-if="!!filter.sphere"
+          v-if="Object.keys(filter.sphere).length"
           @close="close"
         />
         <FilterElement
           :options="filter.radius"
           parent="radius"
           type
-          v-if="!!filter.sphere"
+          v-if="Object.keys(filter.radius).length"
           @close="close"
         />
       </ion-row>
@@ -98,7 +98,6 @@ export default defineComponent({
   },
   data: () => ({
     isFilter: false,
-    search: []
   }),
   computed: {
     ...mapGetters(['filter']),
@@ -129,13 +128,6 @@ export default defineComponent({
         })
       }
 
-      if (Object.keys(this.filter.radius).length && !Object.keys(this.filter.sphere).length) {
-        a = products.filter((e) => e.radius_id === this.filter.radius.id)
-      } else if (!Object.keys(this.filter.radius).length && Object.keys(this.filter.sphere).length) {
-        a = products.filter((e) => e.sphere_id === this.filter.sphere.id)
-      } else if (Object.keys(this.filter.radius).length && Object.keys(this.filter.sphere).length) {
-        a = products.filter((e) => e.radius_id === this.filter.sphere.id) && products.filter((e) => e.sphere_id === this.filter.sphere.id)
-      }
 
       console.log(a)
 

@@ -75,8 +75,8 @@
           !(
             filter.period.length ||
             filter.type.length ||
-            filter.sphere.length ||
-            filter.radius.length
+            Object.keys(filter.sphere).length ||
+            Object.keys(filter.radius).length
           )
         "
       >
@@ -90,8 +90,8 @@
           !!(
             filter.period.length ||
             filter.type.length ||
-            filter.sphere.length ||
-            filter.radius.length
+            Object.keys(filter.sphere).length ||
+            Object.keys(filter.radius).length
           )
         "
       >

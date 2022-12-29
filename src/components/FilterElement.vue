@@ -21,7 +21,7 @@
       </li>
     </div>
 
-    <li v-if="type && options.length">
+    <li v-if="type && Object.keys(options).length">
       <label>
         <span>
           {{ options.name }}
