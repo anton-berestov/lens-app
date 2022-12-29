@@ -2,6 +2,7 @@
   <ion-modal
     :is-open="show"
     :initial-breakpoint="0.7"
+    @willPresent="onChange"
     @didDismiss="$emit('hide')"
     class="filter-modal"
   >
@@ -74,8 +75,8 @@
           !(
             filter.period.length ||
             filter.type.length ||
-            filter.sphere ||
-            filter.radius
+            filter.sphere.length ||
+            filter.radius.length
           )
         "
       >
@@ -89,8 +90,8 @@
           !!(
             filter.period.length ||
             filter.type.length ||
-            filter.sphere ||
-            filter.radius
+            filter.sphere.length ||
+            filter.radius.length
           )
         "
       >
@@ -130,7 +131,7 @@ import Select from '@/components/Select.vue';
 import Button from '@/components/Button.vue'
 import Popover from "@/components/Popover.vue";
 import MultipleButton from "@/components/MultipleButton.vue";
-import {mapMutations} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import types from '../../public/mocha/types.json';
 import periods from '../../public/mocha/periods.json';
 import sphere from '../../public/mocha/sphere.json';
@@ -163,10 +164,8 @@ export default defineComponent({
   },
   data: () => ({
     isActive: false,
-    types: types,
     periods: periods,
-    sphere: sphere,
-    radius: radius,
+    types: types,
     filter: {
       type: [],
       period: [],
@@ -174,8 +173,22 @@ export default defineComponent({
       radius: {}
     },
   }),
+
+  computed: {
+    ...mapGetters({store_filter: 'filter'}),
+    sphere() {
+      return sphere
+    },
+    radius() {
+      return radius
+    }
+  },
+
   methods: {
     ...mapMutations(['SET_POPOVER', 'SET_FILTER']),
+    onChange(){
+      this.filter = {...this.store_filter}
+    },
     openSelect(e) {
       this.isActive = e;
     },
@@ -191,7 +204,13 @@ export default defineComponent({
       this.filter.period = []
       this.filter.sphere = {}
       this.filter.radius = {}
-      this.SET_FILTER({})
+      this.SET_FILTER({
+        type: [],
+        period: [],
+        sphere: {},
+        radius: {}
+      })
+
     }
   },
 });

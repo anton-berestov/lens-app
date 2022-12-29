@@ -74,16 +74,4 @@ ul {
     display: none;
   }
 }
-
-.orange {
-  background: #ffb005;
-}
-
-.pink {
-  background: #ff298a;
-}
-
-.darkblue {
-  background: #00152f;
-}
 </style>

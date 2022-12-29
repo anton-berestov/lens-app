@@ -5,7 +5,12 @@ const modules = {};
 export default createStore({
   state: {
     popover: false,
-    filter: {},
+    filter: {
+      type: [],
+      period: [],
+      sphere: {},
+      radius: {},
+    },
   },
   getters: {
     popover: (state) => state.popover,

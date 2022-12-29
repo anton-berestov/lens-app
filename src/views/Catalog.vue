@@ -10,7 +10,7 @@
           placeholder="Поиск в каталоге"
         ></ion-searchbar>
         <ion-buttons style="padding-bottom: 6px">
-          <ion-button class="filter" @click="filter = true">
+          <ion-button class="filter" @click="isFilter = true">
             <ion-icon
               icon="assets/icon/filter.svg"
               class="icon-filter"
@@ -18,25 +18,53 @@
           </ion-button>
         </ion-buttons>
       </ion-row>
+      <ion-row class="ion-margin-start ion-nowrap filter-element" v-if="filter">
+        <FilterElement
+          :options="filter.type"
+          parent="type"
+          v-if="filter.type"
+          @close="close"
+        />
+        <FilterElement
+          :options="filter.period"
+          parent="period"
+          v-if="filter.period"
+          @close="close"
+        />
+        <FilterElement
+          :options="filter.sphere"
+          parent="sphere"
+          type
+          v-if="!!filter.sphere"
+          @close="close"
+        />
+        <FilterElement
+          :options="filter.radius"
+          parent="radius"
+          type
+          v-if="!!filter.sphere"
+          @close="close"
+        />
+      </ion-row>
 
       <div class="wrapper">
         <Product
-          v-for="products in products.data"
-          :key="products.id"
-          :title="products.name"
-          :price="products.price"
-          :img="products.image"
-          :old-price="products.old_price"
+          v-for="product in onFilter(products)"
+          :key="product.id"
+          :title="product.name"
+          :price="product.price"
+          :img="product.image"
+          :old-price="product.old_price"
           class="product"
         />
       </div>
-      <Filter :show="filter" @hide="hide" />
+      <FilterModal :show="isFilter" @hide="hide" />
     </ion-content>
   </ion-page>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="js">
+import {defineComponent} from 'vue';
 import {
   IonPage,
   IonContent,
@@ -48,13 +76,16 @@ import {
 } from '@ionic/vue';
 import Header from '@/components/Header.vue';
 import Product from '@/components/Product.vue';
-import Filter from '@/components/Filter.vue';
+import FilterModal from '@/components/FilterModal.vue';
 import products from '../../public/mocha/products/products.json';
+import {mapGetters, mapMutations} from 'vuex';
+import FilterElement from '@/components/FilterElement.vue';
 
 export default defineComponent({
   name: 'Catalog',
   components: {
-    Filter,
+    FilterElement,
+    FilterModal,
     Product,
     Header,
     IonContent,
@@ -66,12 +97,72 @@ export default defineComponent({
     IonSearchbar,
   },
   data: () => ({
-    filter: false,
-    products: products,
+    isFilter: false,
+    search: []
   }),
+  computed: {
+    ...mapGetters(['filter']),
+    products() {
+      return products
+    }
+  },
   methods: {
+    ...mapMutations(['SET_FILTER']),
+    onFilter(products) {
+
+      let a = []
+
+      if (this.filter.type.length && !this.filter.period.length) {
+        a = this.filter.type.map((e) => products.filter((el) => el.type_id === e.id))
+      } else if (!this.filter.type.length && this.filter.period.length) {
+        a = this.filter.period.map((e) => products.filter((el) => el.period_id === e.id))
+      } else if (this.filter.type.length && this.filter.period.length) {
+        a = this.filter.type.map((type) => {
+          console.log(type)
+          this.filter.period.map((period) => {
+            console.log(period)
+            products.filter((el) => {
+              console.log(el)
+              return el.type_id === type.id && el.period_id === period.id
+            })
+          })
+        })
+      }
+
+      if (Object.keys(this.filter.radius).length && !Object.keys(this.filter.sphere).length) {
+        a = products.filter((e) => e.radius_id === this.filter.radius.id)
+      } else if (!Object.keys(this.filter.radius).length && Object.keys(this.filter.sphere).length) {
+        a = products.filter((e) => e.sphere_id === this.filter.sphere.id)
+      } else if (Object.keys(this.filter.radius).length && Object.keys(this.filter.sphere).length) {
+        a = products.filter((e) => e.radius_id === this.filter.sphere.id) && products.filter((e) => e.sphere_id === this.filter.sphere.id)
+      }
+
+      console.log(a)
+
+
+      return a.length ? a[0] : products
+    },
     hide() {
-      this.filter = false;
+      this.isFilter = false;
+    },
+    close(el) {
+      const a = {...this.filter};
+
+      if (el.parent === 'sphere' || el.parent === 'radius') {
+        for (let key in a[el.parent]) {
+          delete a[el.parent][key];
+        }
+        this.onFilter(this.products)
+        this.SET_FILTER(a);
+
+      }
+
+      if (el.parent === 'type' || el.parent === 'period') {
+        a[el.parent] = a[el.parent].filter((e) => e.id !== el.value.id);
+        this.onFilter(this.products)
+        this.SET_FILTER(a);
+
+      }
     },
   },
 });
@@ -95,6 +186,11 @@ export default defineComponent({
       width: 13px;
     }
   }
+}
+
+.filter-element {
+  overflow-y: auto;
+  margin-left: 30px;
 }
 
 .wrapper {

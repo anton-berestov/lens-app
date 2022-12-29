@@ -1,72 +1,71 @@
-{
-  "data": [
-    {
-      "id": 1,
-      "name": "Biofinity toric (3 шт)",
-      "price": "1200",
-      "old_price": "",
-      "image": "mocha/products/product.png",
-      "sale": "30%",
-      "type_id": "2",
-      "period_id": "2",
-      "radius_id": "1",
-      "sphere_id": "1"
-    },
-    {
-      "id": 2,
-      "name": "Biofinity toric (6 шт)",
-      "price": "2400",
-      "old_price": "",
-      "image": "mocha/products/product2.png",
-      "type_id": "1",
-      "period_id": "3",
-      "radius_id": "2",
-      "sphere_id": "2"
-    },
-    {
-      "id": 3,
-      "name": "Biofinity toric (3 шт)",
-      "price": "1200",
-      "old_price": "1500",
-      "image": "mocha/products/product.png",
-      "type_id": "3",
-      "period_id": "1",
-      "radius_id": "2",
-      "sphere_id": "2"
-    },
-    {
-      "id": 4,
-      "name": "Acuvue (6 шт)",
-      "price": "2600",
-      "old_price": "",
-      "image": "mocha/products/product3.png",
-      "type_id": "2",
-      "period_id": "4",
-      "radius_id": "1",
-      "sphere_id": "2"
-    },
-    {
-      "id": 5,
-      "name": "Biofinity toric (30 шт)",
-      "price": "5100",
-      "old_price": "",
-      "image": "mocha/products/product4.png",
-      "type_id": "1",
-      "period_id": "1",
-      "radius_id": "2",
-      "sphere_id": "3"
-    },
-    {
-      "id": 6,
-      "name": "Biofinity toric (3 шт)",
-      "price": "1200",
-      "old_price": "",
-      "image": "mocha/products/product.png",
-      "type_id": "1",
-      "period_id": "4",
-      "radius_id": "3",
-      "sphere_id": "3"
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "name": "Biofinity toric (3 шт)",
+    "price": "1200",
+    "old_price": "",
+    "image": "mocha/products/product.png",
+    "sale": "30%",
+    "type_id": "2",
+    "period_id": "2",
+    "radius_id": "1",
+    "sphere_id": "1"
+  },
+  {
+    "id": 2,
+    "name": "Biofinity toric (6 шт)",
+    "price": "2400",
+    "old_price": "",
+    "image": "mocha/products/product2.png",
+    "type_id": "1",
+    "period_id": "3",
+    "radius_id": "2",
+    "sphere_id": "2"
+  },
+  {
+    "id": 3,
+    "name": "Biofinity toric (3 шт)",
+    "price": "1200",
+    "old_price": "1500",
+    "image": "mocha/products/product.png",
+    "type_id": "3",
+    "period_id": "1",
+    "radius_id": "2",
+    "sphere_id": "2"
+  },
+  {
+    "id": 4,
+    "name": "Acuvue (6 шт)",
+    "price": "2600",
+    "old_price": "",
+    "image": "mocha/products/product3.png",
+    "type_id": "2",
+    "period_id": "4",
+    "radius_id": "1",
+    "sphere_id": "2"
+  },
+  {
+    "id": 5,
+    "name": "Biofinity toric (30 шт)",
+    "price": "5100",
+    "old_price": "",
+    "image": "mocha/products/product4.png",
+    "type_id": "1",
+    "period_id": "1",
+    "radius_id": "2",
+    "sphere_id": "3"
+  },
+  {
+    "id": 6,
+    "name": "Biofinity toric (3 шт)",
+    "price": "1200",
+    "old_price": "",
+    "image": "mocha/products/product.png",
+    "type_id": "1",
+    "period_id": "4",
+    "radius_id": "3",
+    "sphere_id": "3"
+  }
+]
+
 
