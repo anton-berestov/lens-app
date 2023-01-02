@@ -186,6 +186,7 @@ export default defineComponent({
   .searchbar-input-container .sc-ion-searchbar-ios {
     height: 30px !important;
     font-size: 12px !important;
+    --background: #ffffff;
   }
 
   .filter {
