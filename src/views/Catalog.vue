@@ -8,6 +8,7 @@
         <ion-searchbar
           class="search"
           placeholder="Поиск в каталоге"
+          @ionFocus="$router.push({ name: 'Search' })"
         ></ion-searchbar>
         <ion-buttons style="padding-bottom: 6px">
           <ion-button class="filter" @click="isFilter = true">
@@ -108,31 +109,43 @@ export default defineComponent({
   methods: {
     ...mapMutations(['SET_FILTER']),
     onFilter(products) {
-
       let a = []
-
       if (this.filter.type.length && !this.filter.period.length) {
-        a = this.filter.type.map((e) => products.filter((el) => el.type_id === e.id))
-      } else if (!this.filter.type.length && this.filter.period.length) {
-        a = this.filter.period.map((e) => products.filter((el) => el.period_id === e.id))
-      } else if (this.filter.type.length && this.filter.period.length) {
-        a = this.filter.type.map((type) => {
-          console.log(type)
-          this.filter.period.map((period) => {
-            console.log(period)
-            products.filter((el) => {
-              console.log(el)
-              return el.type_id === type.id && el.period_id === period.id
+        let b = this.filter.type.map((type) => products.filter((el) => el.type_id.includes(type.id)))
+        if (b.length > 0) {
+          b.map((el) => {
+            el.map((e) => {
+              a.push(e)
             })
           })
-        })
+        }
+      } else if (!this.filter.type.length && this.filter.period.length) {
+        let b = this.filter.period.map((period) => products.filter((el) => el.period_id.includes(period.id)))
+        if (b.length > 0) {
+          b.map((el) => {
+            el.map((e) => {
+              a.push(e)
+            })
+          })
+        }
+      } else if (this.filter.type.length && this.filter.period.length) {
+        const type = this.filter.type
+        const period = this.filter.period
+        // console.log('type', type)
+        // console.log('period', period)
+        // console.log(this.products)
+
+        const type_products = type.map((type) => products.filter((el) => el.type_id.includes(type.id)))
+        const period_products = period.map((period) => products.filter((el) => el.period_id.includes(period.id)))
+
+        console.log(type_products)
+        console.log(period_products)
+
       }
 
+      console.log('finsh', a)
 
-      console.log(a)
-
-
-      return a.length ? a[0] : products
+      return a.length ? a : products
     },
     hide() {
       this.isFilter = false;
@@ -188,7 +201,7 @@ export default defineComponent({
 .wrapper {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  margin: 0 15px;
 
   .product:after {
     --background: #deeeea;

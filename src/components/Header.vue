@@ -16,6 +16,8 @@
         </span>
       </div>
 
+      <slot name="search"></slot>
+
       <ion-buttons slot="end" class="button-box" v-if="contact">
         <ion-button>
           <ion-icon icon="assets/icon/location.svg" />
