@@ -57,6 +57,14 @@
           :img="product.image"
           :old-price="product.old_price"
           class="product"
+          @click="
+            $router.push({
+              name: 'Product',
+              params: {
+                id: product.id,
+              },
+            })
+          "
         />
       </div>
       <FilterModal :show="isFilter" @hide="hide" />

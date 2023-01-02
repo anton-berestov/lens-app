@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-tabs>
-      <ion-router-outlet></ion-router-outlet>
+      <ion-router-outlet animated="false"></ion-router-outlet>
       <ion-tab-bar slot="bottom" class="tab-bar">
         <ion-tab-button
           :selected="checkPath(PATH_HOME)"
@@ -64,6 +64,7 @@ import {
   PATH_BASKET,
   PATH_RECORDING,
   PATH_PROFILE,
+  PATH_SEARCH,
 } from '@/router/constants';
 import { RouteLocationRaw } from 'vue-router';
 
@@ -92,7 +93,8 @@ export default defineComponent({
         : 'assets/icon/home.svg';
     },
     changeCatalog() {
-      return this.$route.path === PATH_CATALOG
+      return this.$route.path === PATH_CATALOG ||
+        this.$route.path === PATH_SEARCH
         ? 'assets/icon/catalog-active.svg'
         : 'assets/icon/catalog.svg';
     },

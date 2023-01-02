@@ -5,3 +5,4 @@ export const PATH_BASKET = '/basket';
 export const PATH_PROFILE = '/profile';
 export const PATH_ACTIONS_NEWS = '/actions-news';
 export const PATH_SEARCH = '/search';
+export const PATH_PRODUCT = '/product/:id';

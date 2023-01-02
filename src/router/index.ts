@@ -6,6 +6,7 @@ import {
   PATH_BASKET,
   PATH_CATALOG,
   PATH_HOME,
+  PATH_PRODUCT,
   PATH_PROFILE,
   PATH_RECORDING,
   PATH_SEARCH,
@@ -31,6 +32,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Catalog.vue'),
       },
       {
+        path: PATH_SEARCH,
+        name: 'Search',
+        component: () => import('@/views/Search.vue'),
+      },
+      {
         path: PATH_RECORDING,
         name: 'Recording',
         component: () => import('@/views/Recording.vue'),
@@ -52,10 +58,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'ActionsNews',
     component: () => import('@/views/ActionsNews.vue'),
   },
+
   {
-    path: PATH_SEARCH,
-    name: 'Search',
-    component: () => import('@/views/Search.vue'),
+    path: PATH_PRODUCT,
+    name: 'Product',
+    props: true,
+    component: () => import('@/views/Product.vue'),
   },
 ];
 

@@ -4,6 +4,7 @@
       <template #search>
         <ion-row class="ion-align-items-center">
           <ion-searchbar
+            ref="inputRef"
             placeholder="Поиск в каталоге"
             class="search"
             v-model="search"
@@ -17,9 +18,14 @@
         icon="assets/icon/empty.svg"
         title="Ничего не найдено"
         description="Напишите по-другому название товара или перейдите в каталог"
+        @update="update"
       />
       <ion-list class="ion-margin-top list">
-        <ion-item v-for="(product, index) in products" :key="index">
+        <ion-item
+          v-for="(product, index) in products"
+          :key="index"
+          @click="$router.push({ name: 'Product', params: { id: product.id } })"
+        >
           <ion-thumbnail slot="start">
             <ion-img :src="product.image" />
           </ion-thumbnail>
@@ -30,7 +36,7 @@
   </ion-page>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import { defineComponent } from 'vue';
 import {
   IonPage,
@@ -67,6 +73,9 @@ export default defineComponent({
       search: '',
     };
   },
+  mounted() {
+    setTimeout(() => this.$refs.inputRef.$el.setFocus(), 20);
+  },
   computed: {
     products() {
       return this.search.length
@@ -74,6 +83,12 @@ export default defineComponent({
             product.name.toLowerCase().includes(this.search.toLowerCase())
           )
         : products;
+    },
+  },
+  methods: {
+    update() {
+      this.$router.push({ name: 'Catalog' });
+      this.search = '';
     },
   },
 });

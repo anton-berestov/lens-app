@@ -112,5 +112,6 @@ export default defineComponent({
 
 .button-box {
   margin-right: 10px;
+  margin-top: 5px;
 }
 </style>
