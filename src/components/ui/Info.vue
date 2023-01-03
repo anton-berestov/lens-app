@@ -18,7 +18,7 @@
 <script>
 import { defineComponent } from 'vue';
 import { IonContent } from '@ionic/vue';
-import Button from '@/components/Button.vue';
+import Button from '@/components/ui/Button.vue';
 
 export default defineComponent({
   name: 'Info',
@@ -47,7 +47,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .wrapper {
   .vector {
-    background: url('../../public/assets/image/Vector.png');
+    background: url('../../../public/assets/image/vector.png');
     background-repeat: no-repeat;
     width: 160px;
     height: 145px;

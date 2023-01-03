@@ -127,10 +127,10 @@ import {
   IonCol,
   IonIcon,
 } from '@ionic/vue';
-import Select from '@/components/Select.vue';
-import Button from '@/components/Button.vue'
-import Popover from "@/components/Popover.vue";
-import MultipleButton from "@/components/MultipleButton.vue";
+import Select from '@/components/ui/Select.vue';
+import Button from '@/components/ui/Button.vue'
+import Popover from "@/components/ui/Popover.vue";
+import MultipleButton from "@/components/ui/MultipleButton.vue";
 import {mapGetters, mapMutations} from "vuex";
 import types from '../../public/mocha/types.json';
 import periods from '../../public/mocha/periods.json';

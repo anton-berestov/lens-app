@@ -96,7 +96,7 @@ export default defineComponent({
   right: 1em;
   width: 10px;
   height: 10px;
-  background: url('../../public/assets/icon/check-mark.svg') no-repeat;
+  background: url('../../../public/assets/icon/check-mark.svg') no-repeat;
 }
 
 .custom-select .items {

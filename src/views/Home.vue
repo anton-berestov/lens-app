@@ -27,8 +27,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonPage, IonContent } from '@ionic/vue';
-import Header from '@/components/Header.vue';
-import Card from '@/components/Card.vue';
+import Header from '@/components/ui/Header.vue';
+import Card from '@/components/ui/Card.vue';
 
 export default defineComponent({
   name: 'Home',

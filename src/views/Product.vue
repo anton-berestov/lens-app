@@ -1,15 +1,112 @@
 <template>
   <ion-page>
     <Header back title="Линзы" />
-    <ion-content> </ion-content>
+    <ion-content>
+      <ion-list class="container">
+        <ion-row class="wrapper">
+          <swiper
+            ref="swiper"
+            :options="slideOpts"
+            :modules="modules"
+            :pagination="true"
+            :autoplay="true"
+            class="swiper"
+          >
+            <swiper-slide>
+              <img :src="product.image" class="image" />
+            </swiper-slide>
+            <swiper-slide>
+              <img :src="product.image" class="image" />
+            </swiper-slide>
+            <swiper-slide>
+              <img :src="product.image" class="image" />
+            </swiper-slide>
+          </swiper>
+        </ion-row>
+        <ion-row class="ion-margin">
+          <ion-row class="row">
+            <ion-label class="title">{{ product.name }} </ion-label>
+          </ion-row>
+          <ion-row class="ion-margin-top row">
+            <ion-label class="price">{{ product.price }} </ion-label>
+            <ion-label
+              v-if="product.old_price"
+              class="ion-margin-start old-price"
+              >{{ product.old_price }}</ion-label
+            >
+          </ion-row>
+        </ion-row>
+        <ion-row class="ion-justify-content-center ion-margin">
+          <ion-label
+            :class="['text', { active: specification }, 'ion-margin']"
+            @click="
+              () => {
+                specification = true;
+                description = false;
+                delivery = false;
+              }
+            "
+            >Характеристики</ion-label
+          >
+          <ion-label
+            :class="['text', { active: description }, 'ion-margin']"
+            @click="
+              () => {
+                specification = false;
+                description = true;
+                delivery = false;
+              }
+            "
+            >Описание</ion-label
+          >
+          <ion-label
+            :class="['text', { active: delivery }, 'ion-margin']"
+            @click="
+              () => {
+                specification = false;
+                description = false;
+                delivery = true;
+              }
+            "
+            >Доставка</ion-label
+          >
+        </ion-row>
+        <ion-row>
+          <Specification v-if="specification" />
+          <Description v-if="description" />
+          <Delivery v-if="delivery" />
+        </ion-row>
+      </ion-list>
+    </ion-content>
   </ion-page>
 </template>
 
-<script>
+<script lang="js">
 import { defineComponent } from 'vue';
-import { IonPage, IonContent } from '@ionic/vue';
-import Header from '@/components/Header.vue';
 import products from '../../public/mocha/products/products.json';
+import { IonPage, IonContent, IonRow, IonList, IonLabel } from '@ionic/vue';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import {
+  Controller,
+  Pagination,
+  Autoplay,
+  Keyboard,
+  Scrollbar,
+  Zoom,
+} from 'swiper';
+import { IonicSlides } from '@ionic/vue';
+import Header from '@/components/ui/Header.vue';
+
+import 'swiper/css';
+import 'swiper/css/autoplay';
+import 'swiper/css/keyboard';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css/zoom';
+import '@ionic/vue/css/ionic-swiper.css';
+import Specification from '@/components/Specification.vue';
+import Description from '@/components/Description.vue';
+import Delivery from '@/components/Delivery.vue';
 
 export default defineComponent({
   name: 'Product',
@@ -23,13 +120,89 @@ export default defineComponent({
     Header,
     IonPage,
     IonContent,
+    IonRow,
+    IonList,
+    Swiper,
+    SwiperSlide,
+    IonLabel,
+    Specification,
+    Description,
+    Delivery
+},
+  data() {
+    return {
+      slideOpts: {
+        initialSlide: 1,
+        speed: 400,
+      },
+      modules: [
+        Pagination,
+        Controller,
+        Autoplay,
+        Keyboard,
+        Scrollbar,
+        Zoom,
+        IonicSlides,
+      ],
+      specification : true,
+      description : false,
+      delivery : false,
+    };
   },
   computed: {
     product() {
-      return products.find((el) => el.id === this.id);
+      return products.find((el) => el.id == this.idProduct);
+    },
+    idProduct() {
+      return this.id;
     },
   },
 });
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.container {
+  height: 100%;
+
+  .wrapper {
+    .swiper {
+      .image {
+        width: 100%;
+      }
+    }
+  }
+  .row {
+    width: 100%;
+
+    .title {
+      font-size: 14px;
+    }
+
+    .price {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 17px;
+    }
+    .old-price {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 15px;
+      text-decoration-line: line-through;
+      color: #969696;
+    }
+  }
+
+  .text {
+    font-size: 14px;
+    line-height: 130%;
+  }
+  .active {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 130%;
+    color: #005944;
+    text-decoration: underline;
+    text-underline-offset: 7px;
+  }
+}
+</style>

@@ -39,8 +39,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonContent, IonPage, IonIcon, IonRow } from '@ionic/vue';
-import Header from '@/components/Header.vue';
-import Button from '@/components/Button.vue';
+import Header from '@/components/ui/Header.vue';
+import Button from '@/components/ui/Button.vue';
 
 export default defineComponent({
   name: 'ActionsNews',

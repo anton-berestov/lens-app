@@ -49,9 +49,9 @@ import {
   IonTitle,
   IonThumbnail,
 } from '@ionic/vue';
-import Header from '@/components/Header.vue';
+import Header from '@/components/ui/Header.vue';
 import products from '../../public/mocha/products/products.json';
-import Info from '@/components/Info.vue';
+import Info from '@/components/ui/Info.vue';
 
 export default defineComponent({
   name: 'Search',

@@ -51,9 +51,9 @@ import {
   IonCol,
   IonButton,
 } from '@ionic/vue';
-import Header from '@/components/Header.vue';
+import Header from '@/components/ui/Header.vue';
 import TimeSelect from '@/components/TimeSelect.vue';
-import Button from '@/components/Button.vue';
+import Button from '@/components/ui/Button.vue';
 
 export default defineComponent({
   name: 'Recording',

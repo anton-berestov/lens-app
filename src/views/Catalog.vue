@@ -83,7 +83,7 @@ import {
   IonButtons,
   IonSearchbar,
 } from '@ionic/vue';
-import Header from '@/components/Header.vue';
+import Header from '@/components/ui/Header.vue';
 import Product from '@/components/Product.vue';
 import FilterModal from '@/components/FilterModal.vue';
 import products from '../../public/mocha/products/products.json';
