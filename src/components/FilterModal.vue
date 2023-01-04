@@ -70,7 +70,7 @@
 
       <ion-row
         :class="{ openSelect: isActive }"
-        class="ion-margin ion-justify-content-center"
+        class="ion-justify-content-center"
         v-if="
           !(
             filter.period.length ||
@@ -251,7 +251,7 @@ export default defineComponent({
   }
 
   .btn {
-    width: 130px;
+    width: 100%;
   }
 
   .select {
