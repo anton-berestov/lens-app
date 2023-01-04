@@ -15,14 +15,8 @@
             :autoplay="true"
             class="swiper"
           >
-            <swiper-slide>
-              <img :src="product.image" class="image" />
-            </swiper-slide>
-            <swiper-slide>
-              <img :src="product.image" class="image" />
-            </swiper-slide>
-            <swiper-slide>
-              <img :src="product.image" class="image" />
+            <swiper-slide v-for="(image, index) in product.image" :key="index">
+              <img :src="image" class="image" />
             </swiper-slide>
           </swiper>
         </ion-row>
@@ -107,6 +101,11 @@ import {
 } from 'swiper';
 import {IonicSlides} from '@ionic/vue';
 import Header from '@/components/ui/Header.vue';
+import Specification from '@/components/Specification.vue';
+import Description from '@/components/Description.vue';
+import Delivery from '@/components/Delivery.vue';
+import Button from "@/components/ui/Button.vue";
+import { mapMutations} from "vuex";
 
 import 'swiper/css';
 import 'swiper/css/autoplay';
@@ -115,11 +114,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/zoom';
 import '@ionic/vue/css/ionic-swiper.css';
-import Specification from '@/components/Specification.vue';
-import Description from '@/components/Description.vue';
-import Delivery from '@/components/Delivery.vue';
-import Button from "@/components/ui/Button.vue";
-import { mapMutations} from "vuex";
+
 
 export default defineComponent({
   name: 'Product',
@@ -195,8 +190,8 @@ export default defineComponent({
       justify-content: center;
       align-items: center;
       position: absolute;
-      right: 18px;
-      top: 18px;
+      right: 26px;
+      top: 15px;
       z-index: 99999;
 
       .sale-text {

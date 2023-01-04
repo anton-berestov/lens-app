@@ -2,6 +2,9 @@
   <ion-card class="card">
     <ion-row class="ion-justify-content-center ion-align-items-center">
       <div class="image-box">
+        <div class="sale" v-if="sale">
+          <p class="sale-text">{{ `-${sale}%` }}</p>
+        </div>
         <swiper
           ref="swiper"
           :options="slideOpts"
@@ -109,7 +112,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .card {
   width: 150px;
   height: 170px;
@@ -119,6 +122,29 @@ export default defineComponent({
     height: 100%;
     width: 100%;
     padding: 5px;
+    position: relative;
+
+    .sale {
+      width: 31px;
+      height: 16px;
+      background: #c90433;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      z-index: 99999;
+
+      .sale-text {
+        font-weight: 600;
+        font-size: 10px;
+        line-height: 12px;
+        text-align: center;
+        color: #ffffff;
+      }
+    }
 
     .swiper-pagination {
       bottom: -3px !important;
