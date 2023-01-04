@@ -33,6 +33,11 @@
         >
           <ion-icon :icon="changeBasket" class="icon" />
           <ion-label class="label">Корзина</ion-label>
+          <div style="position: relative" v-if="cartCount !== 0">
+            <div class="count-box">
+              <p class="count">{{ cartCount }}</p>
+            </div>
+          </div>
         </ion-tab-button>
 
         <ion-tab-button
@@ -66,6 +71,7 @@ import {
   PATH_PROFILE,
 } from '@/router/constants';
 import { RouteLocationRaw } from 'vue-router';
+import { mapGetters } from 'vuex';
 
 export default defineComponent({
   name: 'FooterTabs',
@@ -86,6 +92,7 @@ export default defineComponent({
     PATH_PROFILE,
   }),
   computed: {
+    ...mapGetters(['cart']),
     changeHome() {
       return this.$route.path.includes(PATH_HOME)
         ? 'assets/icon/home-active.svg'
@@ -111,6 +118,9 @@ export default defineComponent({
         ? 'assets/icon/profile-active.svg'
         : 'assets/icon/profile.svg';
     },
+    cartCount() {
+      return this.cart.length;
+    },
   },
   methods: {
     checkPath(path: string) {
@@ -134,6 +144,26 @@ export default defineComponent({
   .icon {
     width: 20px;
     height: 20px;
+  }
+
+  .count-box {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #c90433;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 15px;
+    top: -50px;
+
+    .count {
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 8px;
+      line-height: 10px;
+    }
   }
 }
 </style>

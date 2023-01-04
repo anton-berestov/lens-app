@@ -3,7 +3,7 @@
     <Header back title="Линзы" />
     <ion-content>
       <ion-list class="container">
-        <ion-row class="wrapper" style="position: relative">
+        <ion-row class="ion-margin wrapper" style="position: relative">
           <div class="sale" v-if="product.sale">
             <p class="sale-text">{{ `-${product.sale}%` }}</p>
           </div>
@@ -195,7 +195,7 @@ export default defineComponent({
       justify-content: center;
       align-items: center;
       position: absolute;
-      right: 31px;
+      right: 18px;
       top: 18px;
       z-index: 99999;
 
