@@ -112,7 +112,7 @@
       </ion-row>
     </ion-content>
   </ion-modal>
-  <Popover :types="types" />
+  <Popover />
 </template>
 
 <script lang="js">
@@ -193,7 +193,11 @@ export default defineComponent({
       this.isActive = e;
     },
     openPopover() {
-      this.SET_POPOVER(true)
+      const messages = []
+      types.map((el)=> {
+        messages.push(el.desc)
+      })
+      this.SET_POPOVER({show: true, message: messages})
     },
     apply() {
       this.SET_FILTER(this.filter)

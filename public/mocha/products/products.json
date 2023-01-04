@@ -5,7 +5,7 @@
     "price": "1200",
     "old_price": "",
     "image": "mocha/products/product.png",
-    "sale": "30%",
+    "sale": "30",
     "type_id": "2",
     "period_id": "2",
     "radius_id": "1",

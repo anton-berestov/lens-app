@@ -81,7 +81,7 @@
       </ion-col>
     </ion-row>
   </ion-col>
-  <Popover :text="text" />
+  <Popover />
 </template>
 
 <script lang="ts">
@@ -140,17 +140,15 @@ export default defineComponent({
       default: '',
     },
   },
-  data() {
-    return {
-      text: '',
-    };
-  },
   methods: {
     ...mapMutations(['SET_POPOVER']),
     openPopoverPeriod() {
-      this.text =
-        'Максимальный срок использования линзы. После этого срока применять линзы нельзя, так как это может плохо сказаться на здоровье ваших глаз.';
-      this.SET_POPOVER(true);
+      this.SET_POPOVER({
+        show: true,
+        message: [
+          'Максимальный срок использования линзы. После этого срока применять линзы нельзя, так как это может плохо сказаться на здоровье ваших глаз.',
+        ],
+      });
     },
   },
 });

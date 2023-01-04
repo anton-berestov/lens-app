@@ -3,7 +3,10 @@ const modules = {};
 
 export default createStore({
   state: {
-    popover: false,
+    popover: {
+      show: false,
+      message: [],
+    },
     filter: {
       type: [],
       period: [],

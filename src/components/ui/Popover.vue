@@ -1,12 +1,13 @@
 <template>
-  <ion-modal :is-open="popover" class="popover" :animated="false">
+  <ion-modal :is-open="popover.show" class="popover" :animated="false">
     <div id="box">
-      <p class="text" v-if="text">
-        {{ text }}
-      </p>
-      <div v-if="types">
-        <p class="text" v-for="type in types" :key="type.id">
-          {{ type.desc }}
+      <div v-if="popover.message.length">
+        <p
+          class="text"
+          v-for="(message, index) in popover.message"
+          :key="index"
+        >
+          {{ message }}
         </p>
       </div>
 
@@ -26,16 +27,6 @@ import { mapGetters, mapMutations } from 'vuex';
 
 export default defineComponent({
   name: 'Popover',
-  props: {
-    text: {
-      type: String,
-      default: '',
-    },
-    types: {
-      type: Array,
-      default: () => [],
-    },
-  },
   components: {
     IonButtons,
     IonButton,
@@ -47,7 +38,7 @@ export default defineComponent({
   methods: {
     ...mapMutations(['SET_POPOVER']),
     hide() {
-      this.SET_POPOVER(false);
+      this.SET_POPOVER({ show: false, message: [] });
     },
   },
 });
