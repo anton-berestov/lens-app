@@ -28,13 +28,25 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: PATH_CATALOG,
-        name: 'Catalog',
-        component: () => import('@/views/Catalog.vue'),
-      },
-      {
-        path: PATH_SEARCH,
-        name: 'Search',
-        component: () => import('@/views/Search.vue'),
+        component: () => import('@/layouts/LayoutRouter.vue'),
+        children: [
+          {
+            path: PATH_CATALOG,
+            name: 'Catalog',
+            component: () => import('@/views/Catalog.vue'),
+          },
+          {
+            path: PATH_SEARCH,
+            name: 'Search',
+            component: () => import('@/views/Search.vue'),
+          },
+          {
+            path: PATH_PRODUCT,
+            name: 'Product',
+            props: true,
+            component: () => import('@/views/Product.vue'),
+          },
+        ],
       },
       {
         path: PATH_RECORDING,
@@ -57,13 +69,6 @@ const routes: Array<RouteRecordRaw> = [
     path: PATH_ACTIONS_NEWS,
     name: 'ActionsNews',
     component: () => import('@/views/ActionsNews.vue'),
-  },
-
-  {
-    path: PATH_PRODUCT,
-    name: 'Product',
-    props: true,
-    component: () => import('@/views/Product.vue'),
   },
 ];
 
