@@ -174,15 +174,15 @@ export default defineComponent({
 .btn-question-period {
   position: absolute;
   margin: 0 auto;
-  top: -8px;
-  left: 92px;
+  top: -15px;
+  left: 86px;
 }
 
 .btn-question-radius {
   position: absolute;
   margin: 0 auto;
-  top: -8px;
-  left: 120px;
+  top: -15px;
+  left: 114px;
 }
 
 .icon {

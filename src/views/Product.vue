@@ -33,7 +33,7 @@
             </ion-label>
           </ion-row>
         </ion-row>
-        <ion-row class="ion-justify-content-center">
+        <ion-row class="ion-justify-content-between">
           <ion-label
             :class="['text', { active: specification }, 'ion-margin']"
             @click="

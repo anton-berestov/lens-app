@@ -23,7 +23,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .custom-btn {
   width: 100%;
   height: 41px;
@@ -31,7 +31,7 @@ export default defineComponent({
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
-  margin: 30px 10px;
+  margin: 30px 7px;
 }
 .custom-btn:hover {
   --background: #00795d;
