@@ -1,5 +1,5 @@
 <template>
-  <ion-col class="ion-margin">
+  <ion-col class="ion-margin" style="padding: 0">
     <ion-row>
       <ion-col>
         <ion-label class="title">Диаметр</ion-label>
