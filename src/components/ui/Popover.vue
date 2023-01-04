@@ -2,7 +2,7 @@
   <ion-modal :is-open="popover" class="popover" :animated="false">
     <div id="box">
       <p class="text" v-if="text">
-        Торические линзы предназначены для людей с астигматизмом.
+        {{ text }}
       </p>
       <div v-if="types">
         <p class="text" v-for="type in types" :key="type.id">
