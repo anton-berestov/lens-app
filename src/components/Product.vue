@@ -1,5 +1,5 @@
 <template>
-  <ion-card class="card">
+  <ion-card id="product-card">
     <ion-row class="ion-justify-content-center ion-align-items-center">
       <div class="image-box">
         <div class="sale" v-if="sale">
@@ -113,7 +113,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.card {
+#product-card {
   width: 150px;
   height: 170px;
   margin: 10px 10px;
@@ -148,6 +148,7 @@ export default defineComponent({
 
     .swiper-pagination {
       bottom: -3px !important;
+      position: relative;
     }
     .swiper {
       .image {
@@ -158,7 +159,7 @@ export default defineComponent({
   }
 
   .header {
-    padding: 10px 15px;
+    padding: 5px 10px;
 
     .title {
       font-size: 12px;
@@ -184,13 +185,13 @@ export default defineComponent({
 }
 
 @media (max-width: 360px) {
-  .card {
+  #product-card {
     width: 145px;
     margin: 10px 5px;
   }
 }
 
-.card:hover {
+#product-card:hover {
   --background: #deeeea;
 }
 </style>

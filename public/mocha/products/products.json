@@ -43,7 +43,7 @@
     "name": "Однодневные контактные линзы",
     "price": "2600",
     "old_price": "",
-    "image": ["mocha/products/product3.png"],
+    "image": [ "mocha/products/product4.png", "mocha/products/product.png"],
     "type_id": "2",
     "period_id": "4",
     "radius_id": "1",
