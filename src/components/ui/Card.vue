@@ -33,8 +33,6 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .card {
-  margin: 16px 20px;
-
   .image {
     width: 100%;
   }
