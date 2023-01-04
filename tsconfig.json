@@ -11,6 +11,8 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "sourceMap": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
     "baseUrl": ".",
     "allowJs": true,
     "types": ["webpack-env", "jest"],

@@ -36,7 +36,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-margin-top">
+    <ion-row class="ion-margin-top" style="position: relative">
       <ion-col>
         <ion-label class="title">Срок замены</ion-label>
         <ion-buttons class="btn-question-period">
@@ -63,7 +63,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-margin-top">
+    <ion-row class="ion-margin-top" style="position: relative">
       <ion-col>
         <ion-label class="title">Радиус кривизны</ion-label>
         <ion-buttons class="btn-question-radius">
@@ -177,14 +177,14 @@ export default defineComponent({
   position: absolute;
   margin: 0 auto;
   top: -8px;
-  right: calc((100vmin - 150%) / 2);
+  left: 92px;
 }
 
 .btn-question-radius {
   position: absolute;
   margin: 0 auto;
   top: -8px;
-  right: calc((100vmin - 181%) / 2);
+  left: 120px;
 }
 
 .icon {

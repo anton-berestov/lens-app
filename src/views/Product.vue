@@ -3,7 +3,10 @@
     <Header back title="Линзы" />
     <ion-content>
       <ion-list class="container">
-        <ion-row class="wrapper">
+        <ion-row class="wrapper" style="position: relative">
+          <div class="sale" v-if="product.sale">
+            <p class="sale-text">{{ `-${product.sale}%` }}</p>
+          </div>
           <swiper
             ref="swiper"
             :options="slideOpts"
@@ -78,7 +81,11 @@
         </ion-row>
 
         <ion-row class="ion-justify-content-center">
-          <Button title="В корзину" class="custom-btn" />
+          <Button
+            title="В корзину"
+            class="custom-btn"
+            @click="addInCart(product)"
+          />
         </ion-row>
       </ion-list>
     </ion-content>
@@ -112,6 +119,7 @@ import Specification from '@/components/Specification.vue';
 import Description from '@/components/Description.vue';
 import Delivery from '@/components/Delivery.vue';
 import Button from "@/components/ui/Button.vue";
+import {mapActions, mapMutations} from "vuex";
 
 export default defineComponent({
   name: 'Product',
@@ -163,6 +171,12 @@ export default defineComponent({
       return this.id;
     },
   },
+  methods: {
+    ...mapMutations(['SET_CART']),
+    addInCart(product) {
+      this.SET_CART(product)
+    }
+  },
 });
 </script>
 
@@ -172,6 +186,28 @@ export default defineComponent({
   overflow-y: auto;
 
   .wrapper {
+    .sale {
+      width: 40px;
+      height: 21px;
+      background: #c90433;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      right: 31px;
+      top: 18px;
+      z-index: 99999;
+
+      .sale-text {
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 15px;
+        text-align: center;
+        color: #ffffff;
+      }
+    }
+
     .swiper {
       .image {
         width: 100%;

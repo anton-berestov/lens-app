@@ -27,6 +27,7 @@
     "name": "Однодневные контактные линзы Biofinity toric (3 шт)",
     "price": "1200",
     "old_price": "1500",
+    "sale": "30",
     "image": "mocha/products/product.png",
     "type_id": "3",
     "period_id": "1",
