@@ -119,7 +119,7 @@ import Specification from '@/components/Specification.vue';
 import Description from '@/components/Description.vue';
 import Delivery from '@/components/Delivery.vue';
 import Button from "@/components/ui/Button.vue";
-import {mapActions, mapMutations} from "vuex";
+import { mapMutations} from "vuex";
 
 export default defineComponent({
   name: 'Product',
