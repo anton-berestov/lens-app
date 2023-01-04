@@ -72,6 +72,30 @@
     "period_id": "4",
     "radius_id": "3",
     "sphere_id": "3"
+  },
+  {
+    "id": 7,
+    "producer": "Biofinity toric (3 шт)",
+    "name": "Однодневные контактные линзы",
+    "price": "1200",
+    "old_price": "",
+    "image": ["mocha/products/product.png", "mocha/products/product.png", "mocha/products/product.png","mocha/products/product.png"],
+    "type_id": "1",
+    "period_id": "4",
+    "radius_id": "3",
+    "sphere_id": "3"
+  },
+  {
+    "id": 8,
+    "producer": "Biofinity toric (3 шт)",
+    "name": "Однодневные контактные линзы",
+    "price": "1200",
+    "old_price": "",
+    "image": ["mocha/products/product.png", "mocha/products/product.png", "mocha/products/product.png","mocha/products/product.png"],
+    "type_id": "1",
+    "period_id": "4",
+    "radius_id": "3",
+    "sphere_id": "3"
   }
 ]
 

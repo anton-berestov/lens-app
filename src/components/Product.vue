@@ -2,7 +2,18 @@
   <ion-card class="card">
     <ion-row class="ion-justify-content-center ion-align-items-center">
       <div class="image-box">
-        <img :src="img" class="image" />
+        <swiper
+          ref="swiper"
+          :options="slideOpts"
+          :modules="modules"
+          :pagination="true"
+          :autoplay="true"
+          class="swiper"
+        >
+          <swiper-slide v-for="(image, index) in img" :key="index">
+            <img :src="image" class="image" />
+          </swiper-slide>
+        </swiper>
       </div>
     </ion-row>
     <ion-card-header class="header">
@@ -25,7 +36,25 @@ import {
   IonCardTitle,
   IonRow,
   IonCardSubtitle,
+  IonicSlides,
 } from '@ionic/vue';
+
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/css';
+import 'swiper/css/autoplay';
+import 'swiper/css/keyboard';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css/zoom';
+import '@ionic/vue/css/ionic-swiper.css';
+import {
+  Autoplay,
+  Controller,
+  Keyboard,
+  Pagination,
+  Scrollbar,
+  Zoom,
+} from 'swiper';
 
 export default defineComponent({
   name: 'Product',
@@ -43,13 +72,30 @@ export default defineComponent({
       default: '',
     },
     img: {
-      type: String,
-      default: '',
+      type: Array,
+      default: () => [],
     },
     sale: {
       type: String,
       default: '',
     },
+  },
+  data() {
+    return {
+      slideOpts: {
+        initialSlide: 1,
+        speed: 400,
+      },
+      modules: [
+        Pagination,
+        Controller,
+        Autoplay,
+        Keyboard,
+        Scrollbar,
+        Zoom,
+        IonicSlides,
+      ],
+    };
   },
   components: {
     IonCard,
@@ -57,6 +103,8 @@ export default defineComponent({
     IonCardTitle,
     IonRow,
     IonCardSubtitle,
+    Swiper,
+    SwiperSlide,
   },
 });
 </script>
@@ -65,18 +113,21 @@ export default defineComponent({
 .card {
   width: 150px;
   height: 170px;
-  margin: 12px 15px;
+  margin: 10px 10px;
 
   .image-box {
-    height: 85px;
-    width: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 5px;
+    height: 100%;
+    width: 100%;
+    padding: 5px;
 
-    .image {
-      width: 100%;
+    .swiper-pagination {
+      bottom: -3px !important;
+    }
+    .swiper {
+      .image {
+        width: 100%;
+        height: 85px;
+      }
     }
   }
 
@@ -103,6 +154,13 @@ export default defineComponent({
         text-decoration: line-through;
       }
     }
+  }
+}
+
+@media (max-width: 360px) {
+  .card {
+    width: 145px;
+    margin: 10px 5px;
   }
 }
 
