@@ -64,7 +64,6 @@ import {
   PATH_BASKET,
   PATH_RECORDING,
   PATH_PROFILE,
-  PATH_SEARCH,
 } from '@/router/constants';
 import { RouteLocationRaw } from 'vue-router';
 
@@ -88,28 +87,27 @@ export default defineComponent({
   }),
   computed: {
     changeHome() {
-      return this.$route.path === PATH_HOME
+      return this.$route.path.includes(PATH_HOME)
         ? 'assets/icon/home-active.svg'
         : 'assets/icon/home.svg';
     },
     changeCatalog() {
-      return this.$route.path === PATH_CATALOG ||
-        this.$route.path === PATH_SEARCH
+      return this.$route.path.includes(PATH_CATALOG)
         ? 'assets/icon/catalog-active.svg'
         : 'assets/icon/catalog.svg';
     },
     changeRecording() {
-      return this.$route.path === PATH_RECORDING
+      return this.$route.path.includes(PATH_RECORDING)
         ? 'assets/icon/recording-active.svg'
         : 'assets/icon/recording.svg';
     },
     changeBasket() {
-      return this.$route.path === PATH_BASKET
+      return this.$route.path.includes(PATH_BASKET)
         ? 'assets/icon/basket-active.svg'
         : 'assets/icon/basket.svg';
     },
     changeProfile() {
-      return this.$route.path === PATH_PROFILE
+      return this.$route.path.includes(PATH_PROFILE)
         ? 'assets/icon/profile-active.svg'
         : 'assets/icon/profile.svg';
     },
