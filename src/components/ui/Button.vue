@@ -1,5 +1,5 @@
 <template>
-  <ion-buttons>
+  <ion-buttons class="btn">
     <ion-button fill="solid" class="custom-btn">{{ title }}</ion-button>
   </ion-buttons>
 </template>
@@ -25,12 +25,13 @@ export default defineComponent({
 
 <style scoped>
 .custom-btn {
-  width: 320px;
+  width: 100%;
   height: 41px;
   border-radius: 5px;
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
+  margin: 30px 10px;
 }
 .custom-btn:hover {
   --background: #00795d;
