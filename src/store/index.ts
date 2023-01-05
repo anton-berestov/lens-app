@@ -1,4 +1,6 @@
 import { createStore } from 'vuex';
+import { getProducts } from '@/api/products';
+
 const modules = {};
 
 export default createStore({
@@ -25,6 +27,20 @@ export default createStore({
     SET_FILTER: (state, payload) => (state.filter = payload),
     SET_CART: (state, payload: any) => state.cart.push(payload),
   },
-  actions: {},
+  actions: {
+    getProducts() {
+      return new Promise((resolve, reject) => {
+        getProducts()
+          .then((data) => {
+            console.log(data);
+            resolve(data);
+          })
+          .catch((e) => {
+            console.error(e);
+            reject(e);
+          });
+      });
+    },
+  },
   modules,
 });

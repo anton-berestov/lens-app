@@ -92,7 +92,7 @@ import Header from '@/components/ui/Header.vue';
 import Product from '@/components/Product.vue';
 import FilterModal from '@/components/FilterModal.vue';
 import FilterElement from '@/components/FilterElement.vue';
-import {mapGetters, mapMutations} from 'vuex';
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 import products from '../../public/mocha/products/products.json';
 import producer from '../../public/mocha/producer.json';
@@ -124,8 +124,12 @@ export default defineComponent({
       return producer
     }
   },
+  async mounted() {
+    await this.getProducts()
+  },
   methods: {
     ...mapMutations(['SET_FILTER']),
+    ...mapActions(['getProducts']),
     onProducer(id) {
       const prod = this.producer.find((el) => el.id === id)
       return prod.name
