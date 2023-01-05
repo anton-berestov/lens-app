@@ -24,6 +24,9 @@
           <ion-row class="row">
             <ion-label class="title">{{ product.name }}</ion-label>
           </ion-row>
+          <ion-row class="row">
+            <ion-label class="title">{{ product.producer }}</ion-label>
+          </ion-row>
           <ion-row class="ion-margin-top row">
             <ion-label class="price">{{ product.price }}</ion-label>
             <ion-label
@@ -69,7 +72,16 @@
           </ion-label>
         </ion-row>
         <ion-row>
-          <Specification v-if="specification" />
+          <Specification
+            v-if="specification"
+            :brand="brand.name"
+            :producer="producer.name"
+            :type="type.name"
+            :period="period.name"
+            :radius="radius.name"
+            :diameter="diameter.name"
+            :material="material.name"
+          />
           <Description v-if="description" />
           <Delivery v-if="delivery" />
         </ion-row>
@@ -88,7 +100,6 @@
 
 <script lang="js">
 import {defineComponent} from 'vue';
-import products from '../../public/mocha/products/products.json';
 import {IonPage, IonContent, IonRow, IonList, IonLabel} from '@ionic/vue';
 import {Swiper, SwiperSlide} from 'swiper/vue';
 import {
@@ -105,7 +116,16 @@ import Specification from '@/components/Specification.vue';
 import Description from '@/components/Description.vue';
 import Delivery from '@/components/Delivery.vue';
 import Button from "@/components/ui/Button.vue";
-import { mapMutations} from "vuex";
+import {mapMutations} from "vuex";
+
+import products from '../../public/mocha/products/products.json';
+import radius from '../../public/mocha/radius.json';
+import periods from '../../public/mocha/periods.json';
+import types from '../../public/mocha/types.json';
+import sphere from '../../public/mocha/sphere.json';
+import producer from '../../public/mocha/producer.json';
+import brand from '../../public/mocha/brand.json';
+import material from '../../public/mocha/material.json';
 
 import 'swiper/css';
 import 'swiper/css/autoplay';
@@ -165,6 +185,27 @@ export default defineComponent({
     idProduct() {
       return this.id;
     },
+    radius () {
+      return radius.find((el)=> el.id === this.product.radius_id) || ''
+    },
+    period() {
+      return periods.find((el)=> el.id === this.product.period_id) || ''
+    },
+    type(){
+      return types.find((el)=> el.id === this.product.type_id) || ''
+    },
+    diameter(){
+      return sphere.find((el)=> el.id === this.product.sphere_id) || ''
+    },
+    brand(){
+      return brand.find((el)=> el.id === this.product.brand_id) || ''
+    },
+    producer(){
+      return producer.find((el)=> el.id === this.product.producer_id) || ''
+    },
+    material(){
+      return material.find((el)=> el.id === this.product.material_id) || ''
+    }
   },
   methods: {
     ...mapMutations(['SET_CART']),
@@ -247,7 +288,7 @@ export default defineComponent({
   }
 
   .custom-btn {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
 }
 </style>

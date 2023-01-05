@@ -54,7 +54,7 @@
           <Product
             v-for="product in onFilter(products)"
             :key="product.id"
-            :title="product.producer"
+            :title="onProducer(product.producer_id)"
             :price="product.price"
             :img="product.image"
             :old-price="product.old_price"
@@ -91,9 +91,11 @@ import {
 import Header from '@/components/ui/Header.vue';
 import Product from '@/components/Product.vue';
 import FilterModal from '@/components/FilterModal.vue';
-import products from '../../public/mocha/products/products.json';
-import {mapGetters, mapMutations} from 'vuex';
 import FilterElement from '@/components/FilterElement.vue';
+import {mapGetters, mapMutations} from 'vuex';
+
+import products from '../../public/mocha/products/products.json';
+import producer from '../../public/mocha/producer.json';
 
 export default defineComponent({
   name: 'Catalog',
@@ -117,10 +119,17 @@ export default defineComponent({
     ...mapGetters(['filter']),
     products() {
       return products
+    },
+    producer() {
+      return producer
     }
   },
   methods: {
     ...mapMutations(['SET_FILTER']),
+    onProducer(id) {
+      const prod = this.producer.find((el) => el.id === id)
+      return prod.name
+    },
     onFilter(products) {
       let a = []
       if (this.filter.type.length && !this.filter.period.length) {
@@ -141,22 +150,7 @@ export default defineComponent({
             })
           })
         }
-      } else if (this.filter.type.length && this.filter.period.length) {
-        const type = this.filter.type
-        const period = this.filter.period
-        // console.log('type', type)
-        // console.log('period', period)
-        // console.log(this.products)
-
-        const type_products = type.map((type) => products.filter((el) => el.type_id.includes(type.id)))
-        const period_products = period.map((period) => products.filter((el) => el.period_id.includes(period.id)))
-
-        console.log(type_products)
-        console.log(period_products)
-
       }
-
-      console.log('finsh', a)
 
       return a.length ? a : products
     },

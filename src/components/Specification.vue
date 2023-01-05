@@ -1,42 +1,42 @@
 <template>
   <ion-col class="ion-margin" style="padding: 0">
-    <ion-row>
+    <ion-row v-if="diameter">
       <ion-col>
         <ion-label class="title">Диаметр</ion-label>
       </ion-col>
       <ion-col>
-        <ion-title class="text">23</ion-title>
+        <ion-title class="text">{{ diameter }}</ion-title>
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-margin-top">
+    <ion-row class="ion-margin-top" v-if="producer">
       <ion-col>
         <ion-label class="title">Производитель</ion-label>
       </ion-col>
       <ion-col>
-        <ion-title class="text">Biofinity</ion-title>
+        <ion-title class="text">{{ producer }}</ion-title>
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-margin-top">
+    <ion-row class="ion-margin-top" v-if="type">
       <ion-col>
         <ion-label class="title">Тип линз</ion-label>
       </ion-col>
       <ion-col>
-        <ion-title class="text">астигматические</ion-title>
+        <ion-title class="text">{{ type }}</ion-title>
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-margin-top">
+    <ion-row class="ion-margin-top" v-if="brand">
       <ion-col>
         <ion-label class="title">Бренд</ion-label>
       </ion-col>
       <ion-col>
-        <ion-title class="text">Biofinity</ion-title>
+        <ion-title class="text">{{ brand }}</ion-title>
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-margin-top" style="position: relative">
+    <ion-row class="ion-margin-top" style="position: relative" v-if="period">
       <ion-col>
         <ion-label class="title">Срок замены</ion-label>
         <ion-buttons class="btn-question-period">
@@ -50,20 +50,20 @@
         </ion-buttons>
       </ion-col>
       <ion-col>
-        <ion-title class="text">1 день</ion-title>
+        <ion-title class="text">{{ period }}</ion-title>
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-margin-top">
+    <ion-row class="ion-margin-top" v-if="material">
       <ion-col>
         <ion-label class="title">Материал</ion-label>
       </ion-col>
       <ion-col>
-        <ion-title class="text">силикон</ion-title>
+        <ion-title class="text">{{ material }}</ion-title>
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-margin-top" style="position: relative">
+    <ion-row class="ion-margin-top" style="position: relative" v-if="radius">
       <ion-col>
         <ion-label class="title">Радиус кривизны</ion-label>
         <ion-buttons class="btn-question-radius">
@@ -77,7 +77,7 @@
         </ion-buttons>
       </ion-col>
       <ion-col>
-        <ion-title class="text">8,6</ion-title>
+        <ion-title class="text">{{ radius }}</ion-title>
       </ion-col>
     </ion-row>
   </ion-col>

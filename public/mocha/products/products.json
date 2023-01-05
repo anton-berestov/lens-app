@@ -1,24 +1,36 @@
 [
   {
     "id": 1,
-    "producer": "Biofinity toric (3 шт)",
     "name": "Однодневные контактные линзы",
     "price": "1200",
     "old_price": "",
-    "image": ["mocha/products/product.png", "mocha/products/product.png", "mocha/products/product.png", "mocha/products/product.png"],
+    "image": [
+      "mocha/products/product.png",
+      "mocha/products/product.png",
+      "mocha/products/product.png",
+      "mocha/products/product.png"
+    ],
+    "producer_id": "1",
+    "brand_id": "1",
     "sale": "30",
     "type_id": "2",
     "period_id": "2",
     "radius_id": "1",
-    "sphere_id": "1"
+    "sphere_id": "1",
+    "material_id": "1"
   },
   {
     "id": 2,
-    "producer": "Biofinity toric (6 шт)",
     "name": "Однодневные контактные линзы",
     "price": "2400",
     "old_price": "",
-    "image": ["mocha/products/product2.png", "mocha/products/product2.png", "mocha/products/product2.png"],
+    "image": [
+      "mocha/products/product2.png",
+      "mocha/products/product2.png",
+      "mocha/products/product2.png"
+    ],
+    "producer_id": "1",
+    "brand_id": "1",
     "type_id": "1",
     "period_id": "3",
     "radius_id": "2",
@@ -26,12 +38,16 @@
   },
   {
     "id": 3,
-    "producer": "Biofinity toric (3 шт)",
     "name": "Однодневные контактные линзы",
     "price": "1200",
     "old_price": "1500",
     "sale": "30",
-    "image": ["mocha/products/product.png", "mocha/products/product.png"],
+    "image": [
+      "mocha/products/product.png",
+      "mocha/products/product.png"
+    ],
+    "producer_id": "1",
+    "brand_id": "1",
     "type_id": "3",
     "period_id": "1",
     "radius_id": "2",
@@ -39,11 +55,15 @@
   },
   {
     "id": 4,
-    "producer": "Acuvue (6 шт)",
     "name": "Однодневные контактные линзы",
     "price": "2600",
     "old_price": "",
-    "image": [ "mocha/products/product4.png", "mocha/products/product.png"],
+    "image": [
+      "mocha/products/product4.png",
+      "mocha/products/product.png"
+    ],
+    "brand_id": "2",
+    "producer_id": "2",
     "type_id": "2",
     "period_id": "4",
     "radius_id": "1",
@@ -51,23 +71,35 @@
   },
   {
     "id": 5,
-    "producer": "Biofinity toric (30 шт)",
     "name": "Однодневные контактные линзы",
     "price": "5100",
     "old_price": "",
-    "image": ["mocha/products/product4.png", "mocha/products/product4.png", "mocha/products/product4.png"],
+    "image": [
+      "mocha/products/product4.png",
+      "mocha/products/product4.png",
+      "mocha/products/product4.png"
+    ],
+    "producer_id": "1",
+    "brand_id": "1",
     "type_id": "1",
     "period_id": "1",
     "radius_id": "2",
-    "sphere_id": "3"
+    "sphere_id": "3",
+    "material_id": "1"
   },
   {
     "id": 6,
-    "producer": "Biofinity toric (3 шт)",
     "name": "Однодневные контактные линзы",
     "price": "1200",
     "old_price": "",
-    "image": ["mocha/products/product.png", "mocha/products/product.png", "mocha/products/product.png","mocha/products/product.png"],
+    "image": [
+      "mocha/products/product.png",
+      "mocha/products/product.png",
+      "mocha/products/product.png",
+      "mocha/products/product.png"
+    ],
+    "producer_id": "1",
+    "brand_id": "1",
     "type_id": "1",
     "period_id": "4",
     "radius_id": "3",
@@ -75,11 +107,17 @@
   },
   {
     "id": 7,
-    "producer": "Biofinity toric (3 шт)",
     "name": "Однодневные контактные линзы",
     "price": "1200",
     "old_price": "",
-    "image": ["mocha/products/product.png", "mocha/products/product.png", "mocha/products/product.png","mocha/products/product.png"],
+    "image": [
+      "mocha/products/product.png",
+      "mocha/products/product.png",
+      "mocha/products/product.png",
+      "mocha/products/product.png"
+    ],
+    "producer_id": "1",
+    "brand_id": "1",
     "type_id": "1",
     "period_id": "4",
     "radius_id": "3",
@@ -87,11 +125,17 @@
   },
   {
     "id": 8,
-    "producer": "Biofinity toric (3 шт)",
     "name": "Однодневные контактные линзы",
     "price": "1200",
     "old_price": "",
-    "image": ["mocha/products/product.png", "mocha/products/product.png", "mocha/products/product.png","mocha/products/product.png"],
+    "image": [
+      "mocha/products/product.png",
+      "mocha/products/product.png",
+      "mocha/products/product.png",
+      "mocha/products/product.png"
+    ],
+    "producer_id": "1",
+    "brand_id": "1",
     "type_id": "1",
     "period_id": "4",
     "radius_id": "3",
