@@ -27,9 +27,14 @@
           @click="$router.push({ name: 'Product', params: { id: product.id } })"
         >
           <ion-thumbnail slot="start">
-            <ion-img :src="product.image" />
+            <ion-img :src="product.image[0]" />
           </ion-thumbnail>
-          <ion-title class="title"> {{ product.name }}</ion-title>
+
+          <ion-row class="ion-wrap">
+            <ion-title class="title">
+              {{ product.name }} {{ onBrand(product.brand_id) }}
+            </ion-title>
+          </ion-row>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -37,7 +42,7 @@
 </template>
 
 <script lang="js">
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
 import {
   IonPage,
   IonSearchbar,
@@ -46,12 +51,13 @@ import {
   IonItem,
   IonContent,
   IonImg,
-  IonTitle,
   IonThumbnail,
+  IonTitle
 } from '@ionic/vue';
 import Header from '@/components/ui/Header.vue';
-import products from '../../public/mocha/products/products.json';
 import Info from '@/components/ui/Info.vue';
+import products from '../../public/mocha/products/products.json';
+import brand from '../../public/mocha/brand.json';
 
 export default defineComponent({
   name: 'Search',
@@ -65,8 +71,8 @@ export default defineComponent({
     IonItem,
     IonContent,
     IonImg,
-    IonTitle,
     IonThumbnail,
+    IonTitle
   },
   data() {
     return {
@@ -79,15 +85,19 @@ export default defineComponent({
   computed: {
     products() {
       return this.search.length
-        ? products.filter((product) =>
-            product.name.toLowerCase().includes(this.search.toLowerCase())
+          ? products.filter((product) =>
+              product.name.toLowerCase().includes(this.search.toLowerCase())
           )
-        : products;
+          : products;
     },
   },
   methods: {
+    onBrand(id) {
+      const el = brand.find((el) => el.id === id) || ''
+      return el.name
+    },
     update() {
-      this.$router.push({ name: 'Catalog' });
+      this.$router.push({name: 'Catalog'});
       this.search = '';
     },
   },
