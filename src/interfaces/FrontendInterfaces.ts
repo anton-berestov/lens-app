@@ -4,8 +4,8 @@ export interface Product {
   'title': string,
   'name'?: string, // should be deleted later
   'short_title': string,
-  'price': number,
-  'old_price'?: number,
+  'price': string,
+  'old_price'?: string,
   'image'?: Array<Image>,
   'producer_id'?: number,
   'brand_id'?: number,
