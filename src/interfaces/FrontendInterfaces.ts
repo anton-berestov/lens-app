@@ -39,7 +39,7 @@ export interface Producer {
 }
 
 export interface Characteristics {
-  id: number,
+  id?: number,
   key: string,
   value: string,
   description?: string

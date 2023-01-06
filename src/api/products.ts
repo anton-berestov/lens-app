@@ -175,3 +175,34 @@ export const getProduct = async (id: number, params?: any): Promise<Product | un
     console.error(e);
   }
 };
+
+export const getMeta = async (params?: any): Promise<Characteristics[] | undefined> => {
+
+  try {
+    // empty paramstring
+    let paramString = '';
+    // params include
+    if (params) {
+      paramString = qs.stringify(params);
+    }
+
+    const response = await API.get(`/product-metas/?${paramString}`);
+
+    const metas: Characteristics[] = [];
+
+    if (response.data) {
+      response.data.map((meta: any) => {
+        metas.push({
+          id: meta.id,
+          key: meta.attributes.key,
+          value: meta.attributes.value,
+          description: meta.attributes.description,
+        });
+      });
+    }
+    
+    return metas;
+  } catch (e) {
+    console.error(e);
+  }
+};

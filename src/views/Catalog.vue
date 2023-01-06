@@ -128,10 +128,16 @@ export default defineComponent({
     await this.getProducts()
     await this.getProductsAndMeta()
     await this.getProduct(1)
+    console.log('allMeta', await this.getMeta());
+    console.log('By Type', await this.getMeta({filters: {key: {'$eq': 'type'}}}));
+    console.log('By Period', await this.getMeta({filters: {key: {'$eq': 'period'}}}));
+    console.log('By Radius', await this.getMeta({filters: {key: {'$eq': 'radius'}}}));
+    console.log('By Sphere', await this.getMeta({filters: {key: {'$eq': 'sphere'}}}));
+
   },
   methods: {
     ...mapMutations(['SET_FILTER']),
-    ...mapActions(['getProducts', 'getProductsAndMeta', 'getProduct']),
+    ...mapActions(['getProducts', 'getProductsAndMeta', 'getProduct', 'getMeta']),
     onProducer(id) {
       const prod = this.producer.find((el) => el.id === id)
       return prod.name

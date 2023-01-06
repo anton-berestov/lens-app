@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import { getProducts, getProduct } from '@/api/products';
+import { getProducts, getProduct, getMeta } from '@/api/products';
 
 const modules = {};
 
@@ -69,6 +69,10 @@ export default createStore({
       console.log('one product with params', productAll);
 
       return productAll;
+    },
+
+    async getMeta(context:any, params?:object) {
+      return await getMeta(params);
     }
   },
   modules
