@@ -25,8 +25,8 @@ export const getProducts = async (params?: any): Promise<Product[] | undefined> 
           img.map((i: any) => {
             images.push({
               id: Number(i.id),
-              url: i.attributes.url,
-              thumbnailUrl: i.attributes.formats.thumbnail.url ?? '',
+              url: process.env.VUE_APP_API_PUBLIC + i.attributes.url,
+              thumbnailUrl: process.env.VUE_APP_API_PUBLIC + i.attributes.formats.thumbnail.url ?? '',
               alternativeText: '',
               caption: ''
             });
@@ -66,8 +66,8 @@ export const getProducts = async (params?: any): Promise<Product[] | undefined> 
           name: p.attributes.title,
           title: p.attributes.title,
           short_title: p.attributes.short_title,
-          price: Number(p.attributes.price),
-          old_price: Number(p.attributes.old_price),
+          price: p.attributes.price,
+          old_price: p.attributes.old_price,
           product_meta: characteristics,
           image: images,
           brand_id: brand.id,
@@ -106,7 +106,7 @@ export const getProduct = async (id: number, params?: any): Promise<Product | un
     if (params) {
       paramString = qs.stringify(params);
     }
-    const product: Product = { title: '', short_title: '', price: 0 };
+    const product: Product = { title: '', short_title: '', price: '' };
     const response = await API.get(`/products/${id}/?${paramString}`);
     if (response.data) {
       const p = response.data;
@@ -121,8 +121,8 @@ export const getProduct = async (id: number, params?: any): Promise<Product | un
         img.map((i: any) => {
           images.push({
             id: Number(i.id),
-            url: i.attributes.url,
-            thumbnailUrl: i.attributes.formats.thumbnail.url ?? '',
+            url: process.env.VUE_APP_API_PUBLIC + i.attributes.url,
+            thumbnailUrl: process.env.VUE_APP_API_PUBLIC + i.attributes.formats.thumbnail.url ?? '',
             alternativeText: '',
             caption: ''
           });
@@ -161,8 +161,8 @@ export const getProduct = async (id: number, params?: any): Promise<Product | un
       product.name = p.attributes.title;
       product.title = p.attributes.title;
       product.short_title = p.attributes.short_title;
-      product.price = Number(p.attributes.price);
-      product.old_price = Number(p.attributes.old_price);
+      product.price = p.attributes.price;
+      product.old_price = p.attributes.old_price;
       product.product_meta = characteristics;
       product.image = images;
       product.brand_id = brand.id;
@@ -200,7 +200,7 @@ export const getMeta = async (params?: any): Promise<Characteristics[] | undefin
         });
       });
     }
-    
+
     return metas;
   } catch (e) {
     console.error(e);

@@ -52,13 +52,13 @@
 
         <div class="wrapper">
           <Product
-            v-for="product in onFilter(products)"
+            v-for="product in products"
             :key="product.id"
-            :title="onProducer(product.producer_id)"
+            :title="product.short_title"
             :price="product.price"
             :img="product.image"
             :old-price="product.old_price"
-            :sale="product.sale"
+            :sale="product.discount"
             class="product"
             @click="
               $router.push({
@@ -77,7 +77,7 @@
   </ion-page>
 </template>
 
-<script lang="js">
+<script lang="ts">
 import {defineComponent} from 'vue';
 import {
   IonPage,
@@ -94,7 +94,9 @@ import FilterModal from '@/components/FilterModal.vue';
 import FilterElement from '@/components/FilterElement.vue';
 import {mapActions, mapGetters, mapMutations} from 'vuex';
 
-import products from '../../public/mocha/products/products.json';
+import { Product as ProductInterface } from '../interfaces/FrontendInterfaces'
+
+//import products from '../../public/mocha/products/products.json';
 import producer from '../../public/mocha/producer.json';
 
 export default defineComponent({
@@ -114,19 +116,21 @@ export default defineComponent({
   },
   data: () => ({
     isFilter: false,
+    products: []
   }),
   computed: {
     ...mapGetters(['filter']),
-    products() {
-      return products
-    },
+    /*products(): ProductInterface[] {
+      return this.getProductsAndMeta() //products
+    },*/
     producer() {
       return producer
     }
   },
   async mounted() {
+    this.products = await this.getProductsAndMeta();
     await this.getProducts()
-    await this.getProductsAndMeta()
+    //await this.getProductsAndMeta()
     await this.getProduct(1)
     console.log('allMeta', await this.getMeta());
     console.log('By Type', await this.getMeta({filters: {key: {'$eq': 'type'}}}));
@@ -138,26 +142,26 @@ export default defineComponent({
   methods: {
     ...mapMutations(['SET_FILTER']),
     ...mapActions(['getProducts', 'getProductsAndMeta', 'getProduct', 'getMeta']),
-    onProducer(id) {
-      const prod = this.producer.find((el) => el.id === id)
-      return prod.name
+    onProducer(id:any) {
+      const prod = this.producer.find((el:any) => el.id === id)
+      return prod?.name ?? ''
     },
-    onFilter(products) {
-      let a = []
+    onFilter(products:any[]) {
+      let a:any = []
       if (this.filter.type.length && !this.filter.period.length) {
-        let b = this.filter.type.map((type) => products.filter((el) => el.type_id.includes(type.id)))
+        let b = this.filter.type.map((type:any) => products.filter((el:any) => el.type_id.includes(type.id)))
         if (b.length > 0) {
-          b.map((el) => {
-            el.map((e) => {
+          b.map((el:any) => {
+            el.map((e:any) => {
               a.push(e)
             })
           })
         }
       } else if (!this.filter.type.length && this.filter.period.length) {
-        let b = this.filter.period.map((period) => products.filter((el) => el.period_id.includes(period.id)))
+        let b = this.filter.period.map((period:any) => products.filter((el:any) => el.period_id.includes(period.id)))
         if (b.length > 0) {
-          b.map((el) => {
-            el.map((e) => {
+          b.map((el:any) => {
+            el.map((e:any) => {
               a.push(e)
             })
           })
@@ -169,7 +173,7 @@ export default defineComponent({
     hide() {
       this.isFilter = false;
     },
-    close(el) {
+    close(el:any) {
       const a = {...this.filter};
 
       if (el.parent === 'sphere' || el.parent === 'radius') {
@@ -182,7 +186,7 @@ export default defineComponent({
       }
 
       if (el.parent === 'type' || el.parent === 'period') {
-        a[el.parent] = a[el.parent].filter((e) => e.id !== el.value.id);
+        a[el.parent] = a[el.parent].filter((e:any) => e.id !== el.value.id);
         this.onFilter(this.products)
         this.SET_FILTER(a);
 

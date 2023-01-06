@@ -14,7 +14,7 @@
           class="swiper"
         >
           <swiper-slide v-for="(image, index) in img" :key="index">
-            <img :src="image" class="image" />
+            <img :src="image.url" class="image" />
           </swiper-slide>
         </swiper>
       </div>
