@@ -1,11 +1,11 @@
 <template>
   <ion-page>
     <Header back title="Линзы" />
-    <ion-content>
+    <Content @refresh="refresh">
       <ion-list class="container">
         <ion-row class="ion-margin wrapper" style="position: relative">
-          <div class="sale" v-if="product.sale">
-            <p class="sale-text">{{ `-${product.sale}%` }}</p>
+          <div class="sale" v-if="product.discount">
+            <p class="sale-text">{{ `-${product.discount}%` }}</p>
           </div>
           <swiper
             ref="swiper"
@@ -22,15 +22,15 @@
         </ion-row>
         <ion-row class="ion-margin">
           <ion-row class="row">
-            <ion-label class="title">{{ product.name }}</ion-label>
+            <ion-label class="title">{{ product.title }}</ion-label>
           </ion-row>
           <ion-row class="row">
-            <ion-label class="title">{{ product.producer }}</ion-label>
+            <ion-label class="title">{{ product.short_title }}</ion-label>
           </ion-row>
           <ion-row class="ion-margin-top row">
             <ion-label class="price">{{ product.price }}</ion-label>
             <ion-label
-              v-if="product.old_price"
+              v-if="product.discount"
               class="ion-margin-start old-price"
               >{{ product.old_price }}
             </ion-label>
@@ -94,13 +94,13 @@
           />
         </ion-row>
       </ion-list>
-    </ion-content>
+    </Content>
   </ion-page>
 </template>
 
 <script lang="js">
 import {defineComponent} from 'vue';
-import {IonPage, IonContent, IonRow, IonList, IonLabel} from '@ionic/vue';
+import {IonPage, IonRow, IonList, IonLabel} from '@ionic/vue';
 import {Swiper, SwiperSlide} from 'swiper/vue';
 import {
   Controller,
@@ -116,9 +116,8 @@ import Specification from '@/components/Specification.vue';
 import Description from '@/components/Description.vue';
 import Delivery from '@/components/Delivery.vue';
 import Button from "@/components/ui/Button.vue";
-import {mapMutations} from "vuex";
+import {mapActions, mapMutations} from "vuex";
 
-import products from '../../public/mocha/products/products.json';
 import radius from '../../public/mocha/radius.json';
 import periods from '../../public/mocha/periods.json';
 import types from '../../public/mocha/types.json';
@@ -134,6 +133,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/zoom';
 import '@ionic/vue/css/ionic-swiper.css';
+import Content from "@/components/ui/Content.vue";
 
 
 export default defineComponent({
@@ -145,10 +145,10 @@ export default defineComponent({
     },
   },
   components: {
+    Content,
     Button,
     Header,
     IonPage,
-    IonContent,
     IonRow,
     IonList,
     Swiper,
@@ -176,12 +176,13 @@ export default defineComponent({
       specification: true,
       description: false,
       delivery: false,
+      product : []
     };
   },
+  async mounted() {
+    this.product = await this.getProduct(this.idProduct);
+  },
   computed: {
-    product() {
-      return products.find((el) => el.id == this.idProduct);
-    },
     idProduct() {
       return this.id;
     },
@@ -209,6 +210,15 @@ export default defineComponent({
   },
   methods: {
     ...mapMutations(['SET_CART']),
+    ...mapActions(['getProduct']),
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    async refresh(complete = () => {}) {
+      try {
+        this.product = await this.getProduct(this.idProduct);
+      } finally {
+        complete();
+      }
+    },
     addInCart(product) {
       this.SET_CART(product)
     }
