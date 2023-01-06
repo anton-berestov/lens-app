@@ -16,7 +16,7 @@
             class="swiper"
           >
             <swiper-slide v-for="(image, index) in product.image" :key="index">
-              <img :src="image" class="image" />
+              <img :src="image.url" class="image" />
             </swiper-slide>
           </swiper>
         </ion-row>

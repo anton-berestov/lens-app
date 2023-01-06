@@ -117,7 +117,6 @@ export default defineComponent({
   async mounted() {
     await this.getProducts({ populate: '*' });
 
-    await this.getProduct(1);
     console.log('allMeta', await this.getMeta());
     console.log(
       'By Type',
