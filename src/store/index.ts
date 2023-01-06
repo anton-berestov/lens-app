@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import { getProducts } from '@/api/products';
+import { getProducts, getProductsAndMeta } from '@/api/products';
 
 const modules = {};
 
@@ -31,6 +31,19 @@ export default createStore({
     getProducts() {
       return new Promise((resolve, reject) => {
         getProducts()
+          .then((data) => {
+            console.log(data);
+            resolve(data);
+          })
+          .catch((e) => {
+            console.error(e);
+            reject(e);
+          });
+      });
+    },
+    getProductsAndMeta() {
+      return new Promise((resolve, reject) => {
+        getProductsAndMeta()
           .then((data) => {
             console.log(data);
             resolve(data);
