@@ -87,6 +87,7 @@ ion-label {
 
 #service {
   ion-col {
+
     ion-button {
       width: 100%;
       white-space: pre-wrap;

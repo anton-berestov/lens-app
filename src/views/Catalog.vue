@@ -127,10 +127,11 @@ export default defineComponent({
   async mounted() {
     await this.getProducts()
     await this.getProductsAndMeta()
+    await this.getProduct(1)
   },
   methods: {
     ...mapMutations(['SET_FILTER']),
-    ...mapActions(['getProducts', 'getProductsAndMeta']),
+    ...mapActions(['getProducts', 'getProductsAndMeta', 'getProduct']),
     onProducer(id) {
       const prod = this.producer.find((el) => el.id === id)
       return prod.name

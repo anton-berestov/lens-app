@@ -2,7 +2,7 @@
 
   <ion-grid id='time-select-wrapper'>
     <ion-row>
-      <ion-col class='time-item' v-for='item in timeItems' :key='item.time' :disabled='!item.isFree'>
+      <ion-col class='time-item' :class='item.isFree ? "selectable" : "not-selectable"' v-for='item in timeItems' :key='item.time' :disabled='!item.isFree'>
         {{ item.time }}
       </ion-col>
     </ion-row>
@@ -56,6 +56,7 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
     padding: 5px 10px;
+    margin: 1px;
     gap: 10px;
 
     width: 50px;
@@ -70,6 +71,16 @@ export default defineComponent({
     flex: none;
     order: 0;
     flex-grow: 0;
+
+    &:hover, &:active {
+      background: var(--ion-color-primary);
+      color: var(--ion-color-primary-contrast);
+    }
+
+    &.not-selectable {
+      background: var(--ion-color-danger-tint);
+      color: var(--ion-color-primary-contrast);
+    }
   }
 
 }
