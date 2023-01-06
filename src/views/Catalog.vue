@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <Header title="Каталог" />
-    <ion-content :fullscreen="true">
+    <Content @refresh="refresh">
       <div class="container" style="margin: 5px">
         <ion-row class="ion-nowrap ion-justify-content-between search">
           <ion-searchbar
@@ -58,7 +58,7 @@
             :price="product.price"
             :img="product.image"
             :old-price="product.old_price"
-            :sale="product.discount"
+            :discount="product.discount"
             class="product"
             @click="
               $router.push({
@@ -71,17 +71,15 @@
           />
         </div>
       </div>
-
       <FilterModal :show="isFilter" @hide="hide" />
-    </ion-content>
+    </Content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import { defineComponent } from 'vue';
 import {
   IonPage,
-  IonContent,
   IonRow,
   IonButton,
   IonIcon,
@@ -92,21 +90,17 @@ import Header from '@/components/ui/Header.vue';
 import Product from '@/components/Product.vue';
 import FilterModal from '@/components/FilterModal.vue';
 import FilterElement from '@/components/FilterElement.vue';
-import {mapActions, mapGetters, mapMutations} from 'vuex';
-
-import { Product as ProductInterface } from '../interfaces/FrontendInterfaces'
-
-//import products from '../../public/mocha/products/products.json';
-import producer from '../../public/mocha/producer.json';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
+import Content from '@/components/ui/Content.vue';
 
 export default defineComponent({
   name: 'Catalog',
   components: {
+    Content,
     FilterElement,
     FilterModal,
     Product,
     Header,
-    IonContent,
     IonPage,
     IonRow,
     IonIcon,
@@ -116,80 +110,89 @@ export default defineComponent({
   },
   data: () => ({
     isFilter: false,
-    products: []
   }),
   computed: {
-    ...mapGetters(['filter']),
-    /*products(): ProductInterface[] {
-      return this.getProductsAndMeta() //products
-    },*/
-    producer() {
-      return producer
-    }
+    ...mapGetters(['filter', 'products']),
   },
   async mounted() {
-    this.products = await this.getProductsAndMeta();
-    await this.getProducts()
-    //await this.getProductsAndMeta()
-    await this.getProduct(1)
-    console.log('allMeta', await this.getMeta());
-    console.log('By Type', await this.getMeta({filters: {key: {'$eq': 'type'}}}));
-    console.log('By Period', await this.getMeta({filters: {key: {'$eq': 'period'}}}));
-    console.log('By Radius', await this.getMeta({filters: {key: {'$eq': 'radius'}}}));
-    console.log('By Sphere', await this.getMeta({filters: {key: {'$eq': 'sphere'}}}));
+    await this.getProducts({ populate: '*' });
 
+    await this.getProduct(1);
+    console.log('allMeta', await this.getMeta());
+    console.log(
+      'By Type',
+      await this.getMeta({ filters: { key: { $eq: 'type' } } })
+    );
+    console.log(
+      'By Period',
+      await this.getMeta({ filters: { key: { $eq: 'period' } } })
+    );
+    console.log(
+      'By Radius',
+      await this.getMeta({ filters: { key: { $eq: 'radius' } } })
+    );
+    console.log(
+      'By Sphere',
+      await this.getMeta({ filters: { key: { $eq: 'sphere' } } })
+    );
   },
   methods: {
     ...mapMutations(['SET_FILTER']),
-    ...mapActions(['getProducts', 'getProductsAndMeta', 'getProduct', 'getMeta']),
-    onProducer(id:any) {
-      const prod = this.producer.find((el:any) => el.id === id)
-      return prod?.name ?? ''
+    ...mapActions(['getProducts', 'getProduct', 'getMeta']),
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    async refresh(complete = () => {}) {
+      try {
+        await this.getProducts({ populate: '*' });
+      } finally {
+        complete();
+      }
     },
-    onFilter(products:any[]) {
-      let a:any = []
+    onFilter(products: any[]) {
+      let a: any = [];
       if (this.filter.type.length && !this.filter.period.length) {
-        let b = this.filter.type.map((type:any) => products.filter((el:any) => el.type_id.includes(type.id)))
+        let b = this.filter.type.map((type: any) =>
+          products.filter((el: any) => el.type_id.includes(type.id))
+        );
         if (b.length > 0) {
-          b.map((el:any) => {
-            el.map((e:any) => {
-              a.push(e)
-            })
-          })
+          b.map((el: any) => {
+            el.map((e: any) => {
+              a.push(e);
+            });
+          });
         }
       } else if (!this.filter.type.length && this.filter.period.length) {
-        let b = this.filter.period.map((period:any) => products.filter((el:any) => el.period_id.includes(period.id)))
+        let b = this.filter.period.map((period: any) =>
+          products.filter((el: any) => el.period_id.includes(period.id))
+        );
         if (b.length > 0) {
-          b.map((el:any) => {
-            el.map((e:any) => {
-              a.push(e)
-            })
-          })
+          b.map((el: any) => {
+            el.map((e: any) => {
+              a.push(e);
+            });
+          });
         }
       }
 
-      return a.length ? a : products
+      return a.length ? a : products;
     },
     hide() {
       this.isFilter = false;
     },
-    close(el:any) {
-      const a = {...this.filter};
+    close(el: any) {
+      const a = { ...this.filter };
 
       if (el.parent === 'sphere' || el.parent === 'radius') {
         for (let key in a[el.parent]) {
           delete a[el.parent][key];
         }
-        this.onFilter(this.products)
+        this.onFilter(this.products);
         this.SET_FILTER(a);
-
       }
 
       if (el.parent === 'type' || el.parent === 'period') {
-        a[el.parent] = a[el.parent].filter((e:any) => e.id !== el.value.id);
-        this.onFilter(this.products)
+        a[el.parent] = a[el.parent].filter((e: any) => e.id !== el.value.id);
+        this.onFilter(this.products);
         this.SET_FILTER(a);
-
       }
     },
   },

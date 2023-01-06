@@ -2,8 +2,8 @@
   <ion-card id="product-card">
     <ion-row class="ion-justify-content-center ion-align-items-center">
       <div class="image-box">
-        <div class="sale" v-if="sale">
-          <p class="sale-text">{{ `-${sale}%` }}</p>
+        <div class="sale" v-if="discount">
+          <p class="sale-text">{{ `-${discount}%` }}</p>
         </div>
         <swiper
           ref="swiper"
@@ -78,7 +78,7 @@ export default defineComponent({
       type: Array,
       default: () => [],
     },
-    sale: {
+    discount: {
       type: String,
       default: '',
     },
