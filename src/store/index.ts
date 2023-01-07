@@ -46,12 +46,12 @@ export default createStore({
     },
 
     async getProduct(context: any, id: number, params?: object) {
-      const product = await getProduct(id);
-      console.log('one product without params', product);
-      const productAll = await getProduct(id, { populate: '*' });
-      console.log('one product with params', productAll);
+      // const product = await getProduct(id, params);
+      // console.log('one product without params', product);
+      const product = await getProduct(id, { populate: '*' });
+      // console.log('one product with params', productAll);
 
-      return productAll;
+      return product;
     },
 
     async getMeta(context: any, params?: object) {

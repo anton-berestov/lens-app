@@ -57,7 +57,6 @@
             :title="product.short_title"
             :price="product.price"
             :img="product.image"
-            :old-price="product.old_price"
             :discount="product.discount"
             class="product"
             @click="

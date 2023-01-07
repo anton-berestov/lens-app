@@ -28,11 +28,11 @@
             <ion-label class="title">{{ product.short_title }}</ion-label>
           </ion-row>
           <ion-row class="ion-margin-top row">
-            <ion-label class="price">{{ product.price }}</ion-label>
+            <ion-label class="price">{{ discountPrice }} ₽</ion-label>
             <ion-label
               v-if="product.discount"
               class="ion-margin-start old-price"
-              >{{ product.old_price }}
+              >{{ product.price }} ₽
             </ion-label>
           </ion-row>
         </ion-row>
@@ -134,13 +134,14 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/zoom';
 import '@ionic/vue/css/ionic-swiper.css';
 import Content from "@/components/ui/Content.vue";
+import {discountPrice} from "@/helpers/discountPrice";
 
 
 export default defineComponent({
   name: 'Product',
   props: {
     id: {
-      type: String || Number,
+      type: String,
       default: null,
     },
   },
@@ -176,7 +177,7 @@ export default defineComponent({
       specification: true,
       description: false,
       delivery: false,
-      product : []
+      product: []
     };
   },
   async mounted() {
@@ -186,33 +187,39 @@ export default defineComponent({
     idProduct() {
       return this.id;
     },
-    radius () {
-      return radius.find((el)=> el.id === this.product.radius_id) || ''
+    discountPrice() {
+      return this.product.discount
+          ? discountPrice(this.product.price, this.product.discount)
+          : this.product.price;
+    },
+    radius() {
+      return radius.find((el) => el.id === this.product.radius_id) || ''
     },
     period() {
-      return periods.find((el)=> el.id === this.product.period_id) || ''
+      return periods.find((el) => el.id === this.product.period_id) || ''
     },
-    type(){
-      return types.find((el)=> el.id === this.product.type_id) || ''
+    type() {
+      return types.find((el) => el.id === this.product.type_id) || ''
     },
-    diameter(){
-      return sphere.find((el)=> el.id === this.product.sphere_id) || ''
+    diameter() {
+      return sphere.find((el) => el.id === this.product.sphere_id) || ''
     },
-    brand(){
-      return brand.find((el)=> el.id === this.product.brand_id) || ''
+    brand() {
+      return brand.find((el) => el.id === this.product.brand_id) || ''
     },
-    producer(){
-      return producer.find((el)=> el.id === this.product.producer_id) || ''
+    producer() {
+      return producer.find((el) => el.id === this.product.producer_id) || ''
     },
-    material(){
-      return material.find((el)=> el.id === this.product.material_id) || ''
+    material() {
+      return material.find((el) => el.id === this.product.material_id) || ''
     }
   },
   methods: {
     ...mapMutations(['SET_CART']),
     ...mapActions(['getProduct']),
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    async refresh(complete = () => {}) {
+    async refresh(complete = () => {
+    }) {
       try {
         this.product = await this.getProduct(this.idProduct);
       } finally {

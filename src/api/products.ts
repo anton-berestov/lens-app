@@ -1,9 +1,17 @@
-import { Product, Image, Brand, Producer, Characteristics } from '@/interfaces/FrontendInterfaces';
+import {
+  Product,
+  Image,
+  Brand,
+  Producer,
+  Characteristics,
+} from '@/interfaces/FrontendInterfaces';
 import { AxiosError, AxiosResponse } from 'axios';
 import qs from 'qs';
 import API from './index';
 
-export const getProducts = async (params?: any): Promise<Product[] | undefined> => {
+export const getProducts = async (
+  params?: any
+): Promise<Product[] | undefined> => {
   try {
     // empty paramstring
     let paramString = '';
@@ -26,9 +34,11 @@ export const getProducts = async (params?: any): Promise<Product[] | undefined> 
             images.push({
               id: Number(i.id),
               url: process.env.VUE_APP_API_PUBLIC + i.attributes.url,
-              thumbnailUrl: process.env.VUE_APP_API_PUBLIC + i.attributes.formats.thumbnail.url ?? '',
+              thumbnailUrl:
+                process.env.VUE_APP_API_PUBLIC +
+                  i.attributes.formats.thumbnail.url ?? '',
               alternativeText: '',
-              caption: ''
+              caption: '',
             });
           });
         }
@@ -56,24 +66,22 @@ export const getProducts = async (params?: any): Promise<Product[] | undefined> 
               id: m.id,
               key: m.attributes.key,
               value: m.attributes.value,
-              description: m.attributes.description
+              description: m.attributes.description,
             });
           });
         }
 
         products.push({
           id: p.id,
-          name: p.attributes.title,
           title: p.attributes.title,
           short_title: p.attributes.short_title,
           price: p.attributes.price,
-          old_price: p.attributes.old_price,
+          discount: p.attributes.discount,
           product_meta: characteristics,
           image: images,
           brand_id: brand.id,
-          producer_id: producer.id
+          producer_id: producer.id,
         });
-
       });
     }
     // console.log(products);
@@ -97,8 +105,10 @@ export const getProducts = async (params?: any): Promise<Product[] | undefined> 
 
 };*/
 
-export const getProduct = async (id: number, params?: any): Promise<Product | undefined> => {
-
+export const getProduct = async (
+  id: number,
+  params?: any
+): Promise<Product | undefined> => {
   try {
     // empty paramstring
     let paramString = '';
@@ -122,9 +132,11 @@ export const getProduct = async (id: number, params?: any): Promise<Product | un
           images.push({
             id: Number(i.id),
             url: process.env.VUE_APP_API_PUBLIC + i.attributes.url,
-            thumbnailUrl: process.env.VUE_APP_API_PUBLIC + i.attributes.formats.thumbnail.url ?? '',
+            thumbnailUrl:
+              process.env.VUE_APP_API_PUBLIC +
+                i.attributes.formats.thumbnail.url ?? '',
             alternativeText: '',
-            caption: ''
+            caption: '',
           });
         });
       }
@@ -152,22 +164,20 @@ export const getProduct = async (id: number, params?: any): Promise<Product | un
             id: m.id,
             key: m.attributes.key,
             value: m.attributes.value,
-            description: m.attributes.description
+            description: m.attributes.description,
           });
         });
       }
 
       product.id = p.id;
-      product.name = p.attributes.title;
       product.title = p.attributes.title;
       product.short_title = p.attributes.short_title;
       product.price = p.attributes.price;
-      product.old_price = p.attributes.old_price;
+      product.discount = p.attributes.discount;
       product.product_meta = characteristics;
       product.image = images;
       product.brand_id = brand.id;
       product.producer_id = producer.id;
-
     }
     // console.log(products);
     return product;
@@ -176,8 +186,9 @@ export const getProduct = async (id: number, params?: any): Promise<Product | un
   }
 };
 
-export const getMeta = async (params?: any): Promise<Characteristics[] | undefined> => {
-
+export const getMeta = async (
+  params?: any
+): Promise<Characteristics[] | undefined> => {
   try {
     // empty paramstring
     let paramString = '';

@@ -22,9 +22,11 @@
     <ion-card-header class="header">
       <ion-card-title class="title">{{ title }}</ion-card-title>
       <ion-row class="ion-align-items-center row">
-        <ion-card-subtitle class="price">{{ price }}</ion-card-subtitle>
-        <ion-card-subtitle class="old-price" v-if="oldPrice"
-          >{{ oldPrice }}
+        <ion-card-subtitle class="price"
+          >{{ discountPrice }} ₽</ion-card-subtitle
+        >
+        <ion-card-subtitle class="old-price" v-if="discount"
+          >{{ price }} ₽
         </ion-card-subtitle>
       </ion-row>
     </ion-card-header>
@@ -41,6 +43,7 @@ import {
   IonCardSubtitle,
   IonicSlides,
 } from '@ionic/vue';
+import { discountPrice } from '@/helpers/discountPrice';
 
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
@@ -70,10 +73,6 @@ export default defineComponent({
       type: String,
       default: '',
     },
-    oldPrice: {
-      type: String,
-      default: '',
-    },
     img: {
       type: Array,
       default: () => [],
@@ -82,6 +81,15 @@ export default defineComponent({
       type: String,
       default: '',
     },
+  },
+  components: {
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonRow,
+    IonCardSubtitle,
+    Swiper,
+    SwiperSlide,
   },
   data() {
     return {
@@ -100,14 +108,12 @@ export default defineComponent({
       ],
     };
   },
-  components: {
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonRow,
-    IonCardSubtitle,
-    Swiper,
-    SwiperSlide,
+  computed: {
+    discountPrice() {
+      return this.discount
+        ? discountPrice(this.price, this.discount)
+        : this.price;
+    },
   },
 });
 </script>
@@ -150,6 +156,7 @@ export default defineComponent({
       bottom: -3px !important;
       position: relative;
     }
+
     .swiper {
       .image {
         width: 100%;
