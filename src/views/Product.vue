@@ -118,13 +118,6 @@ import Delivery from '@/components/Delivery.vue';
 import Button from "@/components/ui/Button.vue";
 import {mapActions, mapMutations} from "vuex";
 
-import radius from '../../public/mocha/radius.json';
-import periods from '../../public/mocha/periods.json';
-import types from '../../public/mocha/types.json';
-import sphere from '../../public/mocha/sphere.json';
-import producer from '../../public/mocha/producer.json';
-import brand from '../../public/mocha/brand.json';
-import material from '../../public/mocha/material.json';
 
 import 'swiper/css';
 import 'swiper/css/autoplay';

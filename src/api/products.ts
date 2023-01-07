@@ -161,7 +161,7 @@ export const getProduct = async (
     const response = await API.get(`/products/${id}/?${paramString}`);
     if (response.data) {
       const p = response.data;
-      console.log(response.data);
+      // console.log(response.data);
 
       //extract images
       const images: Image[] = [];
