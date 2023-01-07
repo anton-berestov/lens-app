@@ -60,6 +60,7 @@ export default createStore({
     },
 
     async getProduct(context: any, id: number, params?: object) {
+      console.log(params);
       // const product = await getProduct(id, params);
       // console.log('one product without params', product);
       const product = await getProduct(id, { populate: '*' });
@@ -68,7 +69,7 @@ export default createStore({
       return product;
     },
 
-    async getTypes(context: any, params?: object) {
+    async getTypes(context: any) {
       return new Promise((resolve, reject) => {
         getCharacteristics('types')
           .then((data) => {
@@ -81,7 +82,7 @@ export default createStore({
           });
       });
     },
-    async getPeriod(context: any, params?: object) {
+    async getPeriod(context: any) {
       return new Promise((resolve, reject) => {
         getCharacteristics('periods')
           .then((data) => {
@@ -94,7 +95,7 @@ export default createStore({
           });
       });
     },
-    async getRadius(context: any, params?: object) {
+    async getRadius(context: any) {
       return new Promise((resolve, reject) => {
         getCharacteristics('radii')
           .then((data) => {
@@ -107,7 +108,7 @@ export default createStore({
           });
       });
     },
-    async getSphere(context: any, params?: object) {
+    async getSphere(context: any) {
       return new Promise((resolve, reject) => {
         getCharacteristics('spheres')
           .then((data) => {

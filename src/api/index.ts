@@ -1,7 +1,7 @@
-import axios, {AxiosInstance, AxiosResponse, AxiosError} from 'axios';
+import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 
 export default {
-  new():AxiosInstance {
+  new(): AxiosInstance {
     const req = axios.create({
       headers: {
         'Content-Type': 'application/json, charset=utf-8',
@@ -11,7 +11,7 @@ export default {
     });
     return req;
   },
-  get(url:string, params?:object):Promise<any> {
+  get(url: string, params?: object): Promise<any> {
     return this.new()
       .get(url, params)
       .then((res) => res.data)
@@ -19,7 +19,11 @@ export default {
         throw this.onError(err);
       });
   },
-  post(url:string, params:object, settings:object = {}):Promise<AxiosResponse | AxiosError> {
+  post(
+    url: string,
+    params: object,
+    settings: object = {}
+  ): Promise<AxiosResponse | AxiosError> {
     return this.new()
       .post(url, params, settings)
       .then((res) => res.data)
@@ -27,7 +31,7 @@ export default {
         throw this.onError(err);
       });
   },
-  put(url:string, params:object):Promise<AxiosResponse | AxiosError> {
+  put(url: string, params: object): Promise<AxiosResponse | AxiosError> {
     return this.new()
       .put(url, params)
       .then((res) => res.data)
@@ -35,7 +39,7 @@ export default {
         throw this.onError(err);
       });
   },
-  delete(url:string, params?:object):Promise<AxiosResponse | AxiosError> {
+  delete(url: string, params?: object): Promise<AxiosResponse | AxiosError> {
     return this.new()
       .delete(url, params)
       .then((res) => res.data)
@@ -43,9 +47,9 @@ export default {
         throw this.onError(err);
       });
   },
-  onError(err:any):Promise<AxiosResponse | AxiosError> {
+  onError(err: any): Promise<AxiosResponse | AxiosError> {
     const { response } = err;
-    console.error('API Request Error');
+    console.error('API Request Error', response);
     // if (response?.status === 401) {
     //   window.$store.dispatch('setError', { type: 'Unauthorized' });
     // } else if (response?.status === 403) {

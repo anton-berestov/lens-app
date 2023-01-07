@@ -11,7 +11,6 @@ import {
   Diameter,
   Characteristics,
 } from '@/interfaces/FrontendInterfaces';
-import { AxiosError, AxiosResponse } from 'axios';
 import qs from 'qs';
 import API from './index';
 
@@ -262,18 +261,10 @@ export const getProduct = async (
 };
 
 export const getCharacteristics = async (
-  url: any,
-  params?: any
+  url: any
 ): Promise<Characteristics[] | undefined> => {
   try {
-    // empty paramstring
-    let paramString = '';
-    // params include
-    if (params) {
-      paramString = qs.stringify(params);
-    }
-
-    const response = await API.get(`/${url}/?${paramString}`);
+    const response = await API.get(`/${url}`);
 
     const characteristics: Characteristics[] = [];
 
