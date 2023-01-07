@@ -14,7 +14,7 @@
     </Header>
     <ion-content :fullscreen="true">
       <Info
-        v-if="search.length && !products.length"
+        v-if="search.length && !onProducts.length"
         icon="assets/icon/empty.svg"
         title="Ничего не найдено"
         description="Напишите по-другому название товара или перейдите в каталог"
@@ -22,18 +22,17 @@
       />
       <ion-list class="ion-margin-top list">
         <ion-item
-          v-for="(product, index) in products"
-          :key="index"
+          v-for="product in onProducts"
+          :key="product.id"
           @click="$router.push({ name: 'Product', params: { id: product.id } })"
         >
           <ion-thumbnail slot="start">
-            <ion-img :src="product.image[0]" />
+            <ion-img :src="product.image[0].thumbnailUrl" />
           </ion-thumbnail>
 
           <ion-row class="ion-wrap">
-            <ion-title class="title">
-              {{ product.name }} {{ onBrand(product.brand_id) }}
-            </ion-title>
+            <ion-label class="title"> {{ product.title }}</ion-label>
+            <ion-label class="title"> {{ product.short_title }}</ion-label>
           </ion-row>
         </ion-item>
       </ion-list>
@@ -52,12 +51,11 @@ import {
   IonContent,
   IonImg,
   IonThumbnail,
-  IonTitle
+  IonLabel
 } from '@ionic/vue';
 import Header from '@/components/ui/Header.vue';
 import Info from '@/components/ui/Info.vue';
-import products from '../../public/mocha/products/products.json';
-import brand from '../../public/mocha/brand.json';
+import {mapGetters} from "vuex";
 
 export default defineComponent({
   name: 'Search',
@@ -72,7 +70,7 @@ export default defineComponent({
     IonContent,
     IonImg,
     IonThumbnail,
-    IonTitle
+    IonLabel
   },
   data() {
     return {
@@ -83,19 +81,16 @@ export default defineComponent({
     setTimeout(() => this.$refs.inputRef.$el.setFocus(), 20);
   },
   computed: {
-    products() {
+    ...mapGetters(['products']),
+    onProducts() {
       return this.search.length
-          ? products.filter((product) =>
-              product.name.toLowerCase().includes(this.search.toLowerCase())
+          ? this.products.filter((product) =>
+              product.title.toLowerCase().includes(this.search.toLowerCase()) || product.short_title.toLowerCase().includes(this.search.toLowerCase())
           )
-          : products;
+          : this.products;
     },
   },
   methods: {
-    onBrand(id) {
-      const el = brand.find((el) => el.id === id) || ''
-      return el.name
-    },
     update() {
       this.$router.push({name: 'Catalog'});
       this.search = '';
@@ -113,6 +108,9 @@ export default defineComponent({
   .title {
     text-align: start;
     padding: 0;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 135%;
   }
 }
 </style>
