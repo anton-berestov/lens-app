@@ -9,12 +9,12 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-margin-top" v-if="producer">
+    <ion-row class="ion-margin-top" v-if="manufacturer">
       <ion-col>
         <ion-label class="title">Производитель</ion-label>
       </ion-col>
       <ion-col>
-        <ion-title class="text">{{ producer }}</ion-title>
+        <ion-title class="text">{{ manufacturer }}</ion-title>
       </ion-col>
     </ion-row>
 
@@ -112,10 +112,10 @@ export default defineComponent({
   },
   props: {
     diameter: {
-      type: String || Number,
+      type: String,
       default: '',
     },
-    producer: {
+    manufacturer: {
       type: String,
       default: '',
     },

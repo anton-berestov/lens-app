@@ -18,7 +18,7 @@
 
         <ion-row class="ion-margin">
           <MultipleButton
-            :options="meta_products.period"
+            :options="period"
             :checked="filter.period"
             v-model="filter.period"
           />
@@ -38,7 +38,7 @@
         </ion-row>
         <ion-row class="ion-margin">
           <MultipleButton
-            :options="meta_products.type"
+            :options="type"
             :checked="filter.type"
             v-model="filter.type"
           />
@@ -48,7 +48,7 @@
           <ion-col style="padding-left: 0">
             <ion-title class="text">Сфера</ion-title>
             <Select
-              :options="meta_products.sphere"
+              :options="sphere"
               placeholder="Выбрать"
               class="ion-margin-top"
               @isOpen="openSelect"
@@ -58,7 +58,7 @@
           <ion-col style="padding-right: 0">
             <ion-title class="text">Радиус кривизны</ion-title>
             <Select
-              :options="meta_products.radius"
+              :options="radius"
               placeholder="Выбрать"
               class="ion-margin-top"
               @isOpen="openSelect"
@@ -168,7 +168,7 @@ export default defineComponent({
   }),
 
   computed: {
-    ...mapGetters({store_filter: 'filter', meta_products: 'meta_products'}),
+    ...mapGetters({store_filter: 'filter', type: 'type', radius: 'radius', sphere: 'sphere', period: 'period'}),
   },
 
   methods: {
@@ -181,8 +181,7 @@ export default defineComponent({
     },
     openPopover() {
       const messages = []
-      console.log(this.meta_products)
-      this.meta_products.type.map((el) => {
+      this.type.map((el) => {
         messages.push(el.description)
       })
       this.SET_POPOVER({show: true, message: messages})

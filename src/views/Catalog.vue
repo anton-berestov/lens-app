@@ -115,78 +115,75 @@ export default defineComponent({
   },
   async mounted() {
     await this.getProducts({ populate: '*' });
-    await this.getMetaProducts();
-    console.log('allMeta', await this.getMeta());
+    await this.getPeriods();
+    await this.getSpheres();
+    await this.getRadiuses();
+    await this.getTyps();
   },
   methods: {
-    ...mapMutations(['SET_FILTER', 'SET_META_PRODUCTS']),
-    ...mapActions(['getProducts', 'getProduct', 'getMeta']),
+    ...mapMutations([
+      'SET_FILTER',
+      'SET_META_PRODUCTS',
+      'SET_TYPE',
+      'SET_RADIUS',
+      'SET_RADIUS',
+      'SET_RADIUS',
+    ]),
+    ...mapActions([
+      'getProducts',
+      'getTypes',
+      'getRadius',
+      'getSphere',
+      'getPeriod',
+    ]),
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     async refresh(complete = () => {}) {
       try {
         await this.getProducts({ populate: '*' });
+        await this.getPeriods();
+        await this.getSpheres();
+        await this.getRadiuses();
+        await this.getTyps();
       } finally {
         complete();
       }
     },
-    async getMetaProducts() {
-      const meta = {
-        type: [],
-        period: [],
-        radius: [],
-        sphere: [],
-      };
-      meta.type = await this.getMeta({ filters: { key: { $eq: 'type' } } });
-      meta.period = await this.getMeta({ filters: { key: { $eq: 'period' } } });
-      meta.radius = await this.getMeta({ filters: { key: { $eq: 'radius' } } });
-      meta.sphere = await this.getMeta({ filters: { key: { $eq: 'sphere' } } });
-      this.SET_META_PRODUCTS(meta);
+    async getTyps() {
+      const types = await this.getTypes();
+      this.SET_TYPE(types);
     },
-    onFilter(products: any[]) {
-      let a: any = [];
-      if (this.filter.type.length && !this.filter.period.length) {
-        let b = this.filter.type.map((type: any) =>
-          products.filter((el: any) => el.type_id.includes(type.id))
-        );
-        if (b.length > 0) {
-          b.map((el: any) => {
-            el.map((e: any) => {
-              a.push(e);
-            });
-          });
-        }
-      } else if (!this.filter.type.length && this.filter.period.length) {
-        let b = this.filter.period.map((period: any) =>
-          products.filter((el: any) => el.period_id.includes(period.id))
-        );
-        if (b.length > 0) {
-          b.map((el: any) => {
-            el.map((e: any) => {
-              a.push(e);
-            });
-          });
-        }
-      }
-
-      return a.length ? a : products;
+    async getRadiuses() {
+      const radiuses = await this.getRadius();
+      this.SET_RADIUS(radiuses);
+    },
+    async getSpheres() {
+      const spheres = await this.getSphere();
+      this.SET_RADIUS(spheres);
+    },
+    async getPeriods() {
+      const periods = await this.getPeriod();
+      this.SET_RADIUS(periods);
     },
     hide() {
       this.isFilter = false;
     },
     close(el: any) {
       const a = { ...this.filter };
+      console.log(el);
 
       if (el.parent === 'sphere' || el.parent === 'radius') {
         for (let key in a[el.parent]) {
           delete a[el.parent][key];
         }
-        this.onFilter(this.products);
+        //TODO Отправляем на фильтрацию
         this.SET_FILTER(a);
       }
 
       if (el.parent === 'type' || el.parent === 'period') {
+        console.log();
         a[el.parent] = a[el.parent].filter((e: any) => e.id !== el.value.id);
-        this.onFilter(this.products);
+        console.log(a);
+        //TODO Отправляем на фильтрацию
         this.SET_FILTER(a);
       }
     },

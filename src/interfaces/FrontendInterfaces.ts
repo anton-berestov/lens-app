@@ -4,18 +4,17 @@ export interface Product {
   title: string;
   short_title: string;
   price: string;
-  old_price?: string;
-  image?: Array<Image>;
-  producer_id?: number;
-  brand_id?: number;
   discount?: string;
-  product_meta?: Array<Characteristics>;
-  // maybe to delete...
-  type_id?: number;
-  period_id?: number;
-  radius_id?: number;
-  sphere_id?: number;
-  material_id?: number;
+  // old_price?: string;
+  image?: Array<Image>;
+  brand?: string;
+  diameter?: string;
+  manufacturer?: string;
+  material?: string;
+  period?: string;
+  radius?: string;
+  sphere?: string;
+  type?: string;
 }
 
 // Image Interface to use in Frontend
@@ -32,14 +31,44 @@ export interface Brand {
   title: string;
 }
 
-export interface Producer {
+export interface Diameter {
   id: number;
   title: string;
 }
 
+export interface Manufacturer {
+  id: number;
+  title: string;
+}
+
+export interface Material {
+  id: number;
+  title: string;
+}
+
+export interface Period {
+  id: number;
+  title: string;
+}
+
+export interface Radius {
+  id: number;
+  title: string;
+}
+
+export interface Sphere {
+  id: number;
+  title: string;
+}
+
+export interface Type {
+  id: number;
+  title: string;
+  description: string;
+}
+
 export interface Characteristics {
-  id?: number;
-  key: string;
-  value: string;
-  description?: string;
+  id: number;
+  title: string;
+  description: string;
 }

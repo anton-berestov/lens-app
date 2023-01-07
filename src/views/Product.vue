@@ -74,13 +74,13 @@
         <ion-row>
           <Specification
             v-if="specification"
-            :brand="brand.name"
-            :producer="producer.name"
-            :type="type.name"
-            :period="period.name"
-            :radius="radius.name"
-            :diameter="diameter.name"
-            :material="material.name"
+            :diameter="product.diameter"
+            :manufacturer="product.manufacturer"
+            :type="product.type"
+            :brand="product.brand"
+            :period="product.period"
+            :material="product.material"
+            :radius="product.radius"
           />
           <Description v-if="description" />
           <Delivery v-if="delivery" />
@@ -192,27 +192,6 @@ export default defineComponent({
           ? discountPrice(this.product.price, this.product.discount)
           : this.product.price;
     },
-    radius() {
-      return radius.find((el) => el.id === this.product.radius_id) || ''
-    },
-    period() {
-      return periods.find((el) => el.id === this.product.period_id) || ''
-    },
-    type() {
-      return types.find((el) => el.id === this.product.type_id) || ''
-    },
-    diameter() {
-      return sphere.find((el) => el.id === this.product.sphere_id) || ''
-    },
-    brand() {
-      return brand.find((el) => el.id === this.product.brand_id) || ''
-    },
-    producer() {
-      return producer.find((el) => el.id === this.product.producer_id) || ''
-    },
-    material() {
-      return material.find((el) => el.id === this.product.material_id) || ''
-    }
   },
   methods: {
     ...mapMutations(['SET_CART']),

@@ -5,7 +5,7 @@
     </div>
     <div class="items" :class="{ selectHide: !open }">
       <div v-for="(option, i) of options" :key="i" @click="select(option)">
-        {{ option.value }}
+        {{ option.title }}
       </div>
     </div>
   </div>
@@ -40,7 +40,7 @@ export default defineComponent({
   },
   computed: {
     selected() {
-      return this.modelValue.value ? this.modelValue.value : this.placeholder;
+      return this.modelValue.title ? this.modelValue.title : this.placeholder;
     },
   },
   methods: {

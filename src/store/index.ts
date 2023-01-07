@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import { getProducts, getProduct, getMeta } from '@/api/products';
+import { getProducts, getProduct, getCharacteristics } from '@/api/products';
 
 const modules = {};
 
@@ -16,22 +16,33 @@ export default createStore({
       radius: {},
     },
     products: [],
-    meta_products: [],
+    characteristics: {
+      type: [],
+      period: [],
+      sphere: [],
+      radius: [],
+    },
     cart: Array<any>(),
   },
   getters: {
     popover: (state) => state.popover,
     filter: (state) => state.filter,
     products: (state) => state.products,
-    meta_products: (state) => state.meta_products,
     cart: (state) => state.cart,
+    type: (state) => state.characteristics.type,
+    period: (state) => state.characteristics.period,
+    sphere: (state) => state.characteristics.sphere,
+    radius: (state) => state.characteristics.radius,
   },
   mutations: {
     SET_POPOVER: (state, payload) => (state.popover = payload),
     SET_FILTER: (state, payload) => (state.filter = payload),
     SET_PRODUCTS: (state, payload) => (state.products = payload),
-    SET_META_PRODUCTS: (state, payload) => (state.meta_products = payload),
     SET_CART: (state, payload: any) => state.cart.push(payload),
+    SET_TYPE: (state, payload) => (state.characteristics.type = payload),
+    SET_PERIOD: (state, payload) => (state.characteristics.period = payload),
+    SET_SPHERE: (state, payload) => (state.characteristics.sphere = payload),
+    SET_RADIUS: (state, payload) => (state.characteristics.radius = payload),
   },
   actions: {
     async getProducts(context: any, params?: object) {
@@ -57,8 +68,57 @@ export default createStore({
       return product;
     },
 
-    async getMeta(context: any, params?: object) {
-      return await getMeta(params);
+    async getTypes(context: any, params?: object) {
+      return new Promise((resolve, reject) => {
+        getCharacteristics('types')
+          .then((data) => {
+            context.commit('SET_TYPE', data);
+            resolve(data);
+          })
+          .catch((e) => {
+            console.error(e);
+            reject(e);
+          });
+      });
+    },
+    async getPeriod(context: any, params?: object) {
+      return new Promise((resolve, reject) => {
+        getCharacteristics('periods')
+          .then((data) => {
+            context.commit('SET_PERIOD', data);
+            resolve(data);
+          })
+          .catch((e) => {
+            console.error(e);
+            reject(e);
+          });
+      });
+    },
+    async getRadius(context: any, params?: object) {
+      return new Promise((resolve, reject) => {
+        getCharacteristics('radii')
+          .then((data) => {
+            context.commit('SET_RADIUS', data);
+            resolve(data);
+          })
+          .catch((e) => {
+            console.error(e);
+            reject(e);
+          });
+      });
+    },
+    async getSphere(context: any, params?: object) {
+      return new Promise((resolve, reject) => {
+        getCharacteristics('spheres')
+          .then((data) => {
+            context.commit('SET_SPHERE', data);
+            resolve(data);
+          })
+          .catch((e) => {
+            console.error(e);
+            reject(e);
+          });
+      });
     },
   },
   modules,

@@ -4,10 +4,10 @@
       <label :class="{ checked: checked.includes(option) }">
         <input
           type="checkbox"
-          :value="option.value"
+          :value="option.title"
           @click="onChange(option)"
         />
-        <span>{{ option.value }}</span>
+        <span>{{ option.title }}</span>
       </label>
     </li>
   </ul>
