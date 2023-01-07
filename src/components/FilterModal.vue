@@ -18,7 +18,7 @@
 
         <ion-row class="ion-margin">
           <MultipleButton
-            :options="periods"
+            :options="meta_products.period"
             :checked="filter.period"
             v-model="filter.period"
           />
@@ -38,7 +38,7 @@
         </ion-row>
         <ion-row class="ion-margin">
           <MultipleButton
-            :options="types"
+            :options="meta_products.type"
             :checked="filter.type"
             v-model="filter.type"
           />
@@ -48,7 +48,7 @@
           <ion-col style="padding-left: 0">
             <ion-title class="text">Сфера</ion-title>
             <Select
-              :options="sphere"
+              :options="meta_products.sphere"
               placeholder="Выбрать"
               class="ion-margin-top"
               @isOpen="openSelect"
@@ -58,7 +58,7 @@
           <ion-col style="padding-right: 0">
             <ion-title class="text">Радиус кривизны</ion-title>
             <Select
-              :options="radius"
+              :options="meta_products.radius"
               placeholder="Выбрать"
               class="ion-margin-top"
               @isOpen="openSelect"
@@ -132,11 +132,6 @@ import Button from '@/components/ui/Button.vue'
 import Popover from "@/components/ui/Popover.vue";
 import MultipleButton from "@/components/ui/MultipleButton.vue";
 import {mapGetters, mapMutations} from "vuex";
-import types from '../../public/mocha/types.json';
-import periods from '../../public/mocha/periods.json';
-import sphere from '../../public/mocha/sphere.json';
-import radius from '../../public/mocha/radius.json';
-
 
 export default defineComponent({
   name: 'Filter',
@@ -164,8 +159,6 @@ export default defineComponent({
   },
   data: () => ({
     isActive: false,
-    periods: periods,
-    types: types,
     filter: {
       type: [],
       period: [],
@@ -175,18 +168,12 @@ export default defineComponent({
   }),
 
   computed: {
-    ...mapGetters({store_filter: 'filter'}),
-    sphere() {
-      return sphere
-    },
-    radius() {
-      return radius
-    }
+    ...mapGetters({store_filter: 'filter', meta_products: 'meta_products'}),
   },
 
   methods: {
     ...mapMutations(['SET_POPOVER', 'SET_FILTER']),
-    onChange(){
+    onChange() {
       this.filter = {...this.store_filter}
     },
     openSelect(e) {
@@ -194,8 +181,9 @@ export default defineComponent({
     },
     openPopover() {
       const messages = []
-      types.map((el)=> {
-        messages.push(el.desc)
+      console.log(this.meta_products)
+      this.meta_products.type.map((el) => {
+        messages.push(el.description)
       })
       this.SET_POPOVER({show: true, message: messages})
     },

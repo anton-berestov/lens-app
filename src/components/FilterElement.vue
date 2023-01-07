@@ -4,7 +4,7 @@
       <li v-for="(option, index) in options" :key="index">
         <label>
           <span>
-            {{ option.name }}
+            {{ option.value }}
             <img
               src="assets/icon/close.svg"
               class="img"
@@ -14,7 +14,7 @@
         </label>
         <label v-if="type">
           <span>
-            {{ options.name }}
+            {{ options.value }}
             <img src="assets/icon/close.svg" class="img" />
           </span>
         </label>
@@ -24,7 +24,7 @@
     <li v-if="type && Object.keys(options).length">
       <label>
         <span>
-          {{ options.name }}
+          {{ options.value }}
           <img
             src="assets/icon/close.svg"
             class="img"

@@ -16,18 +16,21 @@ export default createStore({
       radius: {},
     },
     products: [],
+    meta_products: [],
     cart: Array<any>(),
   },
   getters: {
     popover: (state) => state.popover,
     filter: (state) => state.filter,
     products: (state) => state.products,
+    meta_products: (state) => state.meta_products,
     cart: (state) => state.cart,
   },
   mutations: {
     SET_POPOVER: (state, payload) => (state.popover = payload),
     SET_FILTER: (state, payload) => (state.filter = payload),
     SET_PRODUCTS: (state, payload) => (state.products = payload),
+    SET_META_PRODUCTS: (state, payload) => (state.meta_products = payload),
     SET_CART: (state, payload: any) => state.cart.push(payload),
   },
   actions: {

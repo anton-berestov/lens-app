@@ -115,27 +115,11 @@ export default defineComponent({
   },
   async mounted() {
     await this.getProducts({ populate: '*' });
-
+    await this.getMetaProducts();
     console.log('allMeta', await this.getMeta());
-    console.log(
-      'By Type',
-      await this.getMeta({ filters: { key: { $eq: 'type' } } })
-    );
-    console.log(
-      'By Period',
-      await this.getMeta({ filters: { key: { $eq: 'period' } } })
-    );
-    console.log(
-      'By Radius',
-      await this.getMeta({ filters: { key: { $eq: 'radius' } } })
-    );
-    console.log(
-      'By Sphere',
-      await this.getMeta({ filters: { key: { $eq: 'sphere' } } })
-    );
   },
   methods: {
-    ...mapMutations(['SET_FILTER']),
+    ...mapMutations(['SET_FILTER', 'SET_META_PRODUCTS']),
     ...mapActions(['getProducts', 'getProduct', 'getMeta']),
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     async refresh(complete = () => {}) {
@@ -144,6 +128,19 @@ export default defineComponent({
       } finally {
         complete();
       }
+    },
+    async getMetaProducts() {
+      const meta = {
+        type: [],
+        period: [],
+        radius: [],
+        sphere: [],
+      };
+      meta.type = await this.getMeta({ filters: { key: { $eq: 'type' } } });
+      meta.period = await this.getMeta({ filters: { key: { $eq: 'period' } } });
+      meta.radius = await this.getMeta({ filters: { key: { $eq: 'radius' } } });
+      meta.sphere = await this.getMeta({ filters: { key: { $eq: 'sphere' } } });
+      this.SET_META_PRODUCTS(meta);
     },
     onFilter(products: any[]) {
       let a: any = [];

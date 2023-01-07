@@ -2,8 +2,12 @@
   <ul class="multiple-buttons">
     <li v-for="(option, index) in options" :key="index">
       <label :class="{ checked: checked.includes(option) }">
-        <input type="checkbox" :value="option.name" @click="onChange(option)" />
-        <span>{{ option.name }}</span>
+        <input
+          type="checkbox"
+          :value="option.value"
+          @click="onChange(option)"
+        />
+        <span>{{ option.value }}</span>
       </label>
     </li>
   </ul>
