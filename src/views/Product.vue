@@ -4,8 +4,8 @@
     <Content @refresh="refresh">
       <ion-list class="container">
         <ion-row class="ion-margin wrapper" style="position: relative">
-          <div class="sale" v-if="product.discount">
-            <p class="sale-text">{{ `-${product.discount}%` }}</p>
+          <div class="discount" v-if="product.discount">
+            <p class="discount-text">{{ `-${product.discount}%` }}</p>
           </div>
           <swiper
             ref="swiper"
@@ -239,7 +239,7 @@ export default defineComponent({
   overflow-y: auto;
 
   .wrapper {
-    .sale {
+    .discount {
       width: 40px;
       height: 21px;
       background: #c90433;
@@ -252,7 +252,7 @@ export default defineComponent({
       top: 15px;
       z-index: 99999;
 
-      .sale-text {
+      .discount-text {
         font-weight: 600;
         font-size: 12px;
         line-height: 15px;

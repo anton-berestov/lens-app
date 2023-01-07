@@ -2,8 +2,8 @@
   <ion-card id="product-card">
     <ion-row class="ion-justify-content-center ion-align-items-center">
       <div class="image-box">
-        <div class="sale" v-if="discount">
-          <p class="sale-text">{{ `-${discount}%` }}</p>
+        <div class="discount" v-if="discount">
+          <p class="discount-text">{{ `-${discount}%` }}</p>
         </div>
         <swiper
           ref="swiper"
@@ -130,7 +130,7 @@ export default defineComponent({
     padding: 5px;
     position: relative;
 
-    .sale {
+    .discount {
       width: 31px;
       height: 16px;
       background: #c90433;
@@ -143,7 +143,7 @@ export default defineComponent({
       top: 8px;
       z-index: 99999;
 
-      .sale-text {
+      .discount-text {
         font-weight: 600;
         font-size: 10px;
         line-height: 12px;

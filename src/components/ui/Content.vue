@@ -1,6 +1,6 @@
 <template>
   <ion-content ref="Content" :scroll-events="true" @ionScroll="onScroll">
-    <ion-grid class="ion-no-padding" fixed>
+    <ion-grid class="ion-no-padding container" fixed>
       <slot></slot>
     </ion-grid>
     <ion-refresher slot="fixed" @ionRefresh="doRefresh" class="refresher">
@@ -33,7 +33,6 @@ export default defineComponent({
   }),
   methods: {
     async doRefresh(e) {
-      clearTimeout(this.timeOutPull);
       await this.$emit('refresh', () => e.target.complete());
     },
     async refresh() {
@@ -61,6 +60,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.container {
+  height: 100%;
+}
+
 .refresher {
   background: rgba(222 222 222 / 0%);
 }
