@@ -81,6 +81,7 @@
             :period="product.period"
             :material="product.material"
             :radius="product.radius"
+            :sphere="product.sphere"
           />
           <Description v-if="description" />
           <Delivery v-if="delivery" />
