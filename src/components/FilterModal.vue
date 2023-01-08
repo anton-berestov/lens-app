@@ -45,7 +45,7 @@
         </ion-row>
 
         <ion-row class="ion-margin" :class="{ activeClass: isActive }">
-          <ion-col style="padding-left: 0">
+          <ion-col style="padding-left: 0" class="ion-margin-end">
             <ion-title class="text">Сфера</ion-title>
             <Select
               :options="sphere"
