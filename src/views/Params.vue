@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <Header title="Параметры" contact />
+    <Header title="Параметры" contact back />
     <ion-content class="params-content">
       <ion-row class="ion-margin">
         <ion-label>Для добавления в корзину выберите параметры линз</ion-label>

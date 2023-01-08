@@ -2,7 +2,7 @@
   <ion-segment
     value="left"
     @ionChange="changeSegment($event)"
-    class="container"
+    class="segment-container"
   >
     <ion-segment-button value="left" class="segment">
       <ion-label>{{ titleLeft }}</ion-label>
@@ -44,7 +44,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.container {
+.segment-container {
   --background: #ffffff;
   border: 1px solid #005944;
 
