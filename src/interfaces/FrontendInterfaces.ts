@@ -12,8 +12,8 @@ export interface Product {
   manufacturer?: string;
   material?: string;
   period?: string;
-  radius?: string;
-  sphere?: string;
+  radius?: Array<Radius>;
+  sphere?: Array<Sphere>;
   type?: string;
 }
 
