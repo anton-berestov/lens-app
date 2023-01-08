@@ -63,7 +63,22 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-margin-top" style="position: relative" v-if="radius">
+    <ion-row class="ion-margin-top" v-if="sphere.length">
+      <ion-col>
+        <ion-label class="title">Сфера</ion-label>
+      </ion-col>
+      <ion-col>
+        <span class="text" v-for="sph in sphere" :key="sph.id">{{
+          `${sph.title} `
+        }}</span>
+      </ion-col>
+    </ion-row>
+
+    <ion-row
+      class="ion-margin-top"
+      style="position: relative"
+      v-if="radius.length"
+    >
       <ion-col>
         <ion-label class="title">Радиус кривизны</ion-label>
         <ion-buttons class="btn-question-radius">
@@ -77,7 +92,14 @@
         </ion-buttons>
       </ion-col>
       <ion-col>
-        <ion-title class="text">{{ radius }}</ion-title>
+        <span
+          class="text"
+          v-for="(rad, index) in radius"
+          :key="index"
+          style="margin-left: 5px"
+        >
+          {{ `${rad.title} ` }}
+        </span>
       </ion-col>
     </ion-row>
   </ion-col>
@@ -136,8 +158,12 @@ export default defineComponent({
       default: '',
     },
     radius: {
-      type: String,
-      default: '',
+      type: Array,
+      default: () => [],
+    },
+    sphere: {
+      type: Array,
+      default: () => [],
     },
   },
   methods: {
