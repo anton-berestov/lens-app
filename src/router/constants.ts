@@ -6,3 +6,4 @@ export const PATH_PROFILE = '/profile';
 export const PATH_ACTIONS_NEWS = '/actions-news';
 export const PATH_SEARCH = '/catalog/search';
 export const PATH_PRODUCT = '/catalog/product/:id';
+export const PATH_PARAMS = '/catalog/product/params';

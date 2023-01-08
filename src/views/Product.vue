@@ -199,6 +199,7 @@ export default defineComponent({
       }
     },
     addInCart(product) {
+      this.$router.push({name: 'Params'})
       this.SET_CART(product)
     }
   },
