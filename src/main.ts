@@ -24,10 +24,23 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import YmapPlugin from 'vue-yandex-maps';
+
+const settings = {
+  apiKey: process.env.VUE_APP_YANDEX_KEY,
+  lang: 'ru_RU',
+  coordorder: 'latlong',
+  enterprise: false,
+  version: '2.1',
+};
+
 const app = createApp(App)
   .use(IonicVue, { mode: 'ios' })
   .use(store)
-  .use(router);
+  .use(router)
+  .use(YmapPlugin, settings);
 
 router.isReady().then(() => {
   app.mount('#app');

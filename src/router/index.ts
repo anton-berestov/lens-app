@@ -6,6 +6,7 @@ import {
   PATH_BASKET,
   PATH_CATALOG,
   PATH_HOME,
+  PATH_MAP,
   PATH_PARAMS,
   PATH_PRODUCT,
   PATH_PROFILE,
@@ -76,6 +77,11 @@ const routes: Array<RouteRecordRaw> = [
     path: PATH_ACTIONS_NEWS,
     name: 'ActionsNews',
     component: () => import('@/views/ActionsNews.vue'),
+  },
+  {
+    path: PATH_MAP,
+    name: 'Map',
+    component: () => import('@/views/Map.vue'),
   },
 ];
 

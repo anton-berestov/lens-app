@@ -28,6 +28,7 @@
 		"swiper": "^8.4.5",
 		"vue": "^3.2.21",
 		"vue-router": "^4.0.12",
+		"vue-yandex-maps": "^0.12.3",
 		"vuex": "^4.0.2"
 	},
 	"devDependencies": {
