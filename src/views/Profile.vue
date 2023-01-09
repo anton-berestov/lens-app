@@ -68,6 +68,7 @@
             <ion-col
               class="text-col ion-justify-content-between ion-align-items-center"
               style="display: flex"
+              @click="$router.push({ name: 'Chat' })"
             >
               <ion-label class="text">Написать в чат</ion-label>
               <ion-icon icon="assets/icon/arrow.svg"></ion-icon>

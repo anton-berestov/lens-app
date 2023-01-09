@@ -5,6 +5,7 @@ import {
   PATH_ACTIONS_NEWS,
   PATH_BASKET,
   PATH_CATALOG,
+  PATH_CHAT,
   PATH_HOME,
   PATH_MAP,
   PATH_PARAMS,
@@ -82,6 +83,11 @@ const routes: Array<RouteRecordRaw> = [
     path: PATH_MAP,
     name: 'Map',
     component: () => import('@/views/Map.vue'),
+  },
+  {
+    path: PATH_CHAT,
+    name: 'Chat',
+    component: () => import('@/views/Chat.vue'),
   },
 ];
 

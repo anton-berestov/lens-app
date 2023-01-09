@@ -25,7 +25,7 @@
         <ion-button @click="call">
           <ion-icon icon="assets/icon/call.svg" />
         </ion-button>
-        <ion-button>
+        <ion-button @click="$router.push({ name: 'Chat' })">
           <ion-icon icon="assets/icon/message.svg" />
         </ion-button>
       </ion-buttons>

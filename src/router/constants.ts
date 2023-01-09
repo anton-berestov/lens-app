@@ -8,3 +8,4 @@ export const PATH_SEARCH = '/catalog/search';
 export const PATH_PRODUCT = '/catalog/product/:id';
 export const PATH_PARAMS = '/catalog/product/params';
 export const PATH_MAP = '/map';
+export const PATH_CHAT = '/chat';
