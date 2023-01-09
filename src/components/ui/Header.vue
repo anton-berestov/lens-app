@@ -19,10 +19,10 @@
       <slot name="search"></slot>
 
       <ion-buttons slot="end" class="button-box" v-if="contact">
-        <ion-button>
-          <ion-icon icon="assets/icon/location.svg" />
+        <ion-button class="location" @click="$router.push({ name: 'Map' })">
+          <ion-icon icon="assets/icon/location.svg" class="icon-svg" />
         </ion-button>
-        <ion-button>
+        <ion-button @click="call">
           <ion-icon icon="assets/icon/call.svg" />
         </ion-button>
         <ion-button>
@@ -79,6 +79,10 @@ export default defineComponent({
   methods: {
     onBack() {
       this.$router.back();
+    },
+    call() {
+      const win: Window = window;
+      win.location = 'tel:+79502822722';
     },
   },
 });
