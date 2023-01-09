@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package a.berestov.test;
 
 import com.getcapacitor.BridgeActivity;
 
