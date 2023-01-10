@@ -7,6 +7,7 @@ import {
   PATH_BASKET,
   PATH_CATALOG,
   PATH_CHAT,
+  PATH_CHECK_SMS,
   PATH_HOME,
   PATH_MAP,
   PATH_PARAMS,
@@ -94,6 +95,11 @@ const routes: Array<RouteRecordRaw> = [
     path: PATH_AUTH,
     name: 'Auth',
     component: () => import('@/views/Auth.vue'),
+  },
+  {
+    path: PATH_CHECK_SMS,
+    name: 'CheckSms',
+    component: () => import('@/views/CheckSms.vue'),
   },
 ];
 

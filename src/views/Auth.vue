@@ -11,7 +11,7 @@
         <ion-row>
           <ion-item class="input-item">
             <input
-              type="tel"
+              inputmode="tel"
               ref="phone"
               class="input"
               v-model="phone"
@@ -29,6 +29,7 @@
             title="Получить код"
             :disabled="disabled"
             class="button-code"
+            @click="$router.push({ name: 'CheckSms' })"
           />
           <ion-label class="ion-margin-start ion-margin-end data-text"
             >Оформляя заказ, вы даете согласие на

@@ -10,3 +10,4 @@ export const PATH_PARAMS = '/catalog/product/params';
 export const PATH_MAP = '/map';
 export const PATH_CHAT = '/chat';
 export const PATH_AUTH = '/auth';
+export const PATH_CHECK_SMS = '/check-sms';
