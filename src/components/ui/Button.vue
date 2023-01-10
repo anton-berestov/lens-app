@@ -1,6 +1,8 @@
 <template>
   <ion-buttons class="btn">
-    <ion-button fill="solid" class="custom-btn">{{ title }}</ion-button>
+    <ion-button fill="solid" class="custom-btn" :disabled="disabled">{{
+      title
+    }}</ion-button>
   </ion-buttons>
 </template>
 
@@ -14,6 +16,10 @@ export default defineComponent({
     title: {
       type: String,
       default: '',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   components: {

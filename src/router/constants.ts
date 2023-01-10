@@ -9,3 +9,4 @@ export const PATH_PRODUCT = '/catalog/product/:id';
 export const PATH_PARAMS = '/catalog/product/params';
 export const PATH_MAP = '/map';
 export const PATH_CHAT = '/chat';
+export const PATH_AUTH = '/auth';

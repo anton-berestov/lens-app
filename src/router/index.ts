@@ -3,6 +3,7 @@ import { RouteRecordRaw } from 'vue-router';
 import FooterTabs from '../views/FooterTabs.vue';
 import {
   PATH_ACTIONS_NEWS,
+  PATH_AUTH,
   PATH_BASKET,
   PATH_CATALOG,
   PATH_CHAT,
@@ -88,6 +89,11 @@ const routes: Array<RouteRecordRaw> = [
     path: PATH_CHAT,
     name: 'Chat',
     component: () => import('@/views/Chat.vue'),
+  },
+  {
+    path: PATH_AUTH,
+    name: 'Auth',
+    component: () => import('@/views/Auth.vue'),
   },
 ];
 

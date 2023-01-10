@@ -4,6 +4,7 @@ import router from './router';
 import store from './store/index';
 
 import { IonicVue } from '@ionic/vue';
+import Maska from 'maska';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -40,7 +41,8 @@ const app = createApp(App)
   .use(IonicVue, { mode: 'ios' })
   .use(store)
   .use(router)
-  .use(YmapPlugin, settings);
+  .use(YmapPlugin, settings)
+  .use(Maska);
 
 router.isReady().then(() => {
   app.mount('#app');

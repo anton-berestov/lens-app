@@ -76,6 +76,17 @@
           </ion-row>
         </ion-card-content>
       </ion-card>
+
+      <ion-row class="ion-margin swiper-slide-shadow-bottom">
+        <ion-label class="text-no-auth"
+          >Войдите в профиль для оформления заказов или записи к врачу
+        </ion-label>
+      </ion-row>
+      <Button
+        title="Войти"
+        class="auth-button"
+        @click="$router.push({ name: 'Auth' })"
+      />
     </Content>
   </ion-page>
 </template>
@@ -94,10 +105,12 @@ import {
 } from '@ionic/vue';
 import Header from '@/components/ui/Header.vue';
 import Content from '@/components/ui/Content.vue';
+import Button from '@/components/ui/Button.vue';
 
 export default defineComponent({
   name: 'Profile',
   components: {
+    Button,
     Content,
     Header,
     IonPage,
@@ -156,5 +169,16 @@ export default defineComponent({
       }
     }
   }
+}
+
+.text-no-auth {
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 130%;
+  text-align: center;
+}
+
+.auth-button {
+  margin: 20px 10px;
 }
 </style>
