@@ -24,12 +24,16 @@
           </ion-item>
         </ion-row>
 
-        <ion-row>
+        <ion-row class="row">
           <Button
             title="Получить код"
             :disabled="disabled"
             class="button-code"
           />
+          <ion-label class="ion-margin-start ion-margin-end data-text"
+            >Оформляя заказ, вы даете согласие на
+            <a href="#">обработку персональных данных</a>
+          </ion-label>
         </ion-row>
       </ion-list>
     </ion-content>
@@ -71,9 +75,9 @@ export default defineComponent({
   },
   methods: {
     changePhone() {
-      if (this.phone.length === 18) {
-        this.disabled = false;
-      }
+      this.phone.length === 18
+        ? (this.disabled = false)
+        : (this.disabled = true);
     },
   },
 });
@@ -103,8 +107,30 @@ export default defineComponent({
       outline: none;
     }
   }
-  .button-code {
+
+  .row {
+    position: absolute;
+    bottom: 30px;
+    justify-content: center;
     width: 100%;
+    display: flex;
+
+    .button-code {
+      width: 100%;
+      margin: 0 5px;
+    }
+
+    .data-text {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 130%;
+      color: #6f6f6f;
+
+      a {
+        color: #097ac6;
+        text-decoration: none;
+      }
+    }
   }
 }
 </style>
