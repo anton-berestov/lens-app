@@ -1,7 +1,8 @@
 <template>
   <ion-page>
     <Header title="Каталог" />
-    <Content @refresh="refresh">
+    <Loading v-if="loading" />
+    <Content @refresh="refresh" v-if="!loading">
       <div class="container" style="margin: 5px">
         <ion-row class="ion-nowrap ion-justify-content-between search">
           <ion-searchbar
@@ -91,10 +92,12 @@ import FilterModal from '@/components/FilterModal.vue';
 import FilterElement from '@/components/FilterElement.vue';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import Content from '@/components/ui/Content.vue';
+import Loading from '@/components/ui/Loading.vue';
 
 export default defineComponent({
   name: 'Catalog',
   components: {
+    Loading,
     Content,
     FilterElement,
     FilterModal,
@@ -109,16 +112,19 @@ export default defineComponent({
   },
   data: () => ({
     isFilter: false,
+    loading: false,
   }),
   computed: {
     ...mapGetters(['filter', 'products']),
   },
   async mounted() {
+    this.loading = true;
     await this.getProducts({ populate: '*' });
     await this.getPeriods();
     await this.getSpheres();
     await this.getRadiuses();
     await this.getTyps();
+    this.loading = false;
   },
   methods: {
     ...mapMutations([

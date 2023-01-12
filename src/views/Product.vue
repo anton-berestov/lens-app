@@ -1,7 +1,8 @@
 <template>
   <ion-page>
     <Header back title="Линзы" />
-    <Content @refresh="refresh">
+    <Loading v-if="loading" />
+    <Content @refresh="refresh" v-if="!loading">
       <ion-list class="container">
         <ion-row class="ion-margin wrapper" style="position: relative">
           <div class="discount" v-if="product.discount">
@@ -128,7 +129,9 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/zoom';
 import '@ionic/vue/css/ionic-swiper.css';
 import Content from "@/components/ui/Content.vue";
+import Loading from "@/components/ui/Loading.vue";
 import {discountPrice} from "@/helpers/discountPrice";
+
 
 
 export default defineComponent({
@@ -140,6 +143,7 @@ export default defineComponent({
     },
   },
   components: {
+    Loading,
     Content,
     Button,
     Header,
@@ -171,11 +175,14 @@ export default defineComponent({
       specification: true,
       description: false,
       delivery: false,
-      product: []
+      product: [],
+      loading: false
     };
   },
   async mounted() {
+    this.loading = true
     this.product = await this.getProduct(this.idProduct);
+    this.loading = false
   },
   computed: {
     idProduct() {

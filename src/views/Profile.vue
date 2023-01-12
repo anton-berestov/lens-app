@@ -1,7 +1,8 @@
 <template>
   <ion-page>
     <Header title="Профиль" contact />
-    <Content>
+    <Loading v-if="loading" />
+    <Content v-if="!loading">
       <ion-card class="contact">
         <ion-card-content class="content">
           <ion-list>
@@ -12,7 +13,14 @@
                   style="display: flex; align-items: center"
                   >{{ `${user.firstname} ${user.lastname}` }}
                   <ion-buttons>
-                    <ion-button>
+                    <ion-button
+                      @click="
+                        $router.replace({
+                          name: 'EditProfile',
+                          params: { id: user.id },
+                        })
+                      "
+                    >
                       <ion-icon
                         size="small"
                         slot="icon-only"
@@ -163,7 +171,7 @@
         </ion-card-content>
       </ion-card>
 
-      <ion-row class="row">
+      <ion-row class="row" v-if="!Object.keys(user).length">
         <ion-row class="ion-margin swiper-slide-shadow-bottom">
           <ion-label class="text-no-auth"
             >Войдите в профиль для оформления заказов или записи к врачу
@@ -198,10 +206,12 @@ import Header from '@/components/ui/Header.vue';
 import Content from '@/components/ui/Content.vue';
 import Button from '@/components/ui/Button.vue';
 import { mapActions, mapGetters } from 'vuex';
+import Loading from '@/components/ui/Loading.vue';
 
 export default defineComponent({
   name: 'Profile',
   components: {
+    Loading,
     Button,
     Content,
     Header,
@@ -217,14 +227,21 @@ export default defineComponent({
     IonButtons,
     IonButton,
   },
+  data() {
+    return {
+      loading: false,
+    };
+  },
   computed: {
     ...mapGetters(['user']),
   },
   methods: {
     ...mapActions(['getUser']),
   },
-  mounted() {
-    this.getUser();
+  async mounted() {
+    this.loading = true;
+    await this.getUser();
+    this.loading = false;
   },
 });
 </script>
@@ -297,10 +314,6 @@ export default defineComponent({
 }
 
 .row {
-  position: absolute;
-  bottom: 30px;
-  width: 100%;
-
   .text-no-auth {
     font-weight: 300;
     font-size: 14px;
