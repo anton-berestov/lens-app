@@ -1,5 +1,5 @@
 <template>
-  <ion-content class="wrapper">
+  <ion-content class="info-wrapper">
     <div class="vector">
       <img :src="icon" />
     </div>
@@ -7,18 +7,12 @@
       <p class="title">{{ title }}</p>
       <p class="description">{{ description }}</p>
     </div>
-    <Button
-      title="Перейти в каталог"
-      class="ion-justify-content-center button"
-      @click="$emit('update')"
-    />
   </ion-content>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 import { IonContent } from '@ionic/vue';
-import Button from '@/components/ui/Button.vue';
 
 export default defineComponent({
   name: 'Info',
@@ -38,14 +32,13 @@ export default defineComponent({
   },
   emits: ['update'],
   components: {
-    Button,
     IonContent,
   },
 });
 </script>
 
 <style scoped lang="scss">
-.wrapper {
+.info-wrapper {
   .vector {
     background: url('../../../public/assets/image/vector.png');
     background-repeat: no-repeat;
@@ -56,6 +49,7 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
   }
+
   .text {
     margin: 0 27px;
 
@@ -66,21 +60,13 @@ export default defineComponent({
       text-align: center;
       margin: 0;
     }
+
     .description {
       font-weight: 400;
       font-size: 14px;
       line-height: 135%;
       text-align: center;
     }
-  }
-
-  .button {
-    bottom: 40px;
-    position: absolute;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
   }
 }
 </style>
