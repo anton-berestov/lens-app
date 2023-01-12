@@ -8,6 +8,8 @@ import {
   PATH_CATALOG,
   PATH_CHAT,
   PATH_CHECK_SMS,
+  PATH_HISTORY_ORDER,
+  PATH_HISTORY_RECORD,
   PATH_HOME,
   PATH_MAP,
   PATH_PARAMS,
@@ -100,6 +102,16 @@ const routes: Array<RouteRecordRaw> = [
     path: PATH_CHECK_SMS,
     name: 'CheckSms',
     component: () => import('@/views/CheckSms.vue'),
+  },
+  {
+    path: PATH_HISTORY_RECORD,
+    name: 'RecordHistory',
+    component: () => import('@/views/RecordHistory.vue'),
+  },
+  {
+    path: PATH_HISTORY_ORDER,
+    name: 'OrderHistory',
+    component: () => import('@/views/OrderHistory.vue'),
   },
 ];
 

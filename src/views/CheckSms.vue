@@ -100,7 +100,7 @@ export default defineComponent({
   },
 
   created() {
-    setTimeout((x) => {
+    setTimeout(() => {
       this.$nextTick(() => this.setFocus());
     }, 1000);
   },

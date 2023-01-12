@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 import { getProducts, getProduct, getCharacteristics } from '@/api/products';
+import { getUser } from '@/api/user';
 
 const modules = {};
 
@@ -22,6 +23,7 @@ export default createStore({
       sphere: [],
       radius: [],
     },
+    user: {},
     cart: Array<any>(),
   },
   getters: {
@@ -33,6 +35,7 @@ export default createStore({
     period: (state) => state.characteristics.period,
     sphere: (state) => state.characteristics.sphere,
     radius: (state) => state.characteristics.radius,
+    user: (state) => state.user,
   },
   mutations: {
     SET_POPOVER: (state, payload) => (state.popover = payload),
@@ -43,6 +46,7 @@ export default createStore({
     SET_PERIOD: (state, payload) => (state.characteristics.period = payload),
     SET_SPHERE: (state, payload) => (state.characteristics.sphere = payload),
     SET_RADIUS: (state, payload) => (state.characteristics.radius = payload),
+    SET_USER: (state, payload) => (state.user = payload),
   },
   actions: {
     async getProducts(context: any, params?: object) {
@@ -113,6 +117,19 @@ export default createStore({
         getCharacteristics('spheres')
           .then((data) => {
             context.commit('SET_SPHERE', data);
+            resolve(data);
+          })
+          .catch((e) => {
+            console.error(e);
+            reject(e);
+          });
+      });
+    },
+    async getUser(context: any) {
+      return new Promise((resolve, reject) => {
+        getUser(1)
+          .then((data) => {
+            context.commit('SET_USER', data);
             resolve(data);
           })
           .catch((e) => {
