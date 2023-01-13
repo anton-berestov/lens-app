@@ -24,6 +24,7 @@ export default createStore({
       radius: [],
     },
     user: {},
+    token: '',
     cart: Array<any>(),
   },
   getters: {
@@ -36,6 +37,7 @@ export default createStore({
     sphere: (state) => state.characteristics.sphere,
     radius: (state) => state.characteristics.radius,
     user: (state) => state.user,
+    token: (state) => state.token,
   },
   mutations: {
     SET_POPOVER: (state, payload) => (state.popover = payload),
@@ -47,6 +49,7 @@ export default createStore({
     SET_SPHERE: (state, payload) => (state.characteristics.sphere = payload),
     SET_RADIUS: (state, payload) => (state.characteristics.radius = payload),
     SET_USER: (state, payload) => (state.user = payload),
+    SET_TOKEN: (state, payload) => (state.token = payload),
   },
   actions: {
     async getProducts(context: any, params?: object) {
