@@ -65,11 +65,15 @@ export default defineComponent({
 }
 
 .refresher {
-  background: rgba(222 222 222 / 0%);
+  background: #ecebeb;
 }
 
 .refresher-content {
-  background: #dedede;
+  background: #ecebeb;
   height: 100%;
+}
+
+.refresher-completing {
+  display: none;
 }
 </style>
