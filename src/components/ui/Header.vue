@@ -25,7 +25,7 @@
         <ion-button @click="call">
           <ion-icon icon="assets/icon/call.svg" />
         </ion-button>
-        <ion-button @click="$router.push({ name: 'Chat' })">
+        <ion-button @click="chat">
           <ion-icon icon="assets/icon/message.svg" />
         </ion-button>
       </ion-buttons>
@@ -83,6 +83,10 @@ export default defineComponent({
     call() {
       const win: Window = window;
       win.location = 'tel:+79502822722';
+    },
+    chat() {
+      const win: Window = window;
+      win.location = 'https://wa.me/+79502822722';
     },
   },
 });

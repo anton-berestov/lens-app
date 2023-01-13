@@ -1,11 +1,19 @@
 import { UserInterfase } from '@/interfaces/UserInterfase';
 import API from '@/api/index';
 
-export const getUser = async (id: any): Promise<UserInterfase | undefined> => {
+export const getUser = async (): Promise<UserInterfase | undefined> => {
+  const params = {
+    identifier: '8berestov8',
+    password: '123456789',
+  };
   try {
-    const response = await API.get(`/users/${id}`);
+    const { user, jwt }: any = await API.post(`/auth/local`, params);
 
-    const user: UserInterfase = {
+    if (jwt) {
+      localStorage.setItem('jwt', jwt);
+    }
+
+    const User: UserInterfase = {
       id: 0,
       firstname: '',
       lastname: '',
@@ -15,15 +23,15 @@ export const getUser = async (id: any): Promise<UserInterfase | undefined> => {
       phone: '',
     };
 
-    user.id = response.id;
-    user.firstname = response.firstname;
-    user.lastname = response.lastname;
-    user.patronymic = response.patronymic;
-    user.birthday = response.birthday;
-    user.email = response.email;
-    user.phone = response.phone;
+    User.id = user.id;
+    User.firstname = user.firstname;
+    User.lastname = user.lastname;
+    User.patronymic = user.patronymic;
+    User.birthday = user.birthday;
+    User.email = user.email;
+    User.phone = user.phone;
 
-    return user;
+    return User;
   } catch (e) {
     console.error(e);
   }

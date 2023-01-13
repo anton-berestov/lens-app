@@ -127,7 +127,7 @@ export default createStore({
     },
     async getUser(context: any) {
       return new Promise((resolve, reject) => {
-        getUser(1)
+        getUser()
           .then((data) => {
             context.commit('SET_USER', data);
             resolve(data);
