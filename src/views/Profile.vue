@@ -3,7 +3,7 @@
     <Header title="Профиль" contact />
     <Loading v-if="loading" />
     <Content v-if="!loading">
-      <ion-card class="contact">
+      <ion-card class="contact" v-if="token">
         <ion-card-content class="content">
           <ion-list>
             <ion-item>
@@ -15,7 +15,7 @@
                   <ion-buttons>
                     <ion-button
                       @click="
-                        $router.replace({
+                        $router.push({
                           name: 'EditProfile',
                           params: { id: user.id },
                         })
@@ -171,7 +171,7 @@
         </ion-card-content>
       </ion-card>
 
-      <ion-row class="row" v-if="!Object.keys(user).length">
+      <ion-row class="row" v-if="!token">
         <ion-row class="ion-margin swiper-slide-shadow-bottom">
           <ion-label class="text-no-auth"
             >Войдите в профиль для оформления заказов или записи к врачу
@@ -233,7 +233,7 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapGetters(['user']),
+    ...mapGetters(['user', 'token']),
   },
   methods: {
     ...mapActions(['getUser']),

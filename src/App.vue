@@ -7,12 +7,22 @@
 <script lang="ts">
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
 import { defineComponent } from 'vue';
+import { mapMutations } from 'vuex';
 
 export default defineComponent({
   name: 'App',
   components: {
     IonApp,
     IonRouterOutlet,
+  },
+  methods: {
+    ...mapMutations(['SET_TOKEN']),
+  },
+  mounted() {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      this.SET_TOKEN(token);
+    }
   },
 });
 </script>
