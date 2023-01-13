@@ -86,7 +86,7 @@ export default defineComponent({
     },
     chat() {
       const win: Window = window;
-      win.location = 'https://wa.me/+79502822722';
+      win.location = 'https://wa.me/79502822722';
     },
   },
 });
