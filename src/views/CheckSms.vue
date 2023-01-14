@@ -12,6 +12,7 @@
               ref="code"
               input-classes="input"
               separator=""
+              inputmode="tel"
               :num-inputs="4"
               :should-auto-focus="true"
               :is-input-num="true"
@@ -53,6 +54,7 @@ import {
 import Header from '@/components/ui/Header.vue';
 import Button from '@/components/ui/Button.vue';
 import VOtpInput from 'vue3-otp-input';
+import { mapActions, mapGetters } from 'vuex';
 
 export default defineComponent({
   name: 'CheckSms',
@@ -83,14 +85,27 @@ export default defineComponent({
       }
     },
   },
+  computed: {
+    ...mapGetters(['token', 'user']),
+  },
   methods: {
+    ...mapActions(['Auth']),
     setFocus() {
       console.log(this.$refs.code);
-      this.$refs.code.focusInput(-1);
+      this.$refs.code.focusInput(0);
     },
-    handleOnComplete(value) {
+    async handleOnComplete(value) {
       this.smsCode = value;
       console.log('OTP completed: ', value);
+      await this.Auth();
+      if (
+        this.token &&
+        this.user.firstname &&
+        this.user.lastname &&
+        this.user.patronymic
+      ) {
+        this.$router.replace({ name: 'Profile' });
+      }
     },
     pereatCode() {
       this.currentTime = 60;
@@ -107,15 +122,13 @@ export default defineComponent({
     },
   },
   mounted() {
+    setTimeout(() => {
+      this.$nextTick(() => this.setFocus());
+    }, 1000);
     this.startTimer();
   },
   unmounted() {
     this.stopTimer();
-  },
-  created() {
-    // setTimeout(() => {
-    //   this.$nextTick(() => this.setFocus());
-    // }, 1000);
   },
 });
 </script>

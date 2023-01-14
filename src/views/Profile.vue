@@ -236,7 +236,6 @@ export default defineComponent({
     ...mapGetters(['user', 'token']),
   },
   methods: {
-    ...mapActions(['getUser']),
     chat() {
       const win: Window = window;
       win.location = 'https://wa.me/79502822722';
@@ -244,7 +243,6 @@ export default defineComponent({
   },
   async mounted() {
     this.loading = true;
-    await this.getUser();
     this.loading = false;
   },
 });

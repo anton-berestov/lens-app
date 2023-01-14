@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
 import { getProducts, getProduct, getCharacteristics } from '@/api/products';
-import { getUser } from '@/api/user';
+import { Auth } from '@/api/user';
 
 const modules = {};
 
@@ -128,9 +128,9 @@ export default createStore({
           });
       });
     },
-    async getUser(context: any) {
+    async Auth(context: any) {
       return new Promise((resolve, reject) => {
-        getUser()
+        Auth()
           .then((data) => {
             context.commit('SET_USER', data);
             resolve(data);

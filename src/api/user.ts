@@ -1,7 +1,7 @@
 import { UserInterfase } from '@/interfaces/UserInterfase';
 import API from '@/api/index';
 
-export const getUser = async (): Promise<UserInterfase | undefined> => {
+export const Auth = async (): Promise<UserInterfase | undefined> => {
   const params = {
     identifier: '8berestov8',
     password: '123456789',
