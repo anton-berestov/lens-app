@@ -21,8 +21,19 @@
           </ion-item>
         </ion-row>
 
-        <ion-row class="row">
-          <Button title="Повторный код" class="button-code" />
+        <ion-row class="ion-margin row" v-if="!repeat">
+          <ion-label class="repeat-title">
+            {{
+              `Повторная отправка кода подтверждения возможна через ${currentTime} сек`
+            }}
+          </ion-label>
+        </ion-row>
+        <ion-row class="row" v-if="repeat">
+          <Button
+            title="Повторный код"
+            class="button-code"
+            @click="pereatCode"
+          />
         </ion-row>
       </ion-list>
     </ion-content>
@@ -59,23 +70,52 @@ export default defineComponent({
   data() {
     return {
       smsCode: '',
+      repeat: false,
+      currentTime: 60,
+      timer: null,
     };
   },
+  watch: {
+    currentTime(time) {
+      if (time === 0) {
+        this.repeat = true;
+        this.stopTimer();
+      }
+    },
+  },
   methods: {
-    setFocus: function () {
+    setFocus() {
       console.log(this.$refs.code);
-      this.$refs.code.focusInput(0);
+      this.$refs.code.focusInput(-1);
     },
     handleOnComplete(value) {
       this.smsCode = value;
       console.log('OTP completed: ', value);
     },
+    pereatCode() {
+      this.currentTime = 60;
+      this.startTimer();
+      this.repeat = false;
+    },
+    startTimer() {
+      this.timer = setInterval(() => {
+        this.currentTime--;
+      }, 1000);
+    },
+    stopTimer() {
+      clearTimeout(this.timer);
+    },
   },
-
+  mounted() {
+    this.startTimer();
+  },
+  unmounted() {
+    this.stopTimer();
+  },
   created() {
-    setTimeout(() => {
-      this.$nextTick(() => this.setFocus());
-    }, 1000);
+    // setTimeout(() => {
+    //   this.$nextTick(() => this.setFocus());
+    // }, 1000);
   },
 });
 </script>
@@ -99,6 +139,7 @@ export default defineComponent({
         margin-right: 15px;
         text-align: center;
       }
+
       .input:focus {
         outline: none;
       }
@@ -108,6 +149,13 @@ export default defineComponent({
       .button-code {
         width: 100%;
         margin: 0 5px;
+      }
+
+      .repeat-title {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 130%;
+        color: #6f6f6f;
       }
     }
   }
