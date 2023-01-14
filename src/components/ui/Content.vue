@@ -59,7 +59,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss">
 .container {
   height: 100%;
 }
@@ -75,5 +75,12 @@ export default defineComponent({
 
 .refresher-completing {
   display: none;
+}
+ion-refresher {
+  display: contents !important;
+}
+
+ion-spinner {
+  color: #005944;
 }
 </style>

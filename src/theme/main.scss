@@ -29,6 +29,8 @@ ion-spinner {
   color: #005944;
 }
 
-ion-refresher {
-  width: auto;
+ion-refresher ion-refresher-content .refresher-refreshing .refresher-refreshing-icon ion-spinner {
+  color: #005944;
 }
+
+

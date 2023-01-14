@@ -8,37 +8,15 @@
         </ion-row>
         <ion-row>
           <ion-item lines="none" class="input-item">
-            <input
-              inputmode="tel"
-              ref="code1"
-              class="input"
-              maxlength="1"
-              v-model="smsCode1"
-              @keyup="changeCode"
-            />
-            <input
-              inputmode="tel"
-              ref="code2"
-              class="input"
-              maxlength="1"
-              v-model="smsCode2"
-              @keyup="changeCode"
-            />
-            <input
-              inputmode="tel"
-              ref="code3"
-              class="input"
-              maxlength="1"
-              v-model="smsCode4"
-              @keyup="changeCode"
-            />
-            <input
-              inputmode="tel"
-              ref="code4"
-              class="input"
-              maxlength="1"
-              v-model="smsCode4"
-              @keyup="changeCode"
+            <v-otp-input
+              ref="code"
+              input-classes="input"
+              separator=""
+              :num-inputs="4"
+              :should-auto-focus="true"
+              :is-input-num="true"
+              :conditionalClass="['one', 'two', 'three', 'four']"
+              @on-complete="handleOnComplete"
             />
           </ion-item>
         </ion-row>
@@ -63,6 +41,7 @@ import {
 } from '@ionic/vue';
 import Header from '@/components/ui/Header.vue';
 import Button from '@/components/ui/Button.vue';
+import VOtpInput from 'vue3-otp-input';
 
 export default defineComponent({
   name: 'CheckSms',
@@ -75,27 +54,21 @@ export default defineComponent({
     IonItem,
     IonLabel,
     IonRow,
+    VOtpInput,
   },
   data() {
     return {
-      smsCode1: '',
-      smsCode2: '',
-      smsCode3: '',
-      smsCode4: '',
+      smsCode: '',
     };
   },
   methods: {
     setFocus: function () {
-      this.$refs.code1.focus();
+      console.log(this.$refs.code);
+      this.$refs.code.focusInput(0);
     },
-    changeCode() {
-      return this.smsCode1.length
-        ? this.$refs.code2.focus()
-        : this.smsCode2.length
-        ? this.$refs.code3.focus()
-        : this.smsCode3.length
-        ? this.$refs.code4.focus()
-        : this.$refs.code1.focus();
+    handleOnComplete(value) {
+      this.smsCode = value;
+      console.log('OTP completed: ', value);
     },
   },
 
@@ -107,7 +80,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 #check-sms {
   .list {
     height: 100%;
@@ -124,8 +97,8 @@ export default defineComponent({
         border-bottom: 1px solid #dfdfdf;
         width: 25px;
         margin-right: 15px;
+        text-align: center;
       }
-
       .input:focus {
         outline: none;
       }
