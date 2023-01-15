@@ -141,6 +141,7 @@ export default defineComponent({
       'getRadius',
       'getSphere',
       'getPeriod',
+      'filterProducts',
     ]),
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     async refresh(complete = () => {}) {
@@ -174,8 +175,8 @@ export default defineComponent({
       this.isFilter = false;
     },
     close(el: any) {
+      this.loading = true;
       const a = { ...this.filter };
-      console.log(el);
 
       if (el.parent === 'sphere' || el.parent === 'radius') {
         for (let key in a[el.parent]) {
@@ -183,14 +184,17 @@ export default defineComponent({
         }
         //TODO Отправляем на фильтрацию
         this.SET_FILTER(a);
+        this.filterProducts();
+        this.loading = false;
       }
 
       if (el.parent === 'type' || el.parent === 'period') {
         console.log();
         a[el.parent] = a[el.parent].filter((e: any) => e.id !== el.value.id);
-        console.log(a);
         //TODO Отправляем на фильтрацию
         this.SET_FILTER(a);
+        this.filterProducts();
+        this.loading = false;
       }
     },
   },
@@ -220,13 +224,12 @@ export default defineComponent({
 
 .filter-element {
   overflow-y: auto;
-  margin-left: 30px;
 }
 
 .wrapper {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
 
   .product:after {
     --background: #deeeea;

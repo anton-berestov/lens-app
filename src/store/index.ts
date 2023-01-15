@@ -1,5 +1,10 @@
 import { createStore } from 'vuex';
-import { getProducts, getProduct, getCharacteristics } from '@/api/products';
+import {
+  getProducts,
+  getProduct,
+  getCharacteristics,
+  filterProducts,
+} from '@/api/products';
 import { Auth } from '@/api/user';
 
 const modules = {};
@@ -120,6 +125,20 @@ export default createStore({
         getCharacteristics('spheres')
           .then((data) => {
             context.commit('SET_SPHERE', data);
+            resolve(data);
+          })
+          .catch((e) => {
+            console.error(e);
+            reject(e);
+          });
+      });
+    },
+
+    async filterProducts(context: any) {
+      return new Promise((resolve, reject) => {
+        filterProducts(context.getters.filter)
+          .then((data) => {
+            context.commit('SET_PRODUCTS', data);
             resolve(data);
           })
           .catch((e) => {

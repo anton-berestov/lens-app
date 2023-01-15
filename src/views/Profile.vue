@@ -219,7 +219,7 @@ import {
 import Header from '@/components/ui/Header.vue';
 import Content from '@/components/ui/Content.vue';
 import Button from '@/components/ui/Button.vue';
-import { mapActions, mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import Loading from '@/components/ui/Loading.vue';
 
 export default defineComponent({

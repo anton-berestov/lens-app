@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page id="search">
     <Header back>
       <template #search>
         <ion-row class="ion-align-items-center">
@@ -36,6 +36,12 @@
           </ion-row>
         </ion-item>
       </ion-list>
+      <Button
+        title="Перейти в каталог"
+        v-if="search.length && !onProducts.length"
+        class="button"
+        @click="$router.push({ name: 'Catalog' })"
+      />
     </ion-content>
   </ion-page>
 </template>
@@ -56,10 +62,12 @@ import {
 import Header from '@/components/ui/Header.vue';
 import Info from '@/components/ui/Info.vue';
 import {mapGetters} from "vuex";
+import Button from "@/components/ui/Button.vue";
 
 export default defineComponent({
   name: 'Search',
   components: {
+    Button,
     Info,
     Header,
     IonPage,
@@ -99,18 +107,25 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
-.search {
-  padding-bottom: 0;
-}
+<style lang="scss">
+#search {
+  .search {
+    padding-bottom: 0;
+  }
 
-.list {
-  .title {
-    text-align: start;
-    padding: 0;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 135%;
+  .list {
+    .title {
+      text-align: start;
+      padding: 0;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 135%;
+    }
+  }
+
+  .button {
+    position: relative;
+    bottom: 60px;
   }
 }
 </style>

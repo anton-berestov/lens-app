@@ -131,7 +131,7 @@ import Select from '@/components/ui/Select.vue';
 import Button from '@/components/ui/Button.vue'
 import Popover from "@/components/ui/Popover.vue";
 import MultipleButton from "@/components/ui/MultipleButton.vue";
-import {mapGetters, mapMutations} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 
 export default defineComponent({
   name: 'Filter',
@@ -168,11 +168,18 @@ export default defineComponent({
   }),
 
   computed: {
-    ...mapGetters({store_filter: 'filter', type: 'type', radius: 'radius', sphere: 'sphere', period: 'period'}),
+    ...mapGetters({
+      store_filter: 'filter',
+      type: 'type',
+      radius: 'radius',
+      sphere: 'sphere',
+      period: 'period'
+    }),
   },
 
   methods: {
-    ...mapMutations(['SET_POPOVER', 'SET_FILTER']),
+    ...mapMutations(['SET_POPOVER', 'SET_FILTER',]),
+    ...mapActions(['filterProducts']),
     onChange() {
       this.filter = {...this.store_filter}
     },
@@ -188,6 +195,7 @@ export default defineComponent({
     },
     apply() {
       this.SET_FILTER(this.filter)
+      this.filterProducts()
       this.$emit('hide')
     },
     clear() {
