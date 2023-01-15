@@ -10,7 +10,7 @@ import {
   Type,
   Diameter,
   Characteristics,
-} from '@/interfaces/FrontendInterfaces';
+} from '@/interfaces/ProductInterface';
 import qs from 'qs';
 import API from './index';
 
@@ -27,7 +27,7 @@ export const getProducts = async (
     const products: Product[] = [];
     const response = await API.get(`/products?${paramString}`);
     if (response.data) {
-      // console.log(response.data);
+      console.log(response.data);
       response.data.map((p: any) => {
         //extract images
         const images: Image[] = [];
