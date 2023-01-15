@@ -4,6 +4,7 @@ export const PATH_RECORDING = '/recording';
 export const PATH_BASKET = '/basket';
 export const PATH_PROFILE = '/profile';
 export const PATH_EDIT_PROFILE = '/profile/edit/:id';
+export const PATH_CHECK_PROFILE = '/profile/check';
 export const PATH_ACTIONS_NEWS = '/actions-news';
 export const PATH_SEARCH = '/catalog/search';
 export const PATH_PRODUCT = '/catalog/product/:id';

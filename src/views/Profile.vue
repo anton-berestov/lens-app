@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page id="profile">
     <Header title="Профиль" contact />
     <Loading v-if="loading" />
     <Content v-if="!loading">
@@ -183,6 +183,20 @@
           @click="$router.push({ name: 'Auth' })"
         />
       </ion-row>
+
+      <ion-row
+        class="ion-margin-bottom ion-margin ion-justify-content-between"
+        v-if="token"
+      >
+        <ion-buttons>
+          <ion-button class="logout-button" @click="logout"
+            >Выйти из аккаунта</ion-button
+          >
+        </ion-buttons>
+        <ion-buttons>
+          <ion-button class="delete-button">Удалить аккаунт</ion-button>
+        </ion-buttons>
+      </ion-row>
     </Content>
   </ion-page>
 </template>
@@ -205,7 +219,7 @@ import {
 import Header from '@/components/ui/Header.vue';
 import Content from '@/components/ui/Content.vue';
 import Button from '@/components/ui/Button.vue';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import Loading from '@/components/ui/Loading.vue';
 
 export default defineComponent({
@@ -236,9 +250,14 @@ export default defineComponent({
     ...mapGetters(['user', 'token']),
   },
   methods: {
+    ...mapMutations(['SET_TOKEN']),
     chat() {
       const win: Window = window;
       win.location = 'https://wa.me/79502822722';
+    },
+    logout() {
+      this.SET_TOKEN('');
+      localStorage.removeItem('jwt');
     },
   },
   async mounted() {
@@ -249,83 +268,98 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.contact {
-  .title {
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 17px;
-    color: #000000;
-    text-transform: none;
-  }
-
-  .user-info {
-    flex-direction: column;
-
-    .user-name {
+#profile {
+  .contact {
+    .title {
       font-weight: 600;
-      font-size: 16px;
-      line-height: 20px;
-      margin: 10px 0 4px 0;
+      font-size: 14px;
+      line-height: 17px;
+      color: #000000;
+      text-transform: none;
     }
 
-    .user-phone {
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 130%;
-      color: #a0a0a0;
-      margin: 4px 0 10px 0;
-    }
-  }
+    .user-info {
+      flex-direction: column;
 
-  .content {
-    padding-left: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-
-    .item-row {
-      width: 100%;
-    }
-
-    .icon-col {
-      width: 32px;
-      display: contents;
-
-      .icon {
-        width: 24px;
-        height: 24px;
-      }
-    }
-
-    .text-col {
-      .text {
-        font-size: 14px;
-        line-height: 17px;
-        color: #000000;
-        text-decoration: none;
-        white-space: pre-wrap;
+      .user-name {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 20px;
+        margin: 10px 0 4px 0;
       }
 
-      .link-view-card {
-        font-weight: 300;
+      .user-phone {
+        font-weight: 400;
         font-size: 12px;
         line-height: 130%;
-        color: #6f6f6f;
+        color: #a0a0a0;
+        margin: 4px 0 10px 0;
+      }
+    }
+
+    .content {
+      padding-left: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+
+      .item-row {
+        width: 100%;
+      }
+
+      .icon-col {
+        width: 32px;
+        display: contents;
+
+        .icon {
+          width: 24px;
+          height: 24px;
+        }
+      }
+
+      .text-col {
+        .text {
+          font-size: 14px;
+          line-height: 17px;
+          color: #000000;
+          text-decoration: none;
+          white-space: pre-wrap;
+        }
+
+        .link-view-card {
+          font-weight: 300;
+          font-size: 12px;
+          line-height: 130%;
+          color: #6f6f6f;
+        }
       }
     }
   }
-}
 
-.row {
-  .text-no-auth {
-    font-weight: 300;
-    font-size: 14px;
+  .row {
+    .text-no-auth {
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 130%;
+      text-align: center;
+    }
+
+    .auth-button {
+      margin: 0 10px;
+      width: 100%;
+    }
+  }
+  .logout-button {
+    font-weight: 400;
+    font-size: 12px;
     line-height: 130%;
-    text-align: center;
+    color: #a0a0a0;
   }
 
-  .auth-button {
-    margin: 0 10px;
-    width: 100%;
+  .delete-button {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 130%;
+    color: red;
   }
 }
 </style>

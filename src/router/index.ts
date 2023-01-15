@@ -7,6 +7,7 @@ import {
   PATH_BASKET,
   PATH_CATALOG,
   PATH_CHAT,
+  PATH_CHECK_PROFILE,
   PATH_CHECK_SMS,
   PATH_EDIT_PROFILE,
   PATH_HISTORY_ORDER,
@@ -119,6 +120,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'EditProfile',
     props: true,
     component: () => import('@/views/EditProfile.vue'),
+  },
+  {
+    path: PATH_CHECK_PROFILE,
+    name: 'CheckProfile',
+    props: true,
+    component: () => import('@/views/CheckProfile.vue'),
   },
 ];
 

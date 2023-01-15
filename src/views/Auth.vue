@@ -80,6 +80,15 @@ export default defineComponent({
         ? (this.disabled = false)
         : (this.disabled = true);
     },
+    setFocus() {
+      console.log(this.$refs.phone);
+      this.$refs.phone.focus();
+    },
+  },
+  mounted() {
+    setTimeout(() => {
+      this.$nextTick(() => this.setFocus());
+    }, 1000);
   },
 });
 </script>

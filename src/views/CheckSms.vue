@@ -98,6 +98,9 @@ export default defineComponent({
       this.smsCode = value;
       console.log('OTP completed: ', value);
       await this.Auth();
+      this.handlerRoute();
+    },
+    handlerRoute() {
       if (
         this.token &&
         this.user.firstname &&
