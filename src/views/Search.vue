@@ -1,18 +1,18 @@
 <template>
-  <ion-page id="search">
+  <ion-page>
     <Header back>
       <template #search>
         <ion-row class="ion-align-items-center">
           <ion-searchbar
             ref="inputRef"
             placeholder="Поиск в каталоге"
-            class="search"
+            class="searchbar"
             v-model="search"
           ></ion-searchbar>
         </ion-row>
       </template>
     </Header>
-    <ion-content :fullscreen="true">
+    <ion-content :fullscreen="true" id="search">
       <Info
         v-if="search.length && !onProducts.length"
         icon="assets/icon/empty.svg"
@@ -108,11 +108,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-#search {
-  .search {
-    padding-bottom: 0;
-  }
+.searchbar {
+  padding-bottom: 0 !important;
+}
 
+#search {
   .list {
     .title {
       text-align: start;
