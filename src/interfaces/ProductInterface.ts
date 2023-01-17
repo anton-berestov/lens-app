@@ -78,6 +78,6 @@ export interface OrderProductDetails {
   sphere: number | string;
   radius: number | string;
   product_count: number;
-  product_amount: number | string;
+  product_amount: number;
   product_discount: number;
 }

@@ -67,13 +67,7 @@ export default createStore({
         .reduce((a, b) => Number(a) + Number(b), 0)),
     SET_TOTAL_AMOUNT: (state) =>
       (state.basket.total_amount = state.basket.order_product_details
-        .map((el) =>
-          state.products.find((e) => {
-            if (el.product === e.id) {
-              return e.price;
-            }
-          })
-        )
+        .map((el) => el.product_amount)
         .reduce((a, b) => Number(a) + Number(b), 0)),
     SET_TOTAL_DISCOUNT: (state) =>
       (state.basket.total_discount = state.basket.order_product_details

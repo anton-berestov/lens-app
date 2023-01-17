@@ -93,7 +93,7 @@
         </ion-row>
       </div>
 
-      <ion-row class="ion-margin row">
+      <ion-row class="row">
         <Button title="Применить" class="button" @click="apply" />
       </ion-row>
     </ion-content>
@@ -171,7 +171,7 @@ export default defineComponent({
     ...mapGetters(['products']),
   },
   methods: {
-    ...mapMutations(['SET_POPOVER', 'SET_ORDER_PRODUCT_DETAILS']),
+    ...mapMutations(['SET_POPOVER', 'SET_ORDER_PRODUCT_DETAILS', 'SET_BASKET_COUNT']),
     apply() {
       if (
         !this.different &&
@@ -187,6 +187,7 @@ export default defineComponent({
           product_discount: discountPrice(this.product.price, this.product.discount ?? 0) * this.countOne
         };
         this.SET_ORDER_PRODUCT_DETAILS(a)
+        this.SET_BASKET_COUNT()
         this.$router.push({name: 'Basket'})
       } else if (
         this.different &&
@@ -202,6 +203,7 @@ export default defineComponent({
           product_discount: discountPrice(this.product.price, this.product.discount ?? 0) * this.countOne
         };
         this.SET_ORDER_PRODUCT_DETAILS(a)
+
         const b = {
           product: this.product.id,
           radius: this.select.radius2.id,
@@ -211,6 +213,7 @@ export default defineComponent({
           product_discount: discountPrice(this.product.price, this.product.discount ?? 0) * this.countTwo
         };
         this.SET_ORDER_PRODUCT_DETAILS(b)
+        this.SET_BASKET_COUNT()
         this.$router.push({name: 'Basket'})
 
       } else {
@@ -293,6 +296,7 @@ export default defineComponent({
       position: relative;
       left: 0;
       right: 0;
+      margin: 0 8px;
 
       .button {
         width: 100%;

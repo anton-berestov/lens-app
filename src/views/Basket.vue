@@ -19,10 +19,11 @@ export default defineComponent({
     IonPage,
   },
   methods: {
-    ...mapMutations(['SET_BASKET_COUNT']),
+    ...mapMutations(['SET_TOTAL_AMOUNT', 'SET_TOTAL_DISCOUNT']),
   },
   mounted() {
-    this.SET_BASKET_COUNT();
+    this.SET_TOTAL_AMOUNT();
+    this.SET_TOTAL_DISCOUNT();
   },
 });
 </script>
