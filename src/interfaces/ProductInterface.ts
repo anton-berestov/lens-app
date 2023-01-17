@@ -72,3 +72,12 @@ export interface Characteristics {
   title: string;
   description: string;
 }
+
+export interface OrderProductDetails {
+  product: number;
+  sphere: number | string;
+  radius: number | string;
+  product_count: number;
+  product_amount: number | string;
+  product_discount: number;
+}

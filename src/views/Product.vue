@@ -81,8 +81,6 @@
             :brand="product.brand"
             :period="product.period"
             :material="product.material"
-            :radius="product.radius"
-            :sphere="product.sphere"
           />
           <Description v-if="description" />
           <Delivery v-if="delivery" />
@@ -118,7 +116,7 @@ import Specification from '@/components/Specification.vue';
 import Description from '@/components/Description.vue';
 import Delivery from '@/components/Delivery.vue';
 import Button from "@/components/ui/Button.vue";
-import {mapActions, mapMutations} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 
 
 import 'swiper/css';
@@ -179,15 +177,13 @@ export default defineComponent({
       loading: false
     };
   },
-  async mounted() {
+  mounted() {
     this.loading = true
-    this.product = await this.getProduct(this.idProduct);
+    this.product = this.products.find((el) => el.id == this.id)
     this.loading = false
   },
   computed: {
-    idProduct() {
-      return this.id;
-    },
+    ...mapGetters(['products']),
     discountPrice() {
       return this.product.discount
           ? discountPrice(this.product.price, this.product.discount)
@@ -195,20 +191,18 @@ export default defineComponent({
     },
   },
   methods: {
-    ...mapMutations(['SET_CART']),
     ...mapActions(['getProduct']),
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     async refresh(complete = () => {
     }) {
       try {
-        this.product = await this.getProduct(this.idProduct);
+        this.product = await this.getProduct(this.id);
       } finally {
         complete();
       }
     },
     addInCart(product) {
-      this.$router.push({name: 'Params'})
-      this.SET_CART(product)
+      this.$router.push({name: 'Params', params: {id: this.product.id}})
     }
   },
 });

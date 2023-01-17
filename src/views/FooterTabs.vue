@@ -33,9 +33,9 @@
         >
           <ion-icon :icon="changeBasket" class="icon" />
           <ion-label class="label">Корзина</ion-label>
-          <div style="position: relative" v-if="cartCount !== 0">
+          <div style="position: relative" v-if="basket_count !== 0">
             <div class="count-box">
-              <p class="count">{{ cartCount }}</p>
+              <p class="count">{{ basket_count }}</p>
             </div>
           </div>
         </ion-tab-button>
@@ -92,7 +92,7 @@ export default defineComponent({
     PATH_PROFILE,
   }),
   computed: {
-    ...mapGetters(['cart']),
+    ...mapGetters(['basket_count']),
     changeHome() {
       return this.$route.path.includes(PATH_HOME)
         ? 'assets/icon/home-active.svg'
@@ -117,9 +117,6 @@ export default defineComponent({
       return this.$route.path.includes(PATH_PROFILE)
         ? 'assets/icon/profile-active.svg'
         : 'assets/icon/profile.svg';
-    },
-    cartCount() {
-      return this.cart.length;
     },
   },
   methods: {

@@ -6,6 +6,7 @@ import {
   filterProducts,
 } from '@/api/products';
 import { Auth } from '@/api/user';
+import { OrderProductDetails, Product } from '@/interfaces/ProductInterface';
 
 const modules = {};
 
@@ -21,7 +22,7 @@ export default createStore({
       sphere: {},
       radius: {},
     },
-    products: [],
+    products: Array<Product>(),
     characteristics: {
       type: [],
       period: [],
@@ -30,13 +31,23 @@ export default createStore({
     },
     user: {},
     token: '',
-    cart: Array<any>(),
+    basket: {
+      order_product_details: Array<OrderProductDetails>(),
+      count: 0,
+      total_amount: 0,
+      total_discount: 0,
+      user: 0,
+    },
   },
   getters: {
     popover: (state) => state.popover,
     filter: (state) => state.filter,
     products: (state) => state.products,
-    cart: (state) => state.cart,
+    order_product_details: (state) => state.basket.order_product_details,
+    basket_count: (state) => state.basket.count,
+    total_amount: (state) => state.basket.total_amount,
+    total_discount: (state) => state.basket.total_discount,
+    basket_user: (state) => state.basket.user,
     type: (state) => state.characteristics.type,
     period: (state) => state.characteristics.period,
     sphere: (state) => state.characteristics.sphere,
@@ -48,7 +59,26 @@ export default createStore({
     SET_POPOVER: (state, payload) => (state.popover = payload),
     SET_FILTER: (state, payload) => (state.filter = payload),
     SET_PRODUCTS: (state, payload) => (state.products = payload),
-    SET_CART: (state, payload: any) => state.cart.push(payload),
+    SET_ORDER_PRODUCT_DETAILS: (state, payload: OrderProductDetails) =>
+      state.basket.order_product_details.push(payload),
+    SET_BASKET_COUNT: (state) =>
+      (state.basket.count = state.basket.order_product_details
+        .map((el) => el.product_count)
+        .reduce((a, b) => Number(a) + Number(b), 0)),
+    SET_TOTAL_AMOUNT: (state) =>
+      (state.basket.total_amount = state.basket.order_product_details
+        .map((el) =>
+          state.products.find((e) => {
+            if (el.product === e.id) {
+              return e.price;
+            }
+          })
+        )
+        .reduce((a, b) => Number(a) + Number(b), 0)),
+    SET_TOTAL_DISCOUNT: (state) =>
+      (state.basket.total_discount = state.basket.order_product_details
+        .map((el) => el.product_discount)
+        .reduce((a, b) => Number(a) + Number(b), 0)),
     SET_TYPE: (state, payload) => (state.characteristics.type = payload),
     SET_PERIOD: (state, payload) => (state.characteristics.period = payload),
     SET_SPHERE: (state, payload) => (state.characteristics.sphere = payload),
@@ -73,11 +103,7 @@ export default createStore({
 
     async getProduct(context: any, id: number, params?: object) {
       console.log(params);
-      // const product = await getProduct(id, params);
-      // console.log('one product without params', product);
       const product = await getProduct(id, { populate: '*' });
-      // console.log('one product with params', productAll);
-
       return product;
     },
 

@@ -62,46 +62,6 @@
         <ion-title class="text">{{ material }}</ion-title>
       </ion-col>
     </ion-row>
-
-    <ion-row class="ion-margin-top" v-if="sphere.length">
-      <ion-col>
-        <ion-label class="title">Сфера</ion-label>
-      </ion-col>
-      <ion-col>
-        <span class="text" v-for="sph in sphere" :key="sph.id">{{
-          `${sph.title} `
-        }}</span>
-      </ion-col>
-    </ion-row>
-
-    <ion-row
-      class="ion-margin-top"
-      style="position: relative"
-      v-if="radius.length"
-    >
-      <ion-col>
-        <ion-label class="title">Радиус кривизны</ion-label>
-        <ion-buttons class="btn-question-radius">
-          <ion-button @click="openPopoverPeriod">
-            <ion-icon
-              icon="assets/icon/question.svg"
-              slot="icon-only"
-              class="icon"
-            />
-          </ion-button>
-        </ion-buttons>
-      </ion-col>
-      <ion-col>
-        <span
-          class="text"
-          v-for="(rad, index) in radius"
-          :key="index"
-          style="margin-left: 5px"
-        >
-          {{ `${rad.title} ` }}
-        </span>
-      </ion-col>
-    </ion-row>
   </ion-col>
   <Popover />
 </template>
@@ -156,14 +116,6 @@ export default defineComponent({
     material: {
       type: String,
       default: '',
-    },
-    radius: {
-      type: Array,
-      default: () => [],
-    },
-    sphere: {
-      type: Array,
-      default: () => [],
     },
   },
   methods: {
