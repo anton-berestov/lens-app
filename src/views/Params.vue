@@ -171,7 +171,7 @@ export default defineComponent({
     ...mapGetters(['products']),
   },
   methods: {
-    ...mapMutations(['SET_POPOVER', 'SET_ORDER_PRODUCT_DETAILS', 'SET_BASKET_COUNT']),
+    ...mapMutations(['SET_POPOVER', 'SET_ORDER_PRODUCT_DETAILS', 'SET_BASKET_COUNT', 'SET_TOTAL_AMOUNT', 'SET_TOTAL_DISCOUNT']),
     apply() {
       if (
         !this.different &&
@@ -188,6 +188,8 @@ export default defineComponent({
         };
         this.SET_ORDER_PRODUCT_DETAILS(a)
         this.SET_BASKET_COUNT()
+        this.SET_TOTAL_AMOUNT();
+        this.SET_TOTAL_DISCOUNT();
         this.$router.push({name: 'Basket'})
       } else if (
         this.different &&

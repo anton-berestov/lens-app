@@ -54,6 +54,7 @@ export default createStore({
     radius: (state) => state.characteristics.radius,
     user: (state) => state.user,
     token: (state) => state.token,
+    basket: (state) => state.basket,
   },
   mutations: {
     SET_POPOVER: (state, payload) => (state.popover = payload),
@@ -79,6 +80,7 @@ export default createStore({
     SET_RADIUS: (state, payload) => (state.characteristics.radius = payload),
     SET_USER: (state, payload) => (state.user = payload),
     SET_TOKEN: (state, payload) => (state.token = payload),
+    SET_BASKET: (state, payload) => (state.basket = payload),
   },
   actions: {
     async getProducts(context: any, params?: object) {

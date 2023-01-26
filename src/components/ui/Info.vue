@@ -1,5 +1,5 @@
 <template>
-  <ion-content class="info-wrapper">
+  <ion-content class="info-wrapper" :scroll-y="false">
     <div class="vector">
       <img :src="icon" />
     </div>

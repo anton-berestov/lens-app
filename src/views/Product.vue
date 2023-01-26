@@ -116,7 +116,7 @@ import Specification from '@/components/Specification.vue';
 import Description from '@/components/Description.vue';
 import Delivery from '@/components/Delivery.vue';
 import Button from "@/components/ui/Button.vue";
-import {mapActions, mapGetters, mapMutations} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 
 import 'swiper/css';
@@ -202,7 +202,7 @@ export default defineComponent({
       }
     },
     addInCart(product) {
-      this.$router.push({name: 'Params', params: {id: this.product.id}})
+      this.$router.push({name: 'Params', params: {id: product.id}})
     }
   },
 });
