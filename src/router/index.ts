@@ -15,6 +15,7 @@ import {
   PATH_HOME,
   PATH_MAP,
   PATH_PARAMS,
+  PATH_PICKUP,
   PATH_PRODUCT,
   PATH_PROFILE,
   PATH_RECORDING,
@@ -126,6 +127,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'CheckProfile',
     props: true,
     component: () => import('@/views/CheckProfile.vue'),
+  },
+  {
+    path: PATH_PICKUP,
+    name: 'Pickup',
+    props: true,
+    component: () => import('@/views/Pickup.vue'),
   },
 ];
 

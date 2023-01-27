@@ -15,3 +15,4 @@ export const PATH_AUTH = '/auth';
 export const PATH_CHECK_SMS = '/check-sms';
 export const PATH_HISTORY_RECORD = '/record-history';
 export const PATH_HISTORY_ORDER = '/order-history';
+export const PATH_PICKUP = '/pickup';

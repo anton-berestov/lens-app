@@ -62,6 +62,8 @@ export default createStore({
     SET_PRODUCTS: (state, payload) => (state.products = payload),
     SET_ORDER_PRODUCT_DETAILS: (state, payload: OrderProductDetails) =>
       state.basket.order_product_details.push(payload),
+    SET_ORDER_PRODUCT_DETAILS_FULL: (state, payload) =>
+      (state.basket.order_product_details = payload),
     SET_BASKET_COUNT: (state) =>
       (state.basket.count = state.basket.order_product_details
         .map((el) => el.product_count)

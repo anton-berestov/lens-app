@@ -226,7 +226,7 @@ export default defineComponent({
       this.countOne++;
     },
     countOneMinus() {
-      if (this.countOne > 1) {
+      if (this.countOne >= 1) {
         this.countOne--;
       }
     },

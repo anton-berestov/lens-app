@@ -7,7 +7,15 @@
       description="Для заказа товара перейдите в каталог или воспользуйтесь поиском"
       icon="assets/icon/empty-basket.svg"
     />
-    <ion-content :fullscreen="true" v-if="order_product_details.length">
+    <ion-content
+      :fullscreen="true"
+      v-if="order_product_details.length"
+      :style="
+        !order_product_details.length
+          ? { background: '#ffffff' }
+          : { '--background': '#ecebeb' }
+      "
+    >
       <ion-row class="ion-justify-content-end ion-margin">
         <ion-buttons>
           <ion-button class="clear-button" @click="clearBasket">
@@ -19,7 +27,7 @@
 
       <ion-row
         class="ion-margin-top wrapper"
-        v-for="order in orders"
+        v-for="(order, index) in orders"
         :key="order.id"
       >
         <ion-card class="card">
@@ -51,11 +59,19 @@
                 <ion-row class="ion-margin-top row-price">
                   <ion-label class="price">{{ `${order.price} ₽` }} </ion-label>
                   <div class="box ion-margin-start">
-                    <ion-button size="small" class="button" @click="countMinus">
+                    <ion-button
+                      size="small"
+                      class="button"
+                      @click="countMinus(index)"
+                    >
                       <ion-icon :icon="minus" class="icon"></ion-icon>
                     </ion-button>
                     <ion-label>{{ `${order.product_count}` }}</ion-label>
-                    <ion-button size="small" class="button" @click="countPlus">
+                    <ion-button
+                      size="small"
+                      class="button"
+                      @click="countPlus(index)"
+                    >
                       <ion-icon :icon="plus" class="icon"></ion-icon>
                     </ion-button>
                   </div>
@@ -90,6 +106,11 @@
           </ion-card-content>
         </ion-card>
       </ion-row>
+      <Button
+        title="Заказать"
+        class="order-button"
+        @click="$router.push({ name: 'Pickup' })"
+      />
     </ion-content>
     <Button
       v-if="!order_product_details.length"
@@ -171,23 +192,56 @@ export default defineComponent({
     },
   },
   methods: {
-    ...mapMutations(['SET_TOTAL_AMOUNT', 'SET_TOTAL_DISCOUNT', 'SET_BASKET']),
-    onMap(array, id) {
-      array.find((el) => el.id === id);
-    },
+    ...mapMutations([
+      'SET_TOTAL_AMOUNT',
+      'SET_TOTAL_DISCOUNT',
+      'SET_BASKET',
+      'SET_ORDER_PRODUCT_DETAILS_FULL',
+      'SET_BASKET_COUNT',
+    ]),
+
     clearBasket() {
-      this.SET_BASKET({
-        order_product_details: [],
-        count: 0,
-        total_amount: 0,
-        total_discount: 0,
+      this.SET_ORDER_PRODUCT_DETAILS_FULL([]);
+    },
+    countMinus(idx) {
+      const orders = this.order_product_details.map((element, index) => {
+        if (idx === index) {
+          const product_amount = element.product_amount / element.product_count;
+          const product_discount =
+            element.product_discount / element.product_count;
+          if (element.product_count > 1) {
+            element.product_count--;
+          }
+
+          element.product_amount = product_amount * element.product_count;
+          element.product_discount = product_discount * element.product_count;
+        }
+        return element;
       });
+      this.SET_ORDER_PRODUCT_DETAILS_FULL(orders);
+      this.SET_BASKET_COUNT();
+      this.SET_TOTAL_AMOUNT();
+      this.SET_TOTAL_DISCOUNT();
     },
-    countMinus() {
-      console.log('sd');
-    },
-    countPlus() {
-      console.log('sdf');
+    countPlus(idx) {
+      const orders = this.order_product_details.map((element, index) => {
+        if (idx === index) {
+          const product_amount = element.product_amount / element.product_count;
+          const product_discount =
+            element.product_discount / element.product_count;
+          if (element.product_count >= 1) {
+            element.product_count++;
+          }
+
+          element.product_amount = product_amount * element.product_count;
+          element.product_discount = product_discount * element.product_count;
+        }
+        return element;
+      });
+      this.SET_ORDER_PRODUCT_DETAILS_FULL(orders);
+      this.SET_BASKET_COUNT();
+      this.SET_TOTAL_AMOUNT();
+      this.SET_TOTAL_DISCOUNT();
     },
   },
   mounted() {
@@ -212,6 +266,10 @@ export default defineComponent({
       width: 13px;
       margin-right: 6px;
     }
+  }
+
+  .order-button {
+    margin: 0 8px;
   }
 
   .wrapper {
