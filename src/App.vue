@@ -28,7 +28,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import './theme/main.scss';
+@import 'theme/main.scss';
 
 @font-face {
   font-family: 'Montserrat';

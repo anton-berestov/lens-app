@@ -12,8 +12,13 @@
       </div>
 
       <div class="btn-wrapper">
+        <ion-buttons class="ion-margin-end">
+          <ion-button class="btn-cancel" @click="cancel">{{
+            buttonCancel
+          }}</ion-button>
+        </ion-buttons>
         <ion-buttons>
-          <ion-button class="btn" @click="hide">ОК</ion-button>
+          <ion-button class="btn-ok" @click="ok">{{ buttonOk }}</ion-button>
         </ion-buttons>
       </div>
     </div>
@@ -32,13 +37,27 @@ export default defineComponent({
     IonButton,
     IonModal,
   },
+  props: {
+    buttonOk: {
+      type: String,
+      default: '',
+    },
+    buttonCancel: {
+      type: String,
+      default: '',
+    },
+  },
+  emits: ['handler'],
   computed: {
     ...mapGetters(['popover']),
   },
   methods: {
     ...mapMutations(['SET_POPOVER']),
-    hide() {
-      this.SET_POPOVER({ show: false, message: [] });
+    ok() {
+      this.$emit('handler', 'ok');
+    },
+    cancel() {
+      this.$emit('handler', 'cancel');
     },
   },
 });
@@ -77,11 +96,19 @@ export default defineComponent({
     margin-right: 16px;
     margin-bottom: 6px;
 
-    .btn {
-      font-weight: 400;
+    .btn-ok {
+      font-weight: 500;
       font-size: 12px;
       color: #17a1fa;
       line-height: 15px;
+      text-transform: uppercase;
+    }
+    .btn-cancel {
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 15px;
+      color: #c90433;
+      text-transform: uppercase;
     }
   }
 }

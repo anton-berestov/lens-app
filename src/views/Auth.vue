@@ -18,7 +18,7 @@
               v-maska="{
                 mask: '+7 (###) ###-##-##',
               }"
-              @keyup="changePhone"
+              @keyup="handlerPhone"
               @focus="phone === '' ? (phone = '+7 (') : null"
             />
           </ion-item>
@@ -29,7 +29,7 @@
             title="Получить код"
             :disabled="disabled"
             class="button-code"
-            @click="$router.push({ name: 'CheckSms' })"
+            @click="send"
           />
           <ion-label class="ion-margin-start ion-margin-end data-text"
             >Оформляя заказ, вы даете согласие на
@@ -50,10 +50,10 @@ import {
   IonRow,
   IonLabel,
   IonItem,
-  // IonInput,
 } from '@ionic/vue';
 import Header from '@/components/ui/Header.vue';
 import Button from '@/components/ui/Button.vue';
+import { mapActions } from 'vuex';
 
 export default defineComponent({
   name: 'Auth',
@@ -75,14 +75,20 @@ export default defineComponent({
     };
   },
   methods: {
-    changePhone() {
+    ...mapActions(['sendPhone']),
+    handlerPhone() {
       this.phone.length === 18
         ? (this.disabled = false)
         : (this.disabled = true);
     },
     setFocus() {
-      console.log(this.$refs.phone);
       this.$refs.phone.focus();
+    },
+    send() {
+      const phone = this.phone.replace(/[^0-9,.]/g, '');
+      this.sendPhone({ phone });
+      this.$router.push({ name: 'CheckSms' });
+      localStorage.setItem('phone', phone);
     },
   },
   mounted() {

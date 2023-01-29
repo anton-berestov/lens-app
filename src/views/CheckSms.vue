@@ -13,7 +13,7 @@
               input-classes="input"
               separator=""
               inputmode="tel"
-              :num-inputs="4"
+              :num-inputs="6"
               :should-auto-focus="true"
               :is-input-num="true"
               :conditionalClass="['one', 'two', 'three', 'four']"
@@ -33,7 +33,7 @@
           <Button
             title="Повторный код"
             class="button-code"
-            @click="pereatCode"
+            @click="repeatCode"
           />
         </ion-row>
       </ion-list>
@@ -89,15 +89,13 @@ export default defineComponent({
     ...mapGetters(['token', 'user']),
   },
   methods: {
-    ...mapActions(['Auth']),
+    ...mapActions(['sendPhone']),
     setFocus() {
-      console.log(this.$refs.code);
       this.$refs.code.focusInput(0);
     },
     async handleOnComplete(value) {
       this.smsCode = value;
       console.log('OTP completed: ', value);
-      await this.Auth();
       this.handlerRoute();
     },
     handlerRoute() {
@@ -110,10 +108,12 @@ export default defineComponent({
         this.$router.replace({ name: 'Profile' });
       }
     },
-    pereatCode() {
+    repeatCode() {
       this.currentTime = 60;
       this.startTimer();
       this.repeat = false;
+      const phone = localStorage.getItem('phone');
+      this.sendPhone({ phone });
     },
     startTimer() {
       this.timer = setInterval(() => {

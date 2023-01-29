@@ -5,7 +5,7 @@ import {
   getCharacteristics,
   filterProducts,
 } from '@/api/products';
-import { Auth } from '@/api/user';
+import { sendPhone } from '@/api/user';
 import { OrderProductDetails, Product } from '@/interfaces/ProductInterface';
 
 const modules = {};
@@ -171,9 +171,9 @@ export default createStore({
           });
       });
     },
-    async Auth(context: any) {
+    async sendPhone(context: any, params?: any) {
       return new Promise((resolve, reject) => {
-        Auth()
+        sendPhone(params)
           .then((data) => {
             context.commit('SET_USER', data);
             resolve(data);

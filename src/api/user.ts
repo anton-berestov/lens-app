@@ -1,13 +1,25 @@
 import { UserInterfase } from '@/interfaces/UserInterfase';
 import API from '@/api/index';
+import qs from 'qs';
 
-export const Auth = async (): Promise<UserInterfase | undefined> => {
-  const params = {
-    identifier: '8berestov8',
-    password: '123456789',
-  };
+export const sendPhone = async (params: any) => {
+  console.log(params);
+
   try {
-    const { user, jwt }: any = await API.post(`/auth/local`, params);
+    const res = await API.post(`/sms/signup`, params);
+    console.log(res);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const checkSms = async (
+  params: object
+): Promise<UserInterfase | undefined> => {
+  console.log(params);
+
+  try {
+    const { user, jwt }: any = await API.post(`/sms/signup`, params);
 
     if (jwt) {
       localStorage.setItem('jwt', jwt);

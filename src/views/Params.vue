@@ -97,6 +97,7 @@
         <Button title="Применить" class="button" @click="apply" />
       </ion-row>
     </ion-content>
+    <Popover button-ok="OK" @handler="closePopover" />
   </ion-page>
 </template>
 
@@ -119,10 +120,12 @@ import { mapGetters, mapMutations } from 'vuex';
 import { addOutline, removeOutline } from 'ionicons/icons';
 import Button from '@/components/ui/Button.vue';
 import {discountPrice} from "@/helpers/discountPrice";
+import Popover from "@/components/ui/Popover.vue";
 
 export default defineComponent({
   name: 'Params',
   components: {
+    Popover,
     Button,
     Segment,
     Select,
@@ -221,6 +224,9 @@ export default defineComponent({
       } else {
         this.SET_POPOVER({ show: true, message: ['Выберите параметры линз'] });
       }
+    },
+    closePopover() {
+      this.SET_POPOVER({ show: false, message: [] });
     },
     countOnePlus() {
       this.countOne++;

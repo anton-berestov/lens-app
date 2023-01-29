@@ -40,7 +40,7 @@
       <ion-col>
         <ion-label class="title">Срок замены</ion-label>
         <ion-buttons class="btn-question-period">
-          <ion-button @click="openPopoverPeriod">
+          <ion-button @click="openPopover">
             <ion-icon
               icon="assets/icon/question.svg"
               slot="icon-only"
@@ -63,7 +63,7 @@
       </ion-col>
     </ion-row>
   </ion-col>
-  <Popover />
+  <Popover button-ok="OK" @handler="closePopover" />
 </template>
 
 <script lang="ts">
@@ -120,12 +120,18 @@ export default defineComponent({
   },
   methods: {
     ...mapMutations(['SET_POPOVER']),
-    openPopoverPeriod() {
+    openPopover() {
       this.SET_POPOVER({
         show: true,
         message: [
           'Максимальный срок использования линзы. После этого срока применять линзы нельзя, так как это может плохо сказаться на здоровье ваших глаз.',
         ],
+      });
+    },
+    closePopover() {
+      this.SET_POPOVER({
+        show: false,
+        message: [],
       });
     },
   },

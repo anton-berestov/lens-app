@@ -30,7 +30,7 @@
           </ion-row>
         </ion-item>
 
-        <ion-item>
+        <ion-item lines="none">
           <ion-row class="ion-align-items-center">
             <ion-col class="icon-col">
               <ion-icon

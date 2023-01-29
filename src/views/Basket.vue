@@ -112,6 +112,11 @@
         @click="$router.push({ name: 'Pickup' })"
       />
     </ion-content>
+    <Popover
+      button-ok="Очистить"
+      button-cancel="Отмена"
+      @handler="changeBasket"
+    />
     <Button
       v-if="!order_product_details.length"
       title="Перейти в каталог"
@@ -139,10 +144,12 @@ import { addOutline, removeOutline } from 'ionicons/icons';
 import Header from '@/components/ui/Header.vue';
 import Info from '@/components/ui/Info.vue';
 import Button from '@/components/ui/Button.vue';
+import Popover from '@/components/ui/Popover.vue';
 
 export default defineComponent({
   name: 'Basket',
   components: {
+    Popover,
     Button,
     Info,
     Header,
@@ -198,10 +205,30 @@ export default defineComponent({
       'SET_BASKET',
       'SET_ORDER_PRODUCT_DETAILS_FULL',
       'SET_BASKET_COUNT',
+      'SET_POPOVER',
     ]),
 
+    changeBasket(event) {
+      if (event === 'ok') {
+        this.SET_POPOVER({
+          show: false,
+          message: [],
+        });
+        this.SET_ORDER_PRODUCT_DETAILS_FULL([]);
+        this.SET_BASKET_COUNT();
+      }
+      if (event === 'cancel') {
+        this.SET_POPOVER({
+          show: false,
+          message: [],
+        });
+      }
+    },
     clearBasket() {
-      this.SET_ORDER_PRODUCT_DETAILS_FULL([]);
+      this.SET_POPOVER({
+        show: true,
+        message: ['Вы уверены, что хотите очистить корзину?'],
+      });
     },
     countMinus(idx) {
       const orders = this.order_product_details.map((element, index) => {

@@ -5,10 +5,10 @@
     class="segment-container"
   >
     <ion-segment-button value="left" class="segment">
-      <ion-label>{{ titleLeft }}</ion-label>
+      <ion-label class="label">{{ titleLeft }}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="right" class="segment">
-      <ion-label>{{ titleRight }}</ion-label>
+      <ion-label class="label">{{ titleRight }}</ion-label>
     </ion-segment-button>
   </ion-segment>
 </template>
@@ -53,6 +53,14 @@ export default defineComponent({
     --indicator-box-shadow: none;
     margin: 0;
     padding: 0;
+
+    .label {
+      white-space: pre-wrap;
+      font-weight: 300;
+      font-size: 12px;
+      line-height: 15px;
+      text-align: center;
+    }
   }
 
   .segment-button-checked {

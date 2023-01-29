@@ -112,7 +112,7 @@
       </ion-row>
     </ion-content>
   </ion-modal>
-  <Popover />
+  <Popover button-ok="OK" @handler="closePopover" />
 </template>
 
 <script lang="js">
@@ -185,6 +185,9 @@ export default defineComponent({
     },
     openSelect(e) {
       this.isActive = e;
+    },
+    closePopover( ) {
+      this.SET_POPOVER({show: false, message: []})
     },
     openPopover() {
       const messages = []
