@@ -73,17 +73,23 @@
         <ion-row class="ion-margin-top ion-margin-start">
           <ion-label class="title">Контактные данные</ion-label>
         </ion-row>
-        <ion-item class="item">
-          <ion-label position="floating" class="label">Фамимлия*</ion-label>
-          <ion-input v-model="contact.firstname"></ion-input>
+        <ion-item class="item" fill="outline">
+          <!--          <ion-label label-placement="floating" class="label"-->
+          <!--            >Фамимлия*</ion-label-->
+          <!--          >-->
+          <ion-input
+            v-model="contact.firstname"
+            label-placement="floating"
+            label="Email"
+          ></ion-input>
         </ion-item>
         <ion-item class="item">
           <ion-label position="floating" class="label">Имя*</ion-label>
-          <ion-input v-model="contact.lastname"></ion-input>
+          <ion-input v-model="contact.lastname" required></ion-input>
         </ion-item>
         <ion-item class="item">
           <ion-label position="floating" class="label">Отчество*</ion-label>
-          <ion-input v-model="contact.patronymic"></ion-input>
+          <ion-input v-model="contact.patronymic" required></ion-input>
         </ion-item>
         <ion-item class="item">
           <ion-label position="floating" class="label">Дата рождения</ion-label>
@@ -112,7 +118,7 @@
   </ion-page>
 </template>
 
-<script>
+<script lang="js">
 import {
   IonPage,
   IonContent,
@@ -132,6 +138,8 @@ import Segment from '@/components/ui/Segment.vue';
 import Address from '@/components/Address.vue';
 import CardInfo from '@/components/CardInfo.vue';
 import Button from '@/components/ui/Button.vue';
+import { mapGetters } from 'vuex';
+import { formatPhone } from '@/helpers/formatter';
 
 export default {
   name: 'Pickup',
@@ -175,7 +183,9 @@ export default {
       },
     };
   },
+  watch: {},
   computed: {
+    ...mapGetters(['user']),
     handlerIconCalendar() {
       return this.handler === 'left'
         ? 'assets/icon/calendar-pickup.svg'
@@ -186,6 +196,14 @@ export default {
         ? 'assets/icon/payment-pickup.svg'
         : 'assets/icon/payment-courier.svg';
     },
+  },
+  mounted() {
+    this.contact.firstname = this.user.firstname;
+    this.contact.lastname = this.user.lastname;
+    this.contact.patronymic = this.user.patronymic;
+    this.contact.phone = formatPhone(this.user.phone);
+    this.contact.birthday = this.user.birthday;
+    this.contact.email = this.user.email;
   },
 };
 </script>

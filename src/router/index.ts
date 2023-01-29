@@ -5,6 +5,8 @@ import {
   PATH_ACTIONS_NEWS,
   PATH_AUTH,
   PATH_BASKET,
+  PATH_BASKET_AUTH,
+  PATH_BASKET_CHECK_SMS,
   PATH_CATALOG,
   PATH_CHAT,
   PATH_CHECK_PROFILE,
@@ -71,8 +73,24 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: PATH_BASKET,
-        name: 'Basket',
-        component: () => import('@/views/Basket.vue'),
+        component: () => import('@/layouts/LayoutRouter.vue'),
+        children: [
+          {
+            path: PATH_BASKET,
+            name: 'Basket',
+            component: () => import('@/views/Basket.vue'),
+          },
+          {
+            path: PATH_BASKET_AUTH,
+            name: 'BasketAuth',
+            component: () => import('@/views/Auth.vue'),
+          },
+          {
+            path: PATH_BASKET_CHECK_SMS,
+            name: 'BasketCheckSms',
+            component: () => import('@/views/CheckSms.vue'),
+          },
+        ],
       },
       {
         path: PATH_PROFILE,

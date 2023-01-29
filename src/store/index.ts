@@ -5,7 +5,7 @@ import {
   getCharacteristics,
   filterProducts,
 } from '@/api/products';
-import { sendPhone } from '@/api/user';
+import { checkSms, sendPhone } from '@/api/user';
 import { OrderProductDetails, Product } from '@/interfaces/ProductInterface';
 
 const modules = {};
@@ -174,6 +174,18 @@ export default createStore({
     async sendPhone(context: any, params?: any) {
       return new Promise((resolve, reject) => {
         sendPhone(params)
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((e) => {
+            console.error(e);
+            reject(e);
+          });
+      });
+    },
+    async checkSmsCode(context: any, params?: any) {
+      return new Promise((resolve, reject) => {
+        checkSms(params)
           .then((data) => {
             context.commit('SET_USER', data);
             resolve(data);

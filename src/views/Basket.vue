@@ -106,11 +106,7 @@
           </ion-card-content>
         </ion-card>
       </ion-row>
-      <Button
-        title="Заказать"
-        class="order-button"
-        @click="$router.push({ name: 'Pickup' })"
-      />
+      <Button title="Заказать" class="order-button" @click="toOrder" />
     </ion-content>
     <Popover
       button-ok="Очистить"
@@ -177,6 +173,7 @@ export default defineComponent({
       'total_amount',
       'total_discount',
       'products',
+      'token',
     ]),
     orders() {
       return this.order_product_details.map((el) => {
@@ -208,6 +205,13 @@ export default defineComponent({
       'SET_POPOVER',
     ]),
 
+    toOrder() {
+      if (!this.token) {
+        this.$router.push({ name: 'BasketAuth' });
+      } else {
+        this.$router.push({ name: 'Pickup' });
+      }
+    },
     changeBasket(event) {
       if (event === 'ok') {
         this.SET_POPOVER({

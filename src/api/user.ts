@@ -2,9 +2,7 @@ import { UserInterfase } from '@/interfaces/UserInterfase';
 import API from '@/api/index';
 import qs from 'qs';
 
-export const sendPhone = async (params: any) => {
-  console.log(params);
-
+export const sendPhone = async (params: object) => {
   try {
     const res = await API.post(`/sms/signup`, params);
     console.log(res);
@@ -16,10 +14,8 @@ export const sendPhone = async (params: any) => {
 export const checkSms = async (
   params: object
 ): Promise<UserInterfase | undefined> => {
-  console.log(params);
-
   try {
-    const { user, jwt }: any = await API.post(`/sms/signup`, params);
+    const { user, jwt }: any = await API.post(`/sms/callback`, params);
 
     if (jwt) {
       localStorage.setItem('jwt', jwt);

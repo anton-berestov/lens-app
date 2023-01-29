@@ -55,6 +55,7 @@ import Header from '@/components/ui/Header.vue';
 import Button from '@/components/ui/Button.vue';
 import VOtpInput from 'vue3-otp-input';
 import { mapActions, mapGetters } from 'vuex';
+import { PATH_BASKET_CHECK_SMS } from '@/router/constants';
 
 export default defineComponent({
   name: 'CheckSms',
@@ -71,7 +72,6 @@ export default defineComponent({
   },
   data() {
     return {
-      smsCode: '',
       repeat: false,
       currentTime: 60,
       timer: null,
@@ -89,13 +89,13 @@ export default defineComponent({
     ...mapGetters(['token', 'user']),
   },
   methods: {
-    ...mapActions(['sendPhone']),
+    ...mapActions(['sendPhone', 'checkSmsCode']),
     setFocus() {
       this.$refs.code.focusInput(0);
     },
     async handleOnComplete(value) {
-      this.smsCode = value;
-      console.log('OTP completed: ', value);
+      const phone = localStorage.getItem('phone');
+      await this.checkSmsCode({ phone, message: value });
       this.handlerRoute();
     },
     handlerRoute() {
@@ -106,6 +106,15 @@ export default defineComponent({
         this.user.patronymic
       ) {
         this.$router.replace({ name: 'Profile' });
+      }
+      if (
+        (this.token &&
+          this.user.firstname &&
+          this.user.lastname &&
+          this.user.patronymic,
+        PATH_BASKET_CHECK_SMS)
+      ) {
+        this.$router.replace({ name: 'Pickup' });
       }
     },
     repeatCode() {

@@ -54,6 +54,7 @@ import {
 import Header from '@/components/ui/Header.vue';
 import Button from '@/components/ui/Button.vue';
 import { mapActions } from 'vuex';
+import { PATH_BASKET_AUTH } from '@/router/constants';
 
 export default defineComponent({
   name: 'Auth',
@@ -66,7 +67,6 @@ export default defineComponent({
     IonRow,
     IonLabel,
     IonItem,
-    // IonInput,
   },
   data() {
     return {
@@ -87,7 +87,11 @@ export default defineComponent({
     send() {
       const phone = this.phone.replace(/[^0-9,.]/g, '');
       this.sendPhone({ phone });
-      this.$router.push({ name: 'CheckSms' });
+      if (PATH_BASKET_AUTH) {
+        this.$router.push({ name: 'BasketCheckSms' });
+      } else {
+        this.$router.push({ name: 'CheckSms' });
+      }
       localStorage.setItem('phone', phone);
     },
   },
