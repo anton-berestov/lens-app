@@ -5,7 +5,7 @@ import {
   getCharacteristics,
   filterProducts,
 } from '@/api/products';
-import { checkSms, sendPhone } from '@/api/user';
+import { checkSms, sendPhone, updateUser } from '@/api/user';
 import { OrderProductDetails, Product } from '@/interfaces/ProductInterface';
 
 const modules = {};
@@ -188,6 +188,21 @@ export default createStore({
         checkSms(params)
           .then((data) => {
             context.commit('SET_USER', data);
+            context.commit('SET_TOKEN', localStorage.getItem('jwt'));
+            localStorage.removeItem('phone');
+            resolve(data);
+          })
+          .catch((e) => {
+            console.error(e);
+            reject(e);
+          });
+      });
+    },
+    async updateUser(context: any, params?: any) {
+      return new Promise((resolve, reject) => {
+        updateUser(params)
+          .then((data) => {
+            console.log(data);
             resolve(data);
           })
           .catch((e) => {

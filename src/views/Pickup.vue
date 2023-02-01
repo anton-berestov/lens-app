@@ -22,34 +22,47 @@
           </ion-row>
 
           <ion-item>
-            <ion-label position="floating" class="label">Улица,дом*</ion-label>
-            <ion-input v-model="delivery.street"></ion-input>
+            <ion-input
+              v-model="delivery.street"
+              label-placement="floating"
+              label="Улица,дом*"
+            ></ion-input>
           </ion-item>
           <ion-row class="ion-nowrap">
             <ion-item>
-              <ion-label position="floating" class="label">Квартира</ion-label>
-              <ion-input v-model="delivery.apartment"></ion-input>
+              <ion-input
+                v-model="delivery.apartment"
+                label-placement="floating"
+                label="Квартира"
+              ></ion-input>
             </ion-item>
             <ion-item class="ion-margin-start">
-              <ion-label position="floating" class="label">Подъезд</ion-label>
-              <ion-input v-model="delivery.entrance"></ion-input>
+              <ion-input
+                v-model="delivery.entrance"
+                label-placement="floating"
+                label="Подъезд"
+              ></ion-input>
             </ion-item>
             <ion-item class="ion-margin-start">
-              <ion-label position="floating" class="label">Этаж</ion-label>
-              <ion-input v-model="delivery.floor"></ion-input>
+              <ion-input
+                v-model="delivery.floor"
+                label-placement="floating"
+                label="Этаж"
+              ></ion-input>
             </ion-item>
           </ion-row>
 
           <ion-item>
-            <ion-label position="floating" class="label"
-              >Комментарий курьеру
-            </ion-label>
-            <ion-input v-model="delivery.comment"></ion-input>
+            <ion-input
+              v-model="delivery.comment"
+              label-placement="floating"
+              label="Комментарий курьеру"
+            ></ion-input>
           </ion-item>
 
           <ion-item lines="none" class="ion-margin-top">
             <ion-checkbox
-              slot="start"
+              slot="end"
               v-model="delivery.rememberAddress"
             ></ion-checkbox>
             <ion-label class="checkbox-title">Запомнить адрес</ion-label>
@@ -73,31 +86,44 @@
         <ion-row class="ion-margin-top ion-margin-start">
           <ion-label class="title">Контактные данные</ion-label>
         </ion-row>
-        <ion-item class="item" fill="outline">
-          <!--          <ion-label label-placement="floating" class="label"-->
-          <!--            >Фамимлия*</ion-label-->
-          <!--          >-->
+        <ion-item class="item">
           <ion-input
             v-model="contact.firstname"
             label-placement="floating"
-            label="Email"
+            label="Фамилия*"
+            required
           ></ion-input>
         </ion-item>
         <ion-item class="item">
-          <ion-label position="floating" class="label">Имя*</ion-label>
-          <ion-input v-model="contact.lastname" required></ion-input>
+          <ion-input
+            v-model="contact.lastname"
+            label-placement="floating"
+            label="Имя*"
+            required
+          ></ion-input>
         </ion-item>
         <ion-item class="item">
-          <ion-label position="floating" class="label">Отчество*</ion-label>
-          <ion-input v-model="contact.patronymic" required></ion-input>
+          <ion-input
+            v-model="contact.patronymic"
+            label-placement="floating"
+            label="Отчество*"
+            required
+          ></ion-input>
         </ion-item>
         <ion-item class="item">
-          <ion-label position="floating" class="label">Дата рождения</ion-label>
-          <ion-input v-model="contact.birthday"></ion-input>
+          <ion-input
+            v-model="contact.birthday"
+            label-placement="floating"
+            label="Дата рождения"
+          ></ion-input>
         </ion-item>
         <ion-item class="item">
-          <ion-label position="floating" class="label">Email</ion-label>
-          <ion-input v-model="contact.email" type="email"></ion-input>
+          <ion-input
+            v-model="contact.email"
+            type="email"
+            label-placement="floating"
+            label="Email"
+          ></ion-input>
         </ion-item>
 
         <Button title="Оформить заказ" class="button-checkout" />
@@ -229,14 +255,6 @@ export default {
       }
     }
 
-    .label {
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 15px;
-      color: #bbbbbb;
-      margin-top: 16px;
-    }
-
     .checkbox-title {
       font-weight: 400;
       font-size: 12px;
@@ -260,12 +278,11 @@ export default {
     .item {
       padding-right: 20px;
 
-      .label {
+      input {
         font-weight: 400;
-        font-size: 12px;
-        line-height: 15px;
-        color: #bbbbbb;
-        margin-top: 16px;
+        font-size: 14px;
+        line-height: 17px;
+        color: #000000;
       }
     }
   }

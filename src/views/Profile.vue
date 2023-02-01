@@ -17,7 +17,6 @@
                       @click="
                         $router.push({
                           name: 'EditProfile',
-                          params: { id: user.id },
                         })
                       "
                     >
@@ -134,7 +133,9 @@
         <Button
           title="Войти"
           class="auth-button"
-          @click="$router.push({ name: 'Auth' })"
+          @click="
+            $router.push({ name: 'Auth', params: { redirect: 'Profile' } })
+          "
         />
       </ion-row>
 
@@ -214,6 +215,7 @@ export default defineComponent({
     logout() {
       this.SET_TOKEN('');
       localStorage.removeItem('jwt');
+      localStorage.removeItem('user');
     },
   },
   async mounted() {

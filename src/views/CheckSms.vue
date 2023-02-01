@@ -54,8 +54,7 @@ import {
 import Header from '@/components/ui/Header.vue';
 import Button from '@/components/ui/Button.vue';
 import VOtpInput from 'vue3-otp-input';
-import { mapActions, mapGetters } from 'vuex';
-import { PATH_BASKET_CHECK_SMS } from '@/router/constants';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default defineComponent({
   name: 'CheckSms',
@@ -87,8 +86,12 @@ export default defineComponent({
   },
   computed: {
     ...mapGetters(['token', 'user']),
+    redirect() {
+      return this.$route.params.redirect;
+    },
   },
   methods: {
+    ...mapMutations(['SET_TOKEN']),
     ...mapActions(['sendPhone', 'checkSmsCode']),
     setFocus() {
       this.$refs.code.focusInput(0);
@@ -105,17 +108,10 @@ export default defineComponent({
         this.user.lastname &&
         this.user.patronymic
       ) {
-        this.$router.replace({ name: 'Profile' });
-      }
-      if (
-        (this.token &&
-          this.user.firstname &&
-          this.user.lastname &&
-          this.user.patronymic,
-        PATH_BASKET_CHECK_SMS)
-      ) {
         this.$router.replace({ name: 'Pickup' });
       }
+
+      this.$router.replace({ name: this.redirect });
     },
     repeatCode() {
       this.currentTime = 60;
@@ -163,6 +159,8 @@ export default defineComponent({
         width: 25px;
         margin-right: 15px;
         text-align: center;
+        background: none;
+        border-radius: 0;
       }
 
       .input:focus {

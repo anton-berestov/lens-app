@@ -57,7 +57,7 @@
                   >
                 </ion-row>
                 <ion-row class="ion-margin-top row-price">
-                  <ion-label class="price">{{ `${order.price} ₽` }} </ion-label>
+                  <ion-label class="price">{{ `${order.price} ₽` }}</ion-label>
                   <div class="box ion-margin-start">
                     <ion-button
                       size="small"
@@ -207,7 +207,7 @@ export default defineComponent({
 
     toOrder() {
       if (!this.token) {
-        this.$router.push({ name: 'BasketAuth' });
+        this.$router.push({ name: 'Auth', params: { redirect: 'Pickup' } });
       } else {
         this.$router.push({ name: 'Pickup' });
       }
@@ -287,6 +287,7 @@ export default defineComponent({
   ion-content {
     --background: #ffffff;
   }
+
   .clear-button {
     color: #097ac6;
     font-weight: 400;
@@ -372,6 +373,7 @@ export default defineComponent({
       }
     }
   }
+
   .basket-info-wrapper {
     .basket-info-card {
       width: 100%;

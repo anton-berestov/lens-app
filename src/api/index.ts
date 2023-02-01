@@ -2,12 +2,19 @@ import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 
 export default {
   new(): AxiosInstance {
+    const token = localStorage.getItem('jwt');
+    const headers: any = {
+      'Content-Type': 'application/json, charset=utf-8',
+      'content-type': 'application/json',
+    };
+
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
     const req = axios.create({
-      headers: {
-        'Content-Type': 'application/json, charset=utf-8',
-        'content-type': 'application/json',
-      },
       baseURL: process.env.VUE_APP_URL_API,
+      headers,
     });
     return req;
   },
@@ -47,6 +54,7 @@ export default {
         throw this.onError(err);
       });
   },
+
   onError(err: any): Promise<AxiosResponse | AxiosError> {
     const { response } = err;
     console.error('API Request Error', response);

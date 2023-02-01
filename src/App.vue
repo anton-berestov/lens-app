@@ -1,12 +1,13 @@
 <template>
   <ion-app>
-    <ion-router-outlet />
+    <ion-router-outlet :animated="false" />
   </ion-app>
 </template>
 
 <script lang="ts">
-import { IonApp, IonRouterOutlet } from '@ionic/vue';
+import { IonApp, IonRouterOutlet, isPlatform } from '@ionic/vue';
 import { defineComponent } from 'vue';
+import { StatusBar, Style } from '@capacitor/status-bar';
 import { mapMutations } from 'vuex';
 
 export default defineComponent({
@@ -16,12 +17,16 @@ export default defineComponent({
     IonRouterOutlet,
   },
   methods: {
-    ...mapMutations(['SET_TOKEN']),
+    ...mapMutations(['SET_TOKEN', 'SET_USER']),
   },
-  mounted() {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      this.SET_TOKEN(token);
+  async mounted() {
+    if (!isPlatform('mobileweb')) {
+      await StatusBar.setStyle({ style: Style.Light });
+    }
+    this.SET_TOKEN(localStorage.getItem('jwt'));
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.SET_USER(JSON.parse(user));
     }
   },
 });

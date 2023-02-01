@@ -54,7 +54,6 @@ import {
 import Header from '@/components/ui/Header.vue';
 import Button from '@/components/ui/Button.vue';
 import { mapActions } from 'vuex';
-import { PATH_BASKET_AUTH } from '@/router/constants';
 
 export default defineComponent({
   name: 'Auth',
@@ -74,6 +73,11 @@ export default defineComponent({
       disabled: true,
     };
   },
+  computed: {
+    redirect() {
+      return this.$route.params.redirect;
+    },
+  },
   methods: {
     ...mapActions(['sendPhone']),
     handlerPhone() {
@@ -87,11 +91,12 @@ export default defineComponent({
     send() {
       const phone = this.phone.replace(/[^0-9,.]/g, '');
       this.sendPhone({ phone });
-      if (PATH_BASKET_AUTH) {
-        this.$router.push({ name: 'BasketCheckSms' });
-      } else {
-        this.$router.push({ name: 'CheckSms' });
-      }
+
+      this.$router.replace({
+        name: 'CheckSms',
+        params: { redirect: this.redirect },
+      });
+
       localStorage.setItem('phone', phone);
     },
   },
@@ -121,6 +126,7 @@ export default defineComponent({
     .input {
       border: none;
       width: 100%;
+      background: none;
     }
 
     .input:focus {

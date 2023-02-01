@@ -1,27 +1,44 @@
 <template>
   <ion-page>
     <Header title="Мои данные" back />
+    <Loading v-if="loading" :is-open="loading" />
     <ion-content id="my-data">
       <ion-list class="ion-margin-end">
         <ion-item class="ion-margin-top">
-          <ion-label position="floating" class="label">Фамимлия*</ion-label>
-          <ion-input v-model="fields.firstname"></ion-input>
+          <ion-input
+            v-model="fields.firstname"
+            label-placement="floating"
+            label="Фамилия*"
+          ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating" class="label">Имя*</ion-label>
-          <ion-input v-model="fields.lastname"></ion-input>
+          <ion-input
+            v-model="fields.lastname"
+            label-placement="floating"
+            label="Имя*"
+          ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating" class="label">Отчество*</ion-label>
-          <ion-input v-model="fields.patronymic"></ion-input>
+          <ion-input
+            v-model="fields.patronymic"
+            label-placement="floating"
+            label="Отчество*"
+          ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating" class="label">Дата рождения</ion-label>
-          <ion-input v-model="fields.birthday"></ion-input>
+          <ion-input
+            v-model="fields.birthday"
+            label-placement="floating"
+            label="Дата рождения"
+          ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating" class="label">Email</ion-label>
-          <ion-input v-model="fields.email" type="email"></ion-input>
+          <ion-input
+            v-model="fields.email"
+            type="email"
+            label-placement="floating"
+            label="Email"
+          ></ion-input>
         </ion-item>
       </ion-list>
 
@@ -32,39 +49,28 @@
 
 <script>
 import { defineComponent } from 'vue';
-import {
-  IonPage,
-  IonContent,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonInput,
-} from '@ionic/vue';
+import { IonPage, IonContent, IonList, IonItem, IonInput } from '@ionic/vue';
 import Header from '@/components/ui/Header.vue';
 import Button from '@/components/ui/Button.vue';
-import { mapGetters, mapMutations } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
+import Loading from '@/components/ui/Loading.vue';
 
 export default defineComponent({
   name: 'EditProfile',
-  props: {
-    id: {
-      type: String,
-      default: '',
-    },
-  },
   components: {
+    Loading,
     Button,
     Header,
     IonPage,
     IonContent,
     IonList,
     IonItem,
-    IonLabel,
     IonInput,
   },
   data() {
     return {
       fields: {
+        id: 0,
         firstname: '',
         lastname: '',
         patronymic: '',
@@ -72,6 +78,7 @@ export default defineComponent({
         birthday: '',
         email: '',
       },
+      loading: false,
     };
   },
   mounted() {
@@ -87,9 +94,13 @@ export default defineComponent({
   },
   methods: {
     ...mapMutations(['SET_USER']),
+    ...mapActions(['updateUser']),
     saveUser() {
+      this.loading = true;
       this.SET_USER(this.fields);
-      this.$router.push({ name: 'Profile' });
+      this.$router.replace({ name: 'Profile' });
+      this.updateUser(this.fields);
+      this.loading = false;
     },
   },
   computed: {
@@ -101,14 +112,6 @@ export default defineComponent({
 <style scoped lang="scss">
 #my-data {
   --background: #ffffff;
-
-  .label {
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 15px;
-    color: #bbbbbb;
-    margin-top: 16px;
-  }
 
   .button {
     margin: 0 10px;

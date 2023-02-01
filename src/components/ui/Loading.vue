@@ -1,16 +1,18 @@
 <template>
   <ion-content>
     <ion-loading
+      ref="loader"
       :is-open="isOpen"
       cssClass="loader"
       message="Загрузка..."
-      @didDismiss="$emit('close')"
+      :duration="3000"
+      @didDismiss="isOpen"
     >
     </ion-loading>
   </ion-content>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue';
 import { IonLoading, IonContent } from '@ionic/vue';
 
@@ -19,7 +21,7 @@ export default defineComponent({
   props: {
     isOpen: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   emits: ['close'],

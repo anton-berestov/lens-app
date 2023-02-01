@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <Header title="Каталог" />
-    <Loading v-if="loading" />
+    <Loading :is-open="loading" v-if="loading" />
     <Content @refresh="refresh" v-if="!loading">
       <div class="container" style="margin: 5px">
         <ion-row class="ion-nowrap ion-justify-content-between search">
@@ -229,7 +229,7 @@ export default defineComponent({
 .wrapper {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
 
   .product:after {
     --background: #deeeea;

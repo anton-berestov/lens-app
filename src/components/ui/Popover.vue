@@ -87,6 +87,7 @@ export default defineComponent({
     font-size: 12px;
     margin: 10px 10px;
     line-height: 140%;
+    color: #000000;
   }
 
   .btn-wrapper {
