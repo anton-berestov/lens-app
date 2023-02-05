@@ -54,6 +54,10 @@ export const updateUser = async (params: any) => {
       patronymic: params.patronymic,
       birthday: params.birthday,
     };
+    if (params.email) {
+      // @ts-ignore
+      req['email'] = params.email;
+    }
 
     const data: any = await API.put(`/users/${params.id}`, req);
     console.log(data);

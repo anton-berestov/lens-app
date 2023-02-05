@@ -16,6 +16,7 @@ export default createStore({
       show: false,
       message: [],
     },
+    error: null,
     filter: {
       type: [],
       period: [],
@@ -41,6 +42,7 @@ export default createStore({
   },
   getters: {
     popover: (state) => state.popover,
+    error: (state) => state.error,
     filter: (state) => state.filter,
     products: (state) => state.products,
     order_product_details: (state) => state.basket.order_product_details,
@@ -58,6 +60,7 @@ export default createStore({
   },
   mutations: {
     SET_POPOVER: (state, payload) => (state.popover = payload),
+    SET_ERROR: (state, payload) => (state.error = payload),
     SET_FILTER: (state, payload) => (state.filter = payload),
     SET_PRODUCTS: (state, payload) => (state.products = payload),
     SET_ORDER_PRODUCT_DETAILS: (state, payload: OrderProductDetails) =>
@@ -85,6 +88,9 @@ export default createStore({
     SET_BASKET: (state, payload) => (state.basket = payload),
   },
   actions: {
+    setError(context, error) {
+      context.commit('SET_ERROR', error);
+    },
     async getProducts(context: any, params?: object) {
       return new Promise((resolve, reject) => {
         getProducts(params)

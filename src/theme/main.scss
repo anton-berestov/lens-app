@@ -40,3 +40,8 @@ ion-refresher ion-refresher-content .refresher-refreshing .refresher-refreshing-
   color: #bbbbbb;
   margin-top: 10px;
 }
+
+ion-toast.error {
+  --background: red;
+  --color: #ffffff;
+}

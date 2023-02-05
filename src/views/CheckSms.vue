@@ -103,15 +103,21 @@ export default defineComponent({
     },
     handlerRoute() {
       if (
+        this.redirect === 'Pickup' &&
         this.token &&
         this.user.firstname &&
         this.user.lastname &&
         this.user.patronymic
       ) {
         this.$router.replace({ name: 'Pickup' });
+      } else {
+        this.$router.replace({
+          name: 'FillProfile',
+          params: { redirect: this.redirect },
+        });
       }
 
-      this.$router.replace({ name: this.redirect });
+      // this.$router.replace({ name: this.redirect });
     },
     repeatCode() {
       this.currentTime = 60;

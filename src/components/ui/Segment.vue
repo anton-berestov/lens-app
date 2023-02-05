@@ -1,8 +1,9 @@
 <template>
   <ion-segment
-    value="left"
+    :value="value"
     @ionChange="changeSegment($event)"
     class="segment-container"
+    ref="segment"
   >
     <ion-segment-button value="left" class="segment">
       <ion-label class="label">{{ titleLeft }}</ion-label>
@@ -20,6 +21,14 @@ import { IonSegment, IonSegmentButton, IonLabel } from '@ionic/vue';
 export default defineComponent({
   name: 'Segment',
   props: {
+    value: {
+      type: String,
+      default: 'left',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     titleLeft: {
       type: String,
       default: '',
@@ -35,9 +44,14 @@ export default defineComponent({
     IonSegmentButton,
     IonLabel,
   },
+
   methods: {
     changeSegment(event) {
       this.$emit('change', event.detail.value);
+
+      if (this.disabled) {
+        this.$refs.segment.$el.value = 'left';
+      }
     },
   },
 });

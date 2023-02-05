@@ -25,9 +25,17 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import YmapPlugin from 'vue-yandex-maps';
+
+// @ts-ignore
+import { showToast } from '@/helpers/toast';
+
+declare global {
+  interface Window {
+    $store: any;
+  }
+}
 
 const settings = {
   apiKey: process.env.VUE_APP_YANDEX_KEY,
@@ -43,6 +51,9 @@ const app = createApp(App)
   .use(router)
   .use(YmapPlugin, settings)
   .use(Maska);
+
+app.config.globalProperties.$toast = showToast;
+window.$store = store;
 
 router.isReady().then(() => {
   app.mount('#app');

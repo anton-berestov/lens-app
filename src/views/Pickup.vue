@@ -6,7 +6,8 @@
         <Segment
           title-left="Самовывоз"
           title-right="Курьер"
-          @change="handler = $event"
+          @change="handlerSegment($event)"
+          :disabled="handlerAmountDiscount"
         />
       </ion-row>
       <Address title="Адрес получения" v-if="handler === 'left'" />
@@ -86,47 +87,55 @@
         <ion-row class="ion-margin-top ion-margin-start">
           <ion-label class="title">Контактные данные</ion-label>
         </ion-row>
-        <ion-item class="item">
+        <ItemInput lines :error="errorFields.firstname">
           <ion-input
-            v-model="contact.firstname"
+            v-model="fields.firstname"
+            :error="errorFields.firstname"
             label-placement="floating"
             label="Фамилия*"
             required
           ></ion-input>
-        </ion-item>
-        <ion-item class="item">
+        </ItemInput>
+
+        <ItemInput lines :error="errorFields.lastname">
           <ion-input
-            v-model="contact.lastname"
+            v-model="fields.lastname"
             label-placement="floating"
             label="Имя*"
             required
           ></ion-input>
-        </ion-item>
-        <ion-item class="item">
+        </ItemInput>
+
+        <ItemInput lines :error="errorFields.patronymic">
           <ion-input
-            v-model="contact.patronymic"
+            v-model="fields.patronymic"
             label-placement="floating"
             label="Отчество*"
             required
           ></ion-input>
-        </ion-item>
-        <ion-item class="item">
+        </ItemInput>
+
+        <ItemInput lines>
           <ion-input
-            v-model="contact.birthday"
+            v-model="fields.birthday"
             label-placement="floating"
             label="Дата рождения"
           ></ion-input>
-        </ion-item>
-        <ion-item class="item">
+        </ItemInput>
+
+        <ItemInput lines>
           <ion-input
-            v-model="contact.email"
+            v-model="fields.email"
             type="email"
             label-placement="floating"
             label="Email"
           ></ion-input>
-        </ion-item>
-
-        <Button title="Оформить заказ" class="button-checkout" />
+        </ItemInput>
+        <Button
+          title="Оформить заказ"
+          class="button-checkout"
+          @click="submit"
+        />
 
         <ion-row class="ion-margin">
           <ion-text class="text"
@@ -141,6 +150,7 @@
         </ion-row>
       </ion-list>
     </ion-content>
+    <Popover button-ok="OK" @handler="closePopover" />
   </ion-page>
 </template>
 
@@ -164,12 +174,16 @@ import Segment from '@/components/ui/Segment.vue';
 import Address from '@/components/Address.vue';
 import CardInfo from '@/components/CardInfo.vue';
 import Button from '@/components/ui/Button.vue';
-import { mapGetters } from 'vuex';
-import { formatPhone } from '@/helpers/formatter';
+import {mapGetters, mapMutations} from 'vuex';
+import Popover from "@/components/ui/Popover.vue";
+import {checkFields} from "@/helpers/from";
+import ItemInput from "@/components/ui/ItemInput.vue";
 
 export default {
   name: 'Pickup',
   components: {
+    ItemInput,
+    Popover,
     Button,
     CardInfo,
     Address,
@@ -199,19 +213,19 @@ export default {
         comment: '',
         rememberAddress: false,
       },
-      contact: {
-        firstname: '',
-        lastname: '',
-        patronymic: '',
-        phone: '',
-        birthday: '',
-        email: '',
+      fields: {
+        firstname: null,
+        lastname: null,
+        patronymic: null,
+        birthday: null,
+        email: null,
       },
+      errorFields: {},
+      requiredFields: ['firstname', 'lastname', 'patronymic'],
     };
   },
-  watch: {},
   computed: {
-    ...mapGetters(['user']),
+    ...mapGetters(['user', 'basket']),
     handlerIconCalendar() {
       return this.handler === 'left'
         ? 'assets/icon/calendar-pickup.svg'
@@ -222,12 +236,42 @@ export default {
         ? 'assets/icon/payment-pickup.svg'
         : 'assets/icon/payment-courier.svg';
     },
+    handlerAmountDiscount() {
+      return this.basket.total_discount < 2000
+    }
+  },
+  methods: {
+    checkFields,
+    ...mapMutations(['SET_POPOVER']),
+    submit() {
+      if(this.handler === 'left' && !this.checkFields()) {
+
+        console.log(this.errorFields)
+      }
+    },
+    handlerSegment(event) {
+      if(event === 'right' && this.handlerAmountDiscount) {
+        this.SET_POPOVER({
+          show: true,
+          message: [
+            'Доставка курьером возможна при заказе от 2 000 ₽',
+          ],
+        });
+      } else {
+        this.handler = event
+      }
+    },
+    closePopover() {
+      this.SET_POPOVER({
+        show: false,
+        message: [],
+      });
+    },
   },
   mounted() {
     this.contact.firstname = this.user.firstname;
     this.contact.lastname = this.user.lastname;
     this.contact.patronymic = this.user.patronymic;
-    this.contact.phone = formatPhone(this.user.phone);
     this.contact.birthday = this.user.birthday;
     this.contact.email = this.user.email;
   },
@@ -275,15 +319,11 @@ export default {
       color: #000000;
     }
 
-    .item {
-      padding-right: 20px;
-
-      input {
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 17px;
-        color: #000000;
-      }
+    input {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+      color: #000000;
     }
   }
 

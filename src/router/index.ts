@@ -10,6 +10,7 @@ import {
   PATH_CHECK_PROFILE,
   PATH_CHECK_SMS,
   PATH_EDIT_PROFILE,
+  PATH_FILL_PROFILE,
   PATH_HISTORY_ORDER,
   PATH_HISTORY_RECORD,
   PATH_HOME,
@@ -128,6 +129,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'CheckProfile',
     props: true,
     component: () => import('@/views/CheckProfile.vue'),
+  },
+  {
+    path: PATH_FILL_PROFILE,
+    name: 'FillProfile',
+    props: true,
+    component: () => import('@/views/FillProfile.vue'),
   },
   {
     path: PATH_PICKUP,

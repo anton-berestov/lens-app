@@ -58,24 +58,28 @@ export default {
   onError(err: any): Promise<AxiosResponse | AxiosError> {
     const { response } = err;
     console.error('API Request Error', response);
-    // if (response?.status === 401) {
-    //   window.$store.dispatch('setError', { type: 'Unauthorized' });
-    // } else if (response?.status === 403) {
-    //   window.$store.dispatch('setError', response?.data?.message);
-    // } else if (
-    //   typeof response?.status === 'undefined' ||
-    //   response.message === 'Network Error'
-    // ) {
-    //   const method = err?.config?.method;
-    //
-    //   window.$store.dispatch('setError', {
-    //     type: 'Network',
-    //     method
-    //   });
-    // } else if (response?.status < 400 || response?.status >= 500) {
-    //   const errMsg = this.getErrorMessage(err);
-    //   window.$store.dispatch('setError', errMsg);
-    // }
+    if (response?.status === 401) {
+      // @ts-ignore
+      window.$store.dispatch('setError', { type: 'Unauthorized' });
+    } else if (response?.status === 403) {
+      // @ts-ignore
+      window.$store.dispatch('setError', response?.data?.message);
+    } else if (
+      typeof response?.status === 'undefined' ||
+      response.message === 'Network Error'
+    ) {
+      const method = err?.config?.method;
+      // @ts-ignore
+      window.$store.dispatch('setError', {
+        type: 'Network',
+        method,
+      });
+    } else if (response?.status < 400 || response?.status >= 500) {
+      // @ts-ignore
+      const errMsg = this.getErrorMessage(err);
+      // @ts-ignore
+      window.$store.dispatch('setError', errMsg);
+    }
     return err;
   },
 };

@@ -29,7 +29,7 @@
                   </ion-buttons>
                 </ion-label>
                 <ion-label class="user-phone">
-                  {{ `+${user.phone}` }}
+                  {{ formatPhone(user.phone) }}
                 </ion-label>
               </ion-row>
               <ion-row></ion-row>
@@ -177,6 +177,7 @@ import Button from '@/components/ui/Button.vue';
 import { mapGetters, mapMutations } from 'vuex';
 import Loading from '@/components/ui/Loading.vue';
 import Address from '@/components/Address.vue';
+import { formatPhone } from '../helpers/formatter';
 
 export default defineComponent({
   name: 'Profile',
@@ -207,6 +208,7 @@ export default defineComponent({
     ...mapGetters(['user', 'token']),
   },
   methods: {
+    formatPhone,
     ...mapMutations(['SET_TOKEN']),
     chat() {
       const win: Window = window;

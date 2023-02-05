@@ -4,11 +4,16 @@
   </ion-app>
 </template>
 
-<script lang="ts">
-import { IonApp, IonRouterOutlet, isPlatform } from '@ionic/vue';
+<script>
+import {
+  alertController,
+  IonApp,
+  IonRouterOutlet,
+  isPlatform,
+} from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { StatusBar, Style } from '@capacitor/status-bar';
-import { mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default defineComponent({
   name: 'App',
@@ -16,8 +21,50 @@ export default defineComponent({
     IonApp,
     IonRouterOutlet,
   },
+  computed: {
+    ...mapGetters(['error']),
+  },
+  watch: {
+    error(newError, prevError) {
+      if (newError && newError !== prevError) {
+        if (typeof newError === 'string') {
+          this.presentAlert();
+        } else if (typeof newError === 'object') {
+          // if (newError?.type === 'Unauthorized') {
+          //   this.$toast(this.$t('PLEASE-LOGIN'), 4000);
+          //   this.logout();
+          //   this.$router.replace('/');
+          // }
+          if (newError?.type === 'Network') {
+            const { method } = newError;
+            const message =
+              method === 'post' || method === 'delete' || method === 'put'
+                ? 'Ошибка при отправке данных, проверьте ваше интернет-соединение'
+                : 'Ошибка при получении данных, проверьте ваше интернет-соединение';
+            this.$toast(message, 4000);
+          }
+        }
+      }
+    },
+  },
   methods: {
     ...mapMutations(['SET_TOKEN', 'SET_USER']),
+    async presentAlert() {
+      try {
+        const alert = await alertController.create({
+          message: this.error,
+          buttons: ['OK'],
+        });
+        await alert.present();
+        await alert.onDidDismiss();
+        this.clearError();
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    clearError() {
+      window.$store.dispatch('setError', null);
+    },
   },
   async mounted() {
     if (!isPlatform('mobileweb')) {
