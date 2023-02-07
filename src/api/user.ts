@@ -45,7 +45,9 @@ export const checkSms = async (
   }
 };
 
-export const updateUser = async (params: any) => {
+export const updateUser = async (
+  params: any
+): Promise<UserInterfase | undefined> => {
   try {
     console.log(params);
     const req = {

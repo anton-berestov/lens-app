@@ -7,6 +7,7 @@ import {
 } from '@/api/products';
 import { checkSms, sendPhone, updateUser } from '@/api/user';
 import { OrderProductDetails, Product } from '@/interfaces/ProductInterface';
+import { sendOrderDetails, sendOrder } from '@/api/order';
 
 const modules = {};
 
@@ -79,6 +80,7 @@ export default createStore({
       (state.basket.total_discount = state.basket.order_product_details
         .map((el) => el.product_discount)
         .reduce((a, b) => Number(a) + Number(b), 0)),
+    SET_BASKET_USER: (state, payload) => (state.basket.user = payload),
     SET_TYPE: (state, payload) => (state.characteristics.type = payload),
     SET_PERIOD: (state, payload) => (state.characteristics.period = payload),
     SET_SPHERE: (state, payload) => (state.characteristics.sphere = payload),
@@ -212,6 +214,35 @@ export default createStore({
             resolve(data);
           })
           .catch((e) => {
+            console.error(e);
+            reject(e);
+          });
+      });
+    },
+    async sendOrderDetails(context: any, params?: any) {
+      return new Promise((resolve, reject) => {
+        sendOrderDetails(params)
+          .then((data: any) => {
+            sendOrder({ order_product: data });
+            resolve(data);
+          })
+          .catch((e: any) => {
+            console.error(e);
+            reject(e);
+          });
+      });
+    },
+    async sendOrder(context: any, params?: any) {
+      return new Promise((resolve, reject) => {
+        sendOrder({
+          order_product: params,
+          order: context.state.basket,
+        })
+          .then((data: any) => {
+            console.log(data);
+            // resolve(data);
+          })
+          .catch((e: any) => {
             console.error(e);
             reject(e);
           });

@@ -27,7 +27,7 @@ export const getProducts = async (
     const products: Product[] = [];
     const response = await API.get(`/products?${paramString}`);
     if (response.data) {
-      console.log(response.data);
+      // console.log(response.data);
       response.data.map((p: any) => {
         //extract images
         const images: Image[] = [];
@@ -107,7 +107,7 @@ export const getProducts = async (
           type.title = m?.attributes.title;
           type.description = m?.attributes.description;
         }
-        console.log(sphere);
+        // console.log(sphere);
 
         products.push({
           id: p.id,
@@ -326,7 +326,7 @@ export const filterProducts = async (
     const response = await API.get(`/products?${paramString}`);
 
     if (response.data) {
-      console.log(response.data);
+      // console.log(response.data);
       response.data.map((p: any) => {
         //extract images
         const images: Image[] = [];
@@ -406,7 +406,7 @@ export const filterProducts = async (
           type.title = m?.attributes.title;
           type.description = m?.attributes.description;
         }
-        console.log(sphere);
+        // console.log(sphere);
 
         products.push({
           id: p.id,

@@ -131,11 +131,7 @@
             label="Email"
           ></ion-input>
         </ItemInput>
-        <Button
-          title="Оформить заказ"
-          class="button-checkout"
-          @click="submit"
-        />
+        <Button title="Оформить заказ" class="button-checkout" @click="send" />
 
         <ion-row class="ion-margin">
           <ion-text class="text"
@@ -174,10 +170,11 @@ import Segment from '@/components/ui/Segment.vue';
 import Address from '@/components/Address.vue';
 import CardInfo from '@/components/CardInfo.vue';
 import Button from '@/components/ui/Button.vue';
-import {mapGetters, mapMutations} from 'vuex';
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 import Popover from "@/components/ui/Popover.vue";
 import {checkFields} from "@/helpers/from";
 import ItemInput from "@/components/ui/ItemInput.vue";
+import {sendOrderDetails} from "@/api/order";
 
 export default {
   name: 'Pickup',
@@ -201,6 +198,14 @@ export default {
     IonItem,
     IonCheckbox,
     IonText,
+  },
+  mounted() {
+    this.fields.firstname = this.user.firstname;
+    this.fields.lastname = this.user.lastname;
+    this.fields.patronymic = this.user.patronymic;
+    this.fields.birthday = this.user.birthday;
+    this.fields.email = this.user.email;
+    this.SET_BASKET_USER(this.user.id);
   },
   data() {
     return {
@@ -242,11 +247,20 @@ export default {
   },
   methods: {
     checkFields,
-    ...mapMutations(['SET_POPOVER']),
-    submit() {
+    ...mapMutations(['SET_POPOVER', 'SET_USER', 'SET_BASKET_USER']),
+    ...mapActions(['updateUser', 'sendOrderDetails']),
+    async send() {
       if(this.handler === 'left' && !this.checkFields()) {
+        const user = {...this.user}
+        user.firstname = this.fields.firstname
+        user.lastname = this.fields.lastname
+        user.patronymic = this.fields.patronymic
+        user.birthday = this.fields.birthday
+        user.email = this.fields.email
 
-        console.log(this.errorFields)
+        this.SET_USER(user)
+        await this.updateUser(user)
+        await this.sendOrderDetails(this.basket.order_product_details)
       }
     },
     handlerSegment(event) {
@@ -268,13 +282,7 @@ export default {
       });
     },
   },
-  mounted() {
-    this.contact.firstname = this.user.firstname;
-    this.contact.lastname = this.user.lastname;
-    this.contact.patronymic = this.user.patronymic;
-    this.contact.birthday = this.user.birthday;
-    this.contact.email = this.user.email;
-  },
+
 };
 </script>
 
@@ -328,7 +336,7 @@ export default {
   }
 
   .button-checkout {
-    margin: 0 10px 0 10px;
+    margin: 0 2px 0 8px;
   }
 
   .text {
