@@ -182,16 +182,15 @@ export default defineComponent({
         for (let key in a[el.parent]) {
           delete a[el.parent][key];
         }
-        //TODO Отправляем на фильтрацию
+        //Отправляем на фильтрацию
         this.SET_FILTER(a);
         this.filterProducts();
         this.loading = false;
       }
 
       if (el.parent === 'type' || el.parent === 'period') {
-        console.log();
         a[el.parent] = a[el.parent].filter((e: any) => e.id !== el.value.id);
-        //TODO Отправляем на фильтрацию
+        //Отправляем на фильтрацию
         this.SET_FILTER(a);
         this.filterProducts();
         this.loading = false;

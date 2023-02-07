@@ -220,33 +220,25 @@ export default createStore({
       });
     },
     async sendOrderDetails(context: any, params?: any) {
-      return new Promise((resolve, reject) => {
-        sendOrderDetails(params)
-          .then((data: any) => {
-            sendOrder({ order_product: data });
-            resolve(data);
-          })
-          .catch((e: any) => {
-            console.error(e);
-            reject(e);
-          });
-      });
+      sendOrderDetails(params)
+        .then((data: any) => {
+          context.dispatch('sendOrder', [...data]);
+        })
+        .catch((e: any) => {
+          console.error(e);
+        });
     },
     async sendOrder(context: any, params?: any) {
-      return new Promise((resolve, reject) => {
-        sendOrder({
-          order_product: params,
-          order: context.state.basket,
+      sendOrder({
+        order_details: params,
+        order: context.state.basket,
+      })
+        .then((data: any) => {
+          console.log(data);
         })
-          .then((data: any) => {
-            console.log(data);
-            // resolve(data);
-          })
-          .catch((e: any) => {
-            console.error(e);
-            reject(e);
-          });
-      });
+        .catch((e: any) => {
+          console.error(e);
+        });
     },
   },
   modules,

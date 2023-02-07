@@ -174,7 +174,6 @@ import {mapActions, mapGetters, mapMutations} from 'vuex';
 import Popover from "@/components/ui/Popover.vue";
 import {checkFields} from "@/helpers/from";
 import ItemInput from "@/components/ui/ItemInput.vue";
-import {sendOrderDetails} from "@/api/order";
 
 export default {
   name: 'Pickup',
@@ -243,7 +242,7 @@ export default {
     },
     handlerAmountDiscount() {
       return this.basket.total_discount < 2000
-    }
+    },
   },
   methods: {
     checkFields,
