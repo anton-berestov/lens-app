@@ -8,14 +8,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {
-  // IonLoading,
-  // IonContent,
-  IonItem,
-  IonBackdrop,
-  IonSpinner,
-  IonLabel,
-} from '@ionic/vue';
+import { IonItem, IonBackdrop, IonSpinner, IonLabel } from '@ionic/vue';
 
 export default defineComponent({
   name: 'Loading',
@@ -27,8 +20,6 @@ export default defineComponent({
   },
   emits: ['close'],
   components: {
-    // IonLoading,
-    // IonContent,
     IonItem,
     IonBackdrop,
     IonSpinner,
