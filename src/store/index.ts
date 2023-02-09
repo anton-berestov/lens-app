@@ -40,6 +40,7 @@ export default createStore({
       total_discount: 0,
       user: 0,
     },
+    order: '',
   },
   getters: {
     popover: (state) => state.popover,
@@ -58,6 +59,7 @@ export default createStore({
     user: (state) => state.user,
     token: (state) => state.token,
     basket: (state) => state.basket,
+    order: (state) => state.order,
   },
   mutations: {
     SET_POPOVER: (state, payload) => (state.popover = payload),
@@ -88,6 +90,7 @@ export default createStore({
     SET_USER: (state, payload) => (state.user = payload),
     SET_TOKEN: (state, payload) => (state.token = payload),
     SET_BASKET: (state, payload) => (state.basket = payload),
+    SET_ORDER: (state, payload) => (state.order = payload),
   },
   actions: {
     setError(context, error) {
@@ -210,7 +213,6 @@ export default createStore({
       return new Promise((resolve, reject) => {
         updateUser(params)
           .then((data) => {
-            console.log(data);
             resolve(data);
           })
           .catch((e) => {
@@ -233,8 +235,8 @@ export default createStore({
         order_details: params,
         order: context.state.basket,
       })
-        .then((data: any) => {
-          console.log(data);
+        .then(({ data }: any) => {
+          context.commit('SET_ORDER', data.id);
         })
         .catch((e: any) => {
           console.error(e);

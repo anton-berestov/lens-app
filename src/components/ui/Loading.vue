@@ -1,20 +1,21 @@
 <template>
-  <ion-content>
-    <ion-loading
-      ref="loader"
-      :is-open="isOpen"
-      cssClass="loader"
-      message="Загрузка..."
-      :duration="3000"
-      @didDismiss="isOpen"
-    >
-    </ion-loading>
-  </ion-content>
+  <ion-backdrop :visible="true" class="backdrop"></ion-backdrop>
+  <ion-item lines="none" class="spinner">
+    <ion-spinner></ion-spinner>
+    <ion-label class="ion-margin-start">Загрузка...</ion-label>
+  </ion-item>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonLoading, IonContent } from '@ionic/vue';
+import {
+  // IonLoading,
+  // IonContent,
+  IonItem,
+  IonBackdrop,
+  IonSpinner,
+  IonLabel,
+} from '@ionic/vue';
 
 export default defineComponent({
   name: 'Loading',
@@ -26,13 +27,25 @@ export default defineComponent({
   },
   emits: ['close'],
   components: {
-    IonLoading,
-    IonContent,
+    // IonLoading,
+    // IonContent,
+    IonItem,
+    IonBackdrop,
+    IonSpinner,
+    IonLabel,
   },
 });
 </script>
 
 <style>
+.backdrop {
+  opacity: 0.1;
+}
+
+.spinner {
+  margin: auto;
+}
+
 ion-loading.loader {
   --spinner-color: #005944;
 }

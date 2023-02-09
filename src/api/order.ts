@@ -38,7 +38,8 @@ export const sendOrder = async (params: any): Promise<undefined> => {
     };
 
     const res = API.post(`/orders`, { data });
-    console.log(res);
+    // @ts-ignore
+    return res;
   } catch (e) {
     console.error(e);
   }

@@ -15,6 +15,7 @@ import {
   PATH_HISTORY_RECORD,
   PATH_HOME,
   PATH_MAP,
+  PATH_ORDER,
   PATH_PARAMS,
   PATH_PICKUP,
   PATH_PRODUCT,
@@ -141,6 +142,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Pickup',
     props: true,
     component: () => import('@/views/Pickup.vue'),
+  },
+  {
+    path: PATH_ORDER,
+    name: 'Order',
+    component: () => import('@/views/Order.vue'),
   },
 ];
 

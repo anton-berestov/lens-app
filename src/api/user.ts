@@ -49,7 +49,6 @@ export const updateUser = async (
   params: any
 ): Promise<UserInterfase | undefined> => {
   try {
-    console.log(params);
     const req = {
       firstname: params.firstname,
       lastname: params.lastname,
@@ -62,7 +61,6 @@ export const updateUser = async (
     }
 
     const data: any = await API.put(`/users/${params.id}`, req);
-    console.log(data);
 
     const User: UserInterfase = {
       id: 0,

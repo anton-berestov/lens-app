@@ -260,6 +260,7 @@ export default {
         this.SET_USER(user)
         await this.updateUser(user)
         await this.sendOrderDetails(this.basket.order_product_details)
+        this.$router.push({name: 'Order'})
       }
     },
     handlerSegment(event) {
