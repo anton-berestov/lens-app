@@ -22,52 +22,58 @@
             <ion-label class="title">Адрес доставки</ion-label>
           </ion-row>
 
-          <ion-item>
+          <ItemInput lines :error="errorFields.street">
             <ion-input
-              v-model="delivery.street"
+              v-model="address.street"
               label-placement="floating"
               label="Улица,дом*"
             ></ion-input>
-          </ion-item>
+          </ItemInput>
+
           <ion-row class="ion-nowrap">
-            <ion-item>
+            <ItemInput lines>
               <ion-input
-                v-model="delivery.apartment"
+                v-model="address.apartment"
                 label-placement="floating"
                 label="Квартира"
+                type="tel"
               ></ion-input>
-            </ion-item>
-            <ion-item class="ion-margin-start">
+            </ItemInput>
+            <ItemInput lines class="ion-margin-start">
               <ion-input
-                v-model="delivery.entrance"
+                v-model="address.entrance"
                 label-placement="floating"
                 label="Подъезд"
+                type="tel"
               ></ion-input>
-            </ion-item>
-            <ion-item class="ion-margin-start">
+            </ItemInput>
+            <ItemInput lines class="ion-margin-start">
               <ion-input
-                v-model="delivery.floor"
+                v-model="address.floor"
                 label-placement="floating"
                 label="Этаж"
+                type="tel"
               ></ion-input>
-            </ion-item>
+            </ItemInput>
           </ion-row>
 
-          <ion-item>
+          <ItemInput lines>
             <ion-input
-              v-model="delivery.comment"
+              v-model="address.comment"
               label-placement="floating"
               label="Комментарий курьеру"
             ></ion-input>
-          </ion-item>
+          </ItemInput>
 
-          <ion-item lines="none" class="ion-margin-top">
+          <ItemInput lines="none" class="ion-margin-top">
             <ion-checkbox
-              slot="end"
-              v-model="delivery.rememberAddress"
-            ></ion-checkbox>
-            <ion-label class="checkbox-title">Запомнить адрес</ion-label>
-          </ion-item>
+              v-model="address.rememberAddress"
+              labelPlacement="end"
+              justify="start"
+            >
+              <ion-label class="checkbox-title">Запомнить адрес</ion-label>
+            </ion-checkbox>
+          </ItemInput>
         </ion-card-content>
       </ion-card>
 
@@ -161,19 +167,20 @@ import {
   IonIcon,
   IonLabel,
   IonInput,
-  IonItem,
   IonCheckbox,
   IonText,
 } from '@ionic/vue';
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 import Header from '@/components/ui/Header.vue';
 import Segment from '@/components/ui/Segment.vue';
 import Address from '@/components/Address.vue';
 import CardInfo from '@/components/CardInfo.vue';
 import Button from '@/components/ui/Button.vue';
-import {mapActions, mapGetters, mapMutations} from 'vuex';
-import Popover from "@/components/ui/Popover.vue";
-import {checkFields} from "@/helpers/from";
 import ItemInput from "@/components/ui/ItemInput.vue";
+import Popover from "@/components/ui/Popover.vue";
+import {checkFields, clearFields, checkFieldsAddress} from "@/helpers/from";
+import {sendOrderDetails, sendOrder} from "@/api/order";
+
 
 export default {
   name: 'Pickup',
@@ -194,7 +201,6 @@ export default {
     IonIcon,
     IonLabel,
     IonInput,
-    IonItem,
     IonCheckbox,
     IonText,
   },
@@ -209,7 +215,7 @@ export default {
   data() {
     return {
       handler: 'left',
-      delivery: {
+      address: {
         street: '',
         apartment: '',
         entrance: '',
@@ -226,30 +232,41 @@ export default {
       },
       errorFields: {},
       requiredFields: ['firstname', 'lastname', 'patronymic'],
+      requiredFieldsAddress: ['street']
     };
   },
   computed: {
     ...mapGetters(['user', 'basket']),
     handlerIconCalendar() {
       return this.handler === 'left'
-        ? 'assets/icon/calendar-pickup.svg'
-        : 'assets/icon/calendar-courier.svg';
+          ? 'assets/icon/calendar-pickup.svg'
+          : 'assets/icon/calendar-courier.svg';
     },
     handlerIconPayment() {
       return this.handler === 'left'
-        ? 'assets/icon/payment-pickup.svg'
-        : 'assets/icon/payment-courier.svg';
+          ? 'assets/icon/payment-pickup.svg'
+          : 'assets/icon/payment-courier.svg';
     },
     handlerAmountDiscount() {
       return this.basket.total_discount < 2000
     },
   },
+  watch: {
+    async created() {
+      this.emptyFields = {...this.fields};
+    },
+  },
   methods: {
     checkFields,
-    ...mapMutations(['SET_POPOVER', 'SET_USER', 'SET_BASKET_USER', 'SET_BASKET']),
-    ...mapActions(['updateUser', 'sendOrderDetails']),
+    clearFields,
+    checkFieldsAddress,
+    ...mapMutations(['SET_POPOVER', 'SET_USER', 'SET_BASKET_USER', 'SET_BASKET', 'SET_ORDER']),
+    ...mapActions(['updateUser', 'saveAddress']),
+    created() {
+      this.emptyFields = {...this.fields};
+    },
     async send() {
-      if(this.handler === 'left' && !this.checkFields()) {
+      if (this.handler === 'left' && !this.checkFields()) {
         const user = {...this.user}
         user.firstname = this.fields.firstname
         user.lastname = this.fields.lastname
@@ -259,19 +276,77 @@ export default {
 
         this.SET_USER(user)
         await this.updateUser(user)
-        await this.sendOrderDetails(this.basket.order_product_details)
-        this.$router.push({name: 'Order'})
-        this.SET_BASKET({
-          order_product_details: [],
-          count: 0,
-          total_amount: 0,
-          total_discount: 0,
-          user: 0,
+        await sendOrderDetails(this.basket.order_product_details).then((data) => {
+          sendOrder({
+            order_details: data,
+            order: this.basket,
+          }).then(({data}) => {
+            this.SET_ORDER(data.id)
+            this.$router.push({name: 'Order'})
+            this.clearBasket()
+          }).catch((e) => {
+            console.log(e)
+          })
+          console.log(data)
+        }).catch((e) => {
+          console.error(e)
         })
       }
+      if (this.handler === 'right' && !this.checkFields() && !this.checkFieldsAddress()) {
+        const user = {...this.user}
+        user.firstname = this.fields.firstname
+        user.lastname = this.fields.lastname
+        user.patronymic = this.fields.patronymic
+        user.birthday = this.fields.birthday
+        user.email = this.fields.email
+
+        this.SET_USER(user)
+        await this.updateUser(user)
+        await sendOrderDetails(this.basket.order_product_details).then((data) => {
+          sendOrder({
+            order_details: data,
+            order: this.basket,
+          }).then(({data}) => {
+            this.SET_ORDER(data.id)
+            const params = {
+              type: 'order',
+              street: this.address.street,
+              apartment: this.address.apartment,
+              entrance: this.address.entrance,
+              floor: this.address.floor,
+              order: data.id
+            }
+            this.saveAddress(params)
+            if (this.address.rememberAddress) {
+              params.type = 'user'
+              this.saveAddress(params)
+            }
+
+            this.$router.push({name: 'Order'})
+            this.clearBasket()
+          }).catch((e) => {
+            console.log(e)
+          })
+          console.log(data)
+        }).catch((e) => {
+          console.error(e)
+        })
+        console.log('no save')
+
+      }
+    },
+    clearBasket() {
+      this.SET_BASKET({
+        order_product_details: [],
+        count: 0,
+        total_amount: 0,
+        total_discount: 0,
+        user: 0,
+      })
+      this.clearFields();
     },
     handlerSegment(event) {
-      if(event === 'right' && this.handlerAmountDiscount) {
+      if (event === 'right' && this.handlerAmountDiscount) {
         this.SET_POPOVER({
           show: true,
           message: [

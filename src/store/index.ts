@@ -7,7 +7,7 @@ import {
 } from '@/api/products';
 import { checkSms, sendPhone, updateUser } from '@/api/user';
 import { OrderProductDetails, Product } from '@/interfaces/ProductInterface';
-import { sendOrderDetails, sendOrder } from '@/api/order';
+import { saveAddress } from '@/api/address';
 
 const modules = {};
 
@@ -221,24 +221,12 @@ export default createStore({
           });
       });
     },
-    async sendOrderDetails(context: any, params?: any) {
-      sendOrderDetails(params)
-        .then((data: any) => {
-          context.dispatch('sendOrder', [...data]);
+    async saveAddress(context: any, params?: any) {
+      saveAddress(params)
+        .then((data) => {
+          console.log(data);
         })
-        .catch((e: any) => {
-          console.error(e);
-        });
-    },
-    async sendOrder(context: any, params?: any) {
-      sendOrder({
-        order_details: params,
-        order: context.state.basket,
-      })
-        .then(({ data }: any) => {
-          context.commit('SET_ORDER', data.id);
-        })
-        .catch((e: any) => {
+        .catch((e) => {
           console.error(e);
         });
     },

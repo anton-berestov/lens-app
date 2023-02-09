@@ -37,3 +37,27 @@ export function checkFields(e) {
   }
   return hasErrors;
 }
+
+export function checkFieldsAddress(e) {
+  let hasErrors = false;
+  if (typeof e === 'object' && e?.response?.data?.errors) {
+    const { errors } = e.response.data;
+    Object.keys(errors).forEach((i) => {
+      this.errorFields[i] = errors[i].join(', ');
+    });
+  } else {
+    Object.keys(this.address).forEach((i) => {
+      if (
+        this.requiredFieldsAddress.indexOf(i) >= 0 &&
+        !this.address[i] &&
+        this.address[i] !== 0
+      ) {
+        this.errorFields[i] = 'Обязательно для заполнения';
+        hasErrors = true;
+      } else {
+        this.errorFields[i] = false;
+      }
+    });
+  }
+  return hasErrors;
+}
