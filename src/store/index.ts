@@ -223,10 +223,10 @@ export default createStore({
     },
     async saveAddress(context: any, params?: any) {
       saveAddress(params)
-        .then((data) => {
+        .then((data: any) => {
           console.log(data);
         })
-        .catch((e) => {
+        .catch((e: any) => {
           console.error(e);
         });
     },

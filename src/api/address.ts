@@ -1,6 +1,9 @@
 import API from '@/api/index';
+import { UserInterfase } from '@/interfaces/UserInterfase';
 
-export const saveAddress = async (params: any) => {
+export const saveAddress = async (
+  params: any
+): Promise<UserInterfase | undefined> => {
   try {
     const data = {
       street: params.street,
@@ -10,8 +13,8 @@ export const saveAddress = async (params: any) => {
       order: params.order,
     };
     return API.post(`/addresses?populate=${params.type}`, { data })
-      .then((data) => data)
-      .catch((e) => console.error(e));
+      .then((data: any) => data)
+      .catch((e: any) => console.error(e));
   } catch (e) {
     console.error(e);
   }
