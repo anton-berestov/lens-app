@@ -246,7 +246,7 @@ export default {
   },
   methods: {
     checkFields,
-    ...mapMutations(['SET_POPOVER', 'SET_USER', 'SET_BASKET_USER']),
+    ...mapMutations(['SET_POPOVER', 'SET_USER', 'SET_BASKET_USER', 'SET_BASKET']),
     ...mapActions(['updateUser', 'sendOrderDetails']),
     async send() {
       if(this.handler === 'left' && !this.checkFields()) {
@@ -261,6 +261,13 @@ export default {
         await this.updateUser(user)
         await this.sendOrderDetails(this.basket.order_product_details)
         this.$router.push({name: 'Order'})
+        this.SET_BASKET({
+          order_product_details: [],
+          count: 0,
+          total_amount: 0,
+          total_discount: 0,
+          user: 0,
+        })
       }
     },
     handlerSegment(event) {

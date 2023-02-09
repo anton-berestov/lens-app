@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import FooterTabs from '../views/FooterTabs.vue';
 import {
   PATH_ACTIONS_NEWS,
   PATH_AUTH,
@@ -27,12 +26,9 @@ import {
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    component: FooterTabs,
+    component: () => import('@/layouts/LayoutHome.vue'),
+    redirect: '/home',
     children: [
-      {
-        path: '',
-        redirect: '/home',
-      },
       {
         path: PATH_HOME,
         name: 'Home',
@@ -153,6 +149,10 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  next();
 });
 
 export default router;

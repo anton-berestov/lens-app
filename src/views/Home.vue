@@ -19,6 +19,7 @@
         title="Акции и новости"
         img="assets/image/actions_news.png"
         @click="$router.push({ name: 'ActionsNews' })"
+        v-if="false"
       />
     </ion-content>
   </ion-page>

@@ -116,7 +116,8 @@
     <Button
       v-if="!order_product_details.length"
       title="Перейти в каталог"
-      @click="$router.push({ name: 'Catalog' })"
+      @click="$router.push({ path: PATH_CATALOG })"
+      class="catalog-button"
     />
   </ion-page>
 </template>
@@ -141,6 +142,7 @@ import Header from '@/components/ui/Header.vue';
 import Info from '@/components/ui/Info.vue';
 import Button from '@/components/ui/Button.vue';
 import Popover from '@/components/ui/Popover.vue';
+import { PATH_CATALOG } from '@/router/constants';
 
 export default defineComponent({
   name: 'Basket',
@@ -162,6 +164,7 @@ export default defineComponent({
   },
   data() {
     return {
+      PATH_CATALOG,
       plus: addOutline,
       minus: removeOutline,
     };
@@ -302,6 +305,10 @@ export default defineComponent({
 
   .order-button {
     margin: 0 8px;
+  }
+
+  .catalog-button {
+    background: #ffffff;
   }
 
   .wrapper {

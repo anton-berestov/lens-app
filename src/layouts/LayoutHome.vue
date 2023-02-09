@@ -1,58 +1,60 @@
 <template>
   <ion-page>
-    <ion-tabs>
-      <ion-router-outlet animated="false"></ion-router-outlet>
-      <ion-tab-bar slot="bottom" class="tab-bar">
-        <ion-tab-button
-          :selected="checkPath(PATH_HOME)"
-          @click.prevent="changePath(PATH_HOME)"
-        >
-          <ion-icon :icon="changeHome" class="icon" />
-          <ion-label class="label">Главная</ion-label>
-        </ion-tab-button>
+    <ion-content :scroll-y="false">
+      <ion-tabs>
+        <ion-router-outlet :animated="false"></ion-router-outlet>
+        <ion-tab-bar slot="bottom" class="tab-bar">
+          <ion-tab-button
+            :selected="checkPath(PATH_HOME)"
+            @click.prevent="changePath(PATH_HOME)"
+          >
+            <ion-icon :icon="changeHome" class="icon" />
+            <ion-label class="label">Главная</ion-label>
+          </ion-tab-button>
 
-        <ion-tab-button
-          :selected="checkPath(PATH_CATALOG)"
-          @click.prevent="changePath(PATH_CATALOG)"
-        >
-          <ion-icon :icon="changeCatalog" class="icon" />
-          <ion-label class="label">Каталог</ion-label>
-        </ion-tab-button>
+          <ion-tab-button
+            :selected="checkPath(PATH_CATALOG)"
+            @click.prevent="changePath(PATH_CATALOG)"
+          >
+            <ion-icon :icon="changeCatalog" class="icon" />
+            <ion-label class="label">Каталог</ion-label>
+          </ion-tab-button>
 
-        <ion-tab-button
-          :selected="checkPath(PATH_RECORDING)"
-          @click.prevent="changePath(PATH_RECORDING)"
-        >
-          <ion-icon :icon="changeRecording" class="icon" />
-          <ion-label class="label">Запись</ion-label>
-        </ion-tab-button>
+          <ion-tab-button
+            :selected="checkPath(PATH_RECORDING)"
+            @click.prevent="changePath(PATH_RECORDING)"
+          >
+            <ion-icon :icon="changeRecording" class="icon" />
+            <ion-label class="label">Запись</ion-label>
+          </ion-tab-button>
 
-        <ion-tab-button
-          :selected="checkPath(PATH_BASKET)"
-          @click.prevent="changePath(PATH_BASKET)"
-        >
-          <ion-icon :icon="changeBasket" class="icon" />
-          <ion-label class="label">Корзина</ion-label>
-          <div style="position: relative" v-if="basket_count !== 0">
-            <div class="count-box">
-              <p class="count">{{ basket_count }}</p>
+          <ion-tab-button
+            :selected="checkPath(PATH_BASKET)"
+            @click.prevent="changePath(PATH_BASKET)"
+          >
+            <ion-icon :icon="changeBasket" class="icon" />
+            <ion-label class="label">Корзина</ion-label>
+            <div style="position: relative" v-if="basket_count !== 0">
+              <div class="count-box">
+                <p class="count">{{ basket_count }}</p>
+              </div>
             </div>
-          </div>
-        </ion-tab-button>
+          </ion-tab-button>
 
-        <ion-tab-button
-          :selected="checkPath(PATH_PROFILE)"
-          @click.prevent="changePath(PATH_PROFILE)"
-        >
-          <ion-icon :icon="changeProfile" class="icon" />
-          <ion-label class="label">Профиль</ion-label>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
+          <ion-tab-button
+            :selected="checkPath(PATH_PROFILE)"
+            @click.prevent="changePath(PATH_PROFILE)"
+          >
+            <ion-icon :icon="changeProfile" class="icon" />
+            <ion-label class="label">Профиль</ion-label>
+          </ion-tab-button>
+        </ion-tab-bar>
+      </ion-tabs>
+    </ion-content>
   </ion-page>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import { defineComponent } from 'vue';
 import {
   IonTabBar,
@@ -62,6 +64,7 @@ import {
   IonIcon,
   IonPage,
   IonRouterOutlet,
+    IonContent
 } from '@ionic/vue';
 import {
   PATH_CATALOG,
@@ -70,11 +73,10 @@ import {
   PATH_RECORDING,
   PATH_PROFILE,
 } from '@/router/constants';
-import { RouteLocationRaw } from 'vue-router';
 import { mapGetters } from 'vuex';
 
 export default defineComponent({
-  name: 'FooterTabs',
+  name: 'LayoutHome',
   components: {
     IonLabel,
     IonTabs,
@@ -83,6 +85,7 @@ export default defineComponent({
     IonIcon,
     IonPage,
     IonRouterOutlet,
+    IonContent
   },
   data: () => ({
     PATH_HOME,
@@ -120,10 +123,10 @@ export default defineComponent({
     },
   },
   methods: {
-    checkPath(path: string) {
+    checkPath(path) {
       return !!this.$route.matched.find((r) => r.path === path);
     },
-    changePath(path: RouteLocationRaw) {
+    changePath(path) {
       this.$router.replace(path);
     },
   },

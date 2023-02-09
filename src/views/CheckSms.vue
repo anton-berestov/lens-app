@@ -102,6 +102,7 @@ export default defineComponent({
       this.handlerRoute();
     },
     handlerRoute() {
+      console.log(this.redirect);
       if (
         this.redirect === 'Pickup' &&
         this.token &&
@@ -117,7 +118,9 @@ export default defineComponent({
         });
       }
 
-      // this.$router.replace({ name: this.redirect });
+      if (this.redirect === 'Profile') {
+        this.$router.replace({ name: this.redirect });
+      }
     },
     repeatCode() {
       this.currentTime = 60;

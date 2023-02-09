@@ -68,12 +68,28 @@ export default defineComponent({
   },
   async mounted() {
     if (!isPlatform('mobileweb')) {
-      await StatusBar.setStyle({ style: Style.Light });
+      try {
+        await StatusBar.setStyle({ style: Style.Light });
+      } catch (e) {
+        console.error(e);
+      }
     }
-    this.SET_TOKEN(localStorage.getItem('jwt'));
-    const user = localStorage.getItem('user');
-    if (user) {
-      this.SET_USER(JSON.parse(user));
+
+    if (localStorage.getItem('jwt')) {
+      try {
+        this.SET_TOKEN(localStorage.getItem('jwt'));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    if (localStorage.getItem('user')) {
+      try {
+        const user = localStorage.getItem('user');
+        this.SET_USER(JSON.parse(user));
+      } catch (e) {
+        console.error(e);
+      }
     }
   },
 });

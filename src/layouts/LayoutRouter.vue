@@ -1,16 +1,19 @@
 <template>
   <ion-page>
-    <IonRouterOutlet />
+    <ion-content :scroll-y="false">
+      <ion-router-outlet :animated="false" />
+    </ion-content>
   </ion-page>
 </template>
 <script>
-import { IonRouterOutlet, IonPage } from '@ionic/vue';
+import { IonRouterOutlet, IonPage, IonContent } from '@ionic/vue';
 
 export default {
   name: 'LayoutRouter',
   components: {
     IonRouterOutlet,
     IonPage,
+    IonContent,
   },
 };
 </script>

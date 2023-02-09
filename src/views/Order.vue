@@ -8,6 +8,7 @@
         description="Ожидайте звонка оператора для подтверждения заказа"
       />
     </ion-content>
+
     <Button
       title="Перейти на главную"
       class="button"
@@ -24,6 +25,7 @@ import { mapGetters, mapMutations } from 'vuex';
 import Info from '@/components/ui/Info.vue';
 import Loading from '@/components/ui/Loading.vue';
 import Button from '@/components/ui/Button.vue';
+import { PATH_HOME } from '@/router/constants';
 
 export default defineComponent({
   name: 'Order',
@@ -34,13 +36,18 @@ export default defineComponent({
     IonPage,
     IonContent,
   },
+  data() {
+    return {
+      PATH_HOME,
+    };
+  },
   computed: {
     ...mapGetters(['order']),
   },
   methods: {
     ...mapMutations(['SET_ORDER']),
     toHome() {
-      this.$router.push({ name: 'Home' });
+      this.$router.replace({ path: PATH_HOME });
       this.SET_ORDER('');
     },
   },
@@ -55,6 +62,7 @@ export default defineComponent({
   .button {
     bottom: 10px;
     position: relative;
+    background: #ffffff;
   }
 }
 </style>

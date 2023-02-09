@@ -1,14 +1,25 @@
 <template>
-  <ion-backdrop :visible="true" class="backdrop"></ion-backdrop>
-  <ion-item lines="none" class="spinner">
-    <ion-spinner></ion-spinner>
-    <ion-label class="ion-margin-start">Загрузка...</ion-label>
-  </ion-item>
+  <ion-content :scroll-y="false">
+    <ion-backdrop :visible="true" class="backdrop"></ion-backdrop>
+    <ion-item
+      lines="none"
+      class="ion-justify-content-center ion-align-items-center spinner"
+    >
+      <ion-spinner></ion-spinner>
+      <ion-label class="ion-margin-start">Загрузка...</ion-label>
+    </ion-item>
+  </ion-content>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonItem, IonBackdrop, IonSpinner, IonLabel } from '@ionic/vue';
+import {
+  IonItem,
+  IonBackdrop,
+  IonSpinner,
+  IonLabel,
+  IonContent,
+} from '@ionic/vue';
 
 export default defineComponent({
   name: 'Loading',
@@ -24,6 +35,7 @@ export default defineComponent({
     IonBackdrop,
     IonSpinner,
     IonLabel,
+    IonContent,
   },
 });
 </script>
@@ -35,6 +47,10 @@ export default defineComponent({
 
 .spinner {
   margin: auto;
+  display: flex;
+  height: 100%;
+  width: fit-content;
+  --background: none;
 }
 
 ion-loading.loader {
