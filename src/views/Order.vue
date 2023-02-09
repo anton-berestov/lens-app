@@ -1,6 +1,6 @@
 <template>
   <ion-page id="order">
-    <Loading v-if="!order" :is-open="!order ? true : false" />
+    <Loading v-if="!order" />
     <ion-content :scroll-y="false" v-if="order">
       <Info
         icon="assets/icon/check.svg"
