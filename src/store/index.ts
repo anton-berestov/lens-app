@@ -7,7 +7,7 @@ import {
 } from '@/api/products';
 import { checkSms, sendPhone, updateUser } from '@/api/user';
 import { OrderProductDetails, Product } from '@/interfaces/ProductInterface';
-import { saveAddress } from '@/api/address';
+import { saveAddress, getAddress } from '@/api/address';
 
 const modules = {};
 
@@ -226,6 +226,13 @@ export default createStore({
         .then((data: any) => {
           console.log(data);
         })
+        .catch((e: any) => {
+          console.error(e);
+        });
+    },
+    async getAddress(context: any, params?: any) {
+      return getAddress(params)
+        .then(({ data }: any) => data)
         .catch((e: any) => {
           console.error(e);
         });

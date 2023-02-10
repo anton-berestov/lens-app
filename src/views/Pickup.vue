@@ -205,12 +205,12 @@ export default {
     IonText,
   },
   mounted() {
-    this.fields.firstname = this.user.firstname;
-    this.fields.lastname = this.user.lastname;
-    this.fields.patronymic = this.user.patronymic;
-    this.fields.birthday = this.user.birthday;
-    this.fields.email = this.user.email;
-    this.SET_BASKET_USER(this.user.id);
+    this.fields.firstname = this.handlerUser.firstname;
+    this.fields.lastname = this.handlerUser.lastname;
+    this.fields.patronymic = this.handlerUser.patronymic;
+    this.fields.birthday = this.handlerUser.birthday;
+    this.fields.email = this.handlerUser.email;
+    this.SET_BASKET_USER(this.handlerUser.id);
   },
   data() {
     return {
@@ -250,6 +250,9 @@ export default {
     handlerAmountDiscount() {
       return this.basket.total_discount < 2000
     },
+    handlerUser() {
+      return this.user
+    }
   },
   watch: {
     async created() {
@@ -261,13 +264,30 @@ export default {
     clearFields,
     checkFieldsAddress,
     ...mapMutations(['SET_POPOVER', 'SET_USER', 'SET_BASKET_USER', 'SET_BASKET', 'SET_ORDER']),
-    ...mapActions(['updateUser', 'saveAddress']),
+    ...mapActions(['updateUser', 'saveAddress', 'getAddress']),
     created() {
       this.emptyFields = {...this.fields};
     },
+    async handlerAddress() {
+      this.getAddress({
+        type: 'user',
+        id: this.user.id
+      }).then((address) => {
+        address.map(({attributes})=> {
+          this.address.street = attributes.street
+          this.address.apartment = attributes.apartment;
+          this.address.entrance = attributes.entrance;
+          this.address.floor = attributes.floor
+        })
+
+      }).catch((e)=> {
+        console.error(e)
+      })
+
+    },
     async send() {
       if (this.handler === 'left' && !this.checkFields()) {
-        const user = {...this.user}
+        const user = {...this.handlerUser}
         user.firstname = this.fields.firstname
         user.lastname = this.fields.lastname
         user.patronymic = this.fields.patronymic
@@ -293,7 +313,7 @@ export default {
         })
       }
       if (this.handler === 'right' && !this.checkFields() && !this.checkFieldsAddress()) {
-        const user = {...this.user}
+        const user = {...this.handlerUser}
         user.firstname = this.fields.firstname
         user.lastname = this.fields.lastname
         user.patronymic = this.fields.patronymic
@@ -318,7 +338,14 @@ export default {
             }
             this.saveAddress(params)
             if (this.address.rememberAddress) {
-              params.type = 'user'
+              const params = {
+                type: 'user',
+                street: this.address.street,
+                apartment: this.address.apartment,
+                entrance: this.address.entrance,
+                floor: this.address.floor,
+                user: this.handlerUser.id
+              }
               this.saveAddress(params)
             }
 
@@ -331,8 +358,6 @@ export default {
         }).catch((e) => {
           console.error(e)
         })
-        console.log('no save')
-
       }
     },
     clearBasket() {
@@ -345,7 +370,7 @@ export default {
       })
       this.clearFields();
     },
-    handlerSegment(event) {
+   async handlerSegment(event) {
       if (event === 'right' && this.handlerAmountDiscount) {
         this.SET_POPOVER({
           show: true,
@@ -354,6 +379,9 @@ export default {
           ],
         });
       } else {
+        if (event === 'right') {
+          await this.handlerAddress()
+        }
         this.handler = event
       }
     },
