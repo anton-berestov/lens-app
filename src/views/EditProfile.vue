@@ -4,42 +4,46 @@
     <Loading v-if="loading" :is-open="loading" />
     <ion-content id="my-data">
       <ion-list class="ion-margin-end">
-        <ion-item class="ion-margin-top">
+        <ItemInput lines :error="errorFields.firstname" class="ion-margin-top">
           <ion-input
             v-model="fields.firstname"
             label-placement="floating"
             label="Фамилия*"
           ></ion-input>
-        </ion-item>
-        <ion-item>
+        </ItemInput>
+
+        <ItemInput lines :error="errorFields.lastname">
           <ion-input
             v-model="fields.lastname"
             label-placement="floating"
             label="Имя*"
           ></ion-input>
-        </ion-item>
-        <ion-item>
+        </ItemInput>
+
+        <ItemInput lines :error="errorFields.patronymic">
           <ion-input
             v-model="fields.patronymic"
             label-placement="floating"
             label="Отчество*"
           ></ion-input>
-        </ion-item>
-        <ion-item>
+        </ItemInput>
+
+        <ItemInput lines>
           <ion-input
             v-model="fields.birthday"
             label-placement="floating"
             label="Дата рождения"
           ></ion-input>
-        </ion-item>
-        <ion-item>
+        </ItemInput>
+
+        <ItemInput lines>
           <ion-input
             v-model="fields.email"
             type="email"
             label-placement="floating"
             label="Email"
           ></ion-input>
-        </ion-item>
+        </ItemInput>
       </ion-list>
 
       <Button title="Сохранить" class="button" @click="saveUser" />
@@ -49,22 +53,24 @@
 
 <script>
 import { defineComponent } from 'vue';
-import { IonPage, IonContent, IonList, IonItem, IonInput } from '@ionic/vue';
+import { IonPage, IonContent, IonList, IonInput } from '@ionic/vue';
 import Header from '@/components/ui/Header.vue';
 import Button from '@/components/ui/Button.vue';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import Loading from '@/components/ui/Loading.vue';
+import ItemInput from '@/components/ui/ItemInput.vue';
+import { checkFields, clearFields } from '@/helpers/from';
 
 export default defineComponent({
   name: 'EditProfile',
   components: {
+    ItemInput,
     Loading,
     Button,
     Header,
     IonPage,
     IonContent,
     IonList,
-    IonItem,
     IonInput,
   },
   data() {
@@ -79,6 +85,8 @@ export default defineComponent({
         email: '',
       },
       loading: false,
+      errorFields: {},
+      requiredFields: ['firstname', 'lastname', 'patronymic'],
     };
   },
   mounted() {
@@ -93,14 +101,19 @@ export default defineComponent({
     };
   },
   methods: {
+    checkFields,
+    clearFields,
     ...mapMutations(['SET_USER']),
     ...mapActions(['updateUser']),
     saveUser() {
-      this.loading = true;
-      this.SET_USER(this.fields);
-      this.$router.replace({ name: 'Profile' });
-      this.updateUser(this.fields);
-      this.loading = false;
+      if (!this.checkFields()) {
+        this.loading = true;
+        this.SET_USER(this.fields);
+        this.$router.replace({ name: 'Profile' });
+        this.updateUser(this.fields);
+        this.loading = false;
+        this.clearFields();
+      }
     },
   },
   computed: {
