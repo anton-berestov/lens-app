@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page id="home">
     <Header title="Приморский центр охраны зрения" custom contact />
     <ion-content :fullscreen="true">
       <Card

@@ -1,6 +1,6 @@
 <template>
   <ion-segment
-    :value="value"
+    :value="handlerValue"
     @ionChange="changeSegment($event)"
     class="segment-container"
     ref="segment"
@@ -44,13 +44,19 @@ export default defineComponent({
     IonSegmentButton,
     IonLabel,
   },
-
+  computed: {
+    handlerValue() {
+      return this.value;
+    },
+  },
   methods: {
     changeSegment(event) {
       this.$emit('change', event.detail.value);
 
       if (this.disabled) {
         this.$refs.segment.$el.value = 'left';
+      } else {
+        this.$refs.segment.$el.value = this.handlerValue;
       }
     },
   },

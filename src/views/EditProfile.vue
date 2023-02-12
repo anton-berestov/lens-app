@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <Header title="Мои данные" back />
-    <Loading v-if="loading" :is-open="loading" />
+    <Loading v-if="loading" />
     <ion-content id="my-data">
       <ion-list class="ion-margin-end">
         <ItemInput lines :error="errorFields.firstname" class="ion-margin-top">

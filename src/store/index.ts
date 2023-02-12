@@ -223,9 +223,7 @@ export default createStore({
     },
     async saveAddress(context: any, params?: any) {
       saveAddress(params)
-        .then((data: any) => {
-          console.log(data);
-        })
+        .then((data: any) => data)
         .catch((e: any) => {
           console.error(e);
         });

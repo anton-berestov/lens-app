@@ -27,41 +27,14 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     component: () => import('@/layouts/LayoutHome.vue'),
-    redirect: '/home',
+    redirect: PATH_HOME,
     children: [
       {
         path: PATH_HOME,
         name: 'Home',
         component: () => import('@/views/Home.vue'),
       },
-      {
-        path: PATH_CATALOG,
-        component: () => import('@/layouts/LayoutRouter.vue'),
-        children: [
-          {
-            path: PATH_CATALOG,
-            name: 'Catalog',
-            component: () => import('@/views/Catalog.vue'),
-          },
-          {
-            path: PATH_SEARCH,
-            name: 'Search',
-            component: () => import('@/views/Search.vue'),
-          },
-          {
-            path: PATH_PRODUCT,
-            name: 'Product',
-            props: true,
-            component: () => import('@/views/Product.vue'),
-          },
-          {
-            path: PATH_PARAMS,
-            name: 'Params',
-            props: true,
-            component: () => import('@/views/Params.vue'),
-          },
-        ],
-      },
+
       {
         path: PATH_RECORDING,
         name: 'Recording',
@@ -76,6 +49,34 @@ const routes: Array<RouteRecordRaw> = [
         path: PATH_PROFILE,
         name: 'Profile',
         component: () => import('@/views/Profile.vue'),
+      },
+    ],
+  },
+  {
+    path: PATH_CATALOG,
+    component: () => import('@/layouts/LayoutHome.vue'),
+    children: [
+      {
+        path: PATH_CATALOG,
+        name: 'Catalog',
+        component: () => import('@/views/Catalog.vue'),
+      },
+      {
+        path: PATH_SEARCH,
+        name: 'Search',
+        component: () => import('@/views/Search.vue'),
+      },
+      {
+        path: PATH_PRODUCT,
+        name: 'Product',
+        props: true,
+        component: () => import('@/views/Product.vue'),
+      },
+      {
+        path: PATH_PARAMS,
+        name: 'Params',
+        props: true,
+        component: () => import('@/views/Params.vue'),
       },
     ],
   },

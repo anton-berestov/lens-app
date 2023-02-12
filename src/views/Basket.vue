@@ -106,7 +106,7 @@
           </ion-card-content>
         </ion-card>
       </ion-row>
-      <Button title="Заказать" class="order-button" @click="toOrder" />
+      <Button title="Заказать" class="order-button" @click.prevent="toOrder" />
     </ion-content>
     <Popover
       button-ok="Очистить"

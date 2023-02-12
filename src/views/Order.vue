@@ -1,20 +1,17 @@
 <template>
   <ion-page id="order">
-    <Loading v-if="!order" />
-    <ion-content :scroll-y="false" v-if="order">
+    <ion-content :scroll-y="false">
       <Info
         icon="assets/icon/check.svg"
         :title="`Ваш заказ № ${order} успешно оформлен!`"
         description="Ожидайте звонка оператора для подтверждения заказа"
       />
+      <Button
+        title="Перейти на главную"
+        class="button"
+        @click.prevent="toHome"
+      />
     </ion-content>
-
-    <Button
-      title="Перейти на главную"
-      class="button"
-      @click="toHome"
-      v-if="order"
-    />
   </ion-page>
 </template>
 
@@ -23,7 +20,6 @@ import { defineComponent } from 'vue';
 import { IonPage, IonContent } from '@ionic/vue';
 import { mapGetters, mapMutations } from 'vuex';
 import Info from '@/components/ui/Info.vue';
-import Loading from '@/components/ui/Loading.vue';
 import Button from '@/components/ui/Button.vue';
 import { PATH_HOME } from '@/router/constants';
 
@@ -32,7 +28,6 @@ export default defineComponent({
   components: {
     Button,
     Info,
-    Loading,
     IonPage,
     IonContent,
   },
@@ -60,7 +55,7 @@ export default defineComponent({
     --background: #ffffff;
   }
   .button {
-    bottom: 10px;
+    bottom: 60px;
     position: relative;
     background: #ffffff;
   }

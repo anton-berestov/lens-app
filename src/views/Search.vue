@@ -110,6 +110,19 @@ export default defineComponent({
 <style lang="scss">
 .searchbar {
   padding-bottom: 0 !important;
+  height: 30px !important;
+  border-radius: 5px;
+
+  .searchbar-input-container {
+    height: 30px !important;
+  }
+
+  .searchbar-input {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #000000;
+  }
 }
 
 #search {

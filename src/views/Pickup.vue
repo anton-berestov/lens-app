@@ -1,13 +1,15 @@
 <template>
   <ion-page id="pickup">
     <Header title="Оформление заказа" back />
-    <ion-content>
+    <Loading v-if="loading" />
+    <ion-content v-if="!loading">
       <ion-row class="ion-padding-top ion-padding-start ion-padding-end">
         <Segment
           title-left="Самовывоз"
           title-right="Курьер"
           @change="handlerSegment($event)"
           :disabled="handlerAmountDiscount"
+          :value="this.handler"
         />
       </ion-row>
       <Address title="Адрес получения" v-if="handler === 'left'" />
@@ -178,8 +180,10 @@ import CardInfo from '@/components/CardInfo.vue';
 import Button from '@/components/ui/Button.vue';
 import ItemInput from "@/components/ui/ItemInput.vue";
 import Popover from "@/components/ui/Popover.vue";
+import Loading from "@/components/ui/Loading.vue";
 import {checkFields, clearFields, checkFieldsAddress} from "@/helpers/from";
 import {sendOrderDetails, sendOrder} from "@/api/order";
+import {updateAddress} from "@/api/address";
 
 
 export default {
@@ -203,6 +207,7 @@ export default {
     IonInput,
     IonCheckbox,
     IonText,
+    Loading
   },
   mounted() {
     this.fields.firstname = this.handlerUser.firstname;
@@ -215,7 +220,9 @@ export default {
   data() {
     return {
       handler: 'left',
+      loading: false,
       address: {
+        id: '',
         street: '',
         apartment: '',
         entrance: '',
@@ -269,23 +276,26 @@ export default {
       this.emptyFields = {...this.fields};
     },
     async handlerAddress() {
+      this.loading = true
       this.getAddress({
         type: 'user',
         id: this.user.id
       }).then((address) => {
-        address.map(({attributes})=> {
+        address.map(({id, attributes}) => {
+          this.id = id
           this.address.street = attributes.street
           this.address.apartment = attributes.apartment;
           this.address.entrance = attributes.entrance;
           this.address.floor = attributes.floor
         })
-
-      }).catch((e)=> {
+        this.loading = false
+      }).catch((e) => {
+        this.loading = false
         console.error(e)
       })
-
     },
     async send() {
+      this.loading = true
       if (this.handler === 'left' && !this.checkFields()) {
         const user = {...this.handlerUser}
         user.firstname = this.fields.firstname
@@ -302,12 +312,13 @@ export default {
             order: this.basket,
           }).then(({data}) => {
             this.SET_ORDER(data.id)
-            this.$router.push({name: 'Order'})
+            this.$router.replace({name: 'Order'})
             this.clearBasket()
+            this.loading = false
           }).catch((e) => {
-            console.log(e)
+            this.loading = false
+            console.error(e)
           })
-          console.log(data)
         }).catch((e) => {
           console.error(e)
         })
@@ -338,23 +349,35 @@ export default {
             }
             this.saveAddress(params)
             if (this.address.rememberAddress) {
-              const params = {
-                type: 'user',
-                street: this.address.street,
-                apartment: this.address.apartment,
-                entrance: this.address.entrance,
-                floor: this.address.floor,
-                user: this.handlerUser.id
+              if (!this.id) {
+                const params = {
+                  type: 'user',
+                  street: this.address.street,
+                  apartment: this.address.apartment,
+                  entrance: this.address.entrance,
+                  floor: this.address.floor,
+                  user: this.handlerUser.id
+                }
+                this.saveAddress(params)
               }
-              this.saveAddress(params)
+              if (this.id) {
+                const params = {
+                  id: this.id,
+                  street: this.address.street,
+                  apartment: this.address.apartment,
+                  entrance: this.address.entrance,
+                  floor: this.address.floor,
+                  user: this.handlerUser.id
+                }
+                updateAddress(params)
+              }
             }
-
-            this.$router.push({name: 'Order'})
+            this.$router.replace({name: 'Order'})
             this.clearBasket()
+            this.loading = false
           }).catch((e) => {
-            console.log(e)
+            console.error(e)
           })
-          console.log(data)
         }).catch((e) => {
           console.error(e)
         })
@@ -370,7 +393,8 @@ export default {
       })
       this.clearFields();
     },
-   async handlerSegment(event) {
+    async handlerSegment(event) {
+
       if (event === 'right' && this.handlerAmountDiscount) {
         this.SET_POPOVER({
           show: true,
@@ -379,10 +403,10 @@ export default {
           ],
         });
       } else {
-        if (event === 'right') {
+        this.handler = event
+        if (this.handler === 'right') {
           await this.handlerAddress()
         }
-        this.handler = event
       }
     },
     closePopover() {

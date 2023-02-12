@@ -23,13 +23,6 @@ import {
 
 export default defineComponent({
   name: 'Loading',
-  props: {
-    isOpen: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  emits: ['close'],
   components: {
     IonItem,
     IonBackdrop,
