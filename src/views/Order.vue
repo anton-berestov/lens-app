@@ -36,7 +36,7 @@ export default defineComponent({
   methods: {
     ...mapMutations(['SET_ORDER']),
     toHome() {
-      this.$router.replace({ name: "'Home" });
+      this.$router.replace({ name: 'Home' });
       this.SET_ORDER('');
     },
   },

@@ -49,6 +49,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Profile.vue'),
       },
     ],
+    redirect: PATH_HOME,
   },
   {
     path: PATH_CATALOG,
