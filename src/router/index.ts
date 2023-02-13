@@ -27,14 +27,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     component: () => import('@/layouts/LayoutHome.vue'),
-    redirect: PATH_HOME,
     children: [
       {
         path: PATH_HOME,
         name: 'Home',
         component: () => import('@/views/Home.vue'),
       },
-
       {
         path: PATH_RECORDING,
         name: 'Recording',

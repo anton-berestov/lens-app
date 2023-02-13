@@ -193,7 +193,7 @@ export default defineComponent({
         this.SET_BASKET_COUNT()
         this.SET_TOTAL_AMOUNT();
         this.SET_TOTAL_DISCOUNT();
-        this.$router.push({name: 'Basket'})
+        this.$router.replace({name: 'Basket'})
       } else if (
         this.different &&
         Object.keys(this.select.radius2).length &&
@@ -219,7 +219,7 @@ export default defineComponent({
         };
         this.SET_ORDER_PRODUCT_DETAILS(b)
         this.SET_BASKET_COUNT()
-        this.$router.push({name: 'Basket'})
+        this.$router.replace({name: 'Basket'})
 
       } else {
         this.SET_POPOVER({ show: true, message: ['Выберите параметры линз'] });

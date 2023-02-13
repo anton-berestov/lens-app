@@ -4,7 +4,12 @@
     <ion-content :fullscreen="true">
       <ion-row class="ion-margin">
         <ion-label class="ion-margin-bottom title">Выберите дату</ion-label>
-        <ion-datetime presentation="date" locale="ru-RU" size="cover">
+        <ion-datetime
+          presentation="date"
+          locale="ru-RU"
+          size="cover"
+          ref="calendar"
+        >
         </ion-datetime>
       </ion-row>
 
@@ -26,9 +31,9 @@
   </ion-page>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import { IonPage, IonContent, IonDatetime, IonLabel, IonRow } from '@ionic/vue';
+<script lang="js">
+import {defineComponent} from 'vue';
+import {IonPage, IonContent, IonDatetime, IonLabel, IonRow} from '@ionic/vue';
 import Header from '@/components/ui/Header.vue';
 import TimeSelect from '@/components/TimeSelect.vue';
 import Button from '@/components/ui/Button.vue';
@@ -46,6 +51,22 @@ export default defineComponent({
     IonLabel,
     IonDatetime,
     IonRow,
+  },
+  mounted() {
+    setTimeout(() => {
+      const shadow = this.$refs.calendar?.$el.shadowRoot;
+
+      const days = shadow.querySelectorAll('.calendar-day');
+      const day_of_week = shadow.querySelectorAll('.day-of-week')
+
+      day_of_week.forEach((el) => {
+        el.setAttribute('part', 'day-of-week')
+      })
+
+      days.forEach((day) => {
+        day.setAttribute('part', 'day');
+      });
+    }, 100);
   },
 });
 </script>
@@ -68,20 +89,23 @@ export default defineComponent({
     border-radius: 5px;
     min-height: 250px;
     --font-size: 11px !important;
-  }
-}
-.calendar-day {
-  font-weight: 400;
-  font-size: 11px !important;
-  color: #616161 !important;
-}
 
-:host {
-  font-size: 11px;
-}
-.day-of-week {
-  font-weight: 400;
-  font-size: 11px !important;
-  color: #616161 !important;
+    &::part(day) {
+      font-weight: 400;
+      font-size: 11px !important;
+      color: #616161 !important;
+
+      &::after {
+        padding: 0;
+        padding-inline: 0;
+      }
+    }
+
+    &::part(day-of-week) {
+      font-weight: 400;
+      font-size: 11px !important;
+      color: #616161 !important;
+    }
+  }
 }
 </style>

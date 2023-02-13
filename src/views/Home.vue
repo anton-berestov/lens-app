@@ -6,13 +6,13 @@
         class="pressed"
         title="Заказать контактные линзы"
         img="assets/image/ordering_contact_lenses.png"
-        @click="$router.push({ name: 'Catalog' })"
+        @click="$router.replace({ name: 'Catalog' })"
       />
       <Card
         class="pressed"
         title="Записаться к врачу"
         img="assets/image/recording_with_a_doctor.png"
-        @click="$router.push({ name: 'Recording' })"
+        @click="$router.replace({ name: 'Recording' })"
       />
       <Card
         class="pressed"
