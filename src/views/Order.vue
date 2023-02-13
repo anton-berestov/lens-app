@@ -21,7 +21,6 @@ import { IonPage, IonContent } from '@ionic/vue';
 import { mapGetters, mapMutations } from 'vuex';
 import Info from '@/components/ui/Info.vue';
 import Button from '@/components/ui/Button.vue';
-import { PATH_HOME } from '@/router/constants';
 
 export default defineComponent({
   name: 'Order',
@@ -31,18 +30,13 @@ export default defineComponent({
     IonPage,
     IonContent,
   },
-  data() {
-    return {
-      PATH_HOME,
-    };
-  },
   computed: {
     ...mapGetters(['order']),
   },
   methods: {
     ...mapMutations(['SET_ORDER']),
     toHome() {
-      this.$router.replace({ path: PATH_HOME });
+      this.$router.replace({ name: "'Home" });
       this.SET_ORDER('');
     },
   },
