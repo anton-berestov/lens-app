@@ -6,7 +6,9 @@ import {
   PATH_BASKET,
   PATH_CATALOG,
   PATH_CHAT,
+  PATH_CHECK_DATA,
   PATH_CHECK_PROFILE,
+  PATH_CHECK_RECORDING,
   PATH_CHECK_SMS,
   PATH_EDIT_PROFILE,
   PATH_FILL_PROFILE,
@@ -143,6 +145,16 @@ const routes: Array<RouteRecordRaw> = [
     path: PATH_ORDER,
     name: 'Order',
     component: () => import('@/views/Order.vue'),
+  },
+  {
+    path: PATH_CHECK_RECORDING,
+    name: 'CheckRecording',
+    component: () => import('@/views/CheckRecording.vue'),
+  },
+  {
+    path: PATH_CHECK_DATA,
+    name: 'CheckData',
+    component: () => import('@/views/CheckData.vue'),
   },
 ];
 

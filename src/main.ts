@@ -30,6 +30,8 @@ import YmapPlugin from 'vue-yandex-maps';
 
 // @ts-ignore
 import { showToast } from '@/helpers/toast';
+import moment from 'moment';
+import 'moment/locale/ru';
 
 declare global {
   interface Window {
@@ -53,6 +55,7 @@ const app = createApp(App)
   .use(Maska);
 
 app.config.globalProperties.$toast = showToast;
+app.config.globalProperties.$moment = moment;
 window.$store = store;
 
 router.isReady().then(() => {

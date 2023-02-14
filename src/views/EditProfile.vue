@@ -28,20 +28,24 @@
           ></ion-input>
         </ItemInput>
 
-        <ItemInput lines>
+        <ItemInput lines id="click-trigger" class="ion-align-items-end">
           <ion-input
-            v-model="fields.birthday"
+            :value="formatDate(fields.birthday)"
             label-placement="floating"
             label="Дата рождения"
+            disabled
           ></ion-input>
+          <ion-icon icon="assets/icon/calendar-courier.svg" class="icon" />
         </ItemInput>
+        <ItemDate v-model="fields.birthday" />
 
-        <ItemInput lines>
+        <ItemInput lines :error="errorFields.email">
           <ion-input
             v-model="fields.email"
             type="email"
             label-placement="floating"
             label="Email"
+            @ionChange="validateEmail"
           ></ion-input>
         </ItemInput>
       </ion-list>
@@ -53,17 +57,20 @@
 
 <script>
 import { defineComponent } from 'vue';
-import { IonPage, IonContent, IonList, IonInput } from '@ionic/vue';
+import { IonPage, IonContent, IonList, IonInput, IonIcon } from '@ionic/vue';
 import Header from '@/components/ui/Header.vue';
 import Button from '@/components/ui/Button.vue';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import Loading from '@/components/ui/Loading.vue';
 import ItemInput from '@/components/ui/ItemInput.vue';
 import { checkFields, clearFields } from '@/helpers/from';
+import ItemDate from '@/components/ui/ItemDate.vue';
+import { formatDate } from '@/helpers/formatter';
 
 export default defineComponent({
   name: 'EditProfile',
   components: {
+    ItemDate,
     ItemInput,
     Loading,
     Button,
@@ -72,6 +79,7 @@ export default defineComponent({
     IonContent,
     IonList,
     IonInput,
+    IonIcon,
   },
   data() {
     return {
@@ -101,6 +109,7 @@ export default defineComponent({
     };
   },
   methods: {
+    formatDate,
     checkFields,
     clearFields,
     ...mapMutations(['SET_USER']),
@@ -115,6 +124,16 @@ export default defineComponent({
         this.clearFields();
       }
     },
+    validateEmail() {
+      if (
+        // eslint-disable-next-line
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.fields.email)
+      ) {
+        this.errorFields.email = '';
+      } else {
+        this.errorFields.email = 'Некорректный эмайл';
+      }
+    },
   },
   computed: {
     ...mapGetters(['user']),
@@ -125,6 +144,10 @@ export default defineComponent({
 <style scoped lang="scss">
 #my-data {
   --background: #ffffff;
+
+  .icon {
+    margin-bottom: 4px;
+  }
 
   .button {
     margin: 0 10px;

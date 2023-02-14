@@ -1,6 +1,8 @@
 export const PATH_HOME = '/main';
 export const PATH_CATALOG = '/catalog';
 export const PATH_RECORDING = '/recording';
+export const PATH_CHECK_RECORDING = '/recording/check';
+export const PATH_CHECK_DATA = '/check-data';
 export const PATH_BASKET = '/basket';
 export const PATH_PROFILE = '/profile';
 export const PATH_EDIT_PROFILE = '/profile/edit/';
@@ -17,5 +19,4 @@ export const PATH_AUTH = '/auth/:redirect';
 export const PATH_CHECK_SMS = '/check-sms/:redirect';
 export const PATH_HISTORY_RECORD = '/record-history';
 export const PATH_HISTORY_ORDER = '/order-history';
-
 export const PATH_ORDER = '/order';

@@ -51,7 +51,6 @@ export default defineComponent({
   .button {
     bottom: 60px;
     position: relative;
-    background: #ffffff;
   }
 }
 </style>

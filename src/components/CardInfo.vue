@@ -11,6 +11,11 @@
           {{ description }}
         </ion-label>
       </ion-row>
+      <ion-row class="description-row" v-if="subdescription">
+        <ion-label class="description">
+          {{ subdescription }}
+        </ion-label>
+      </ion-row>
     </ion-card-content>
   </ion-card>
 </template>
@@ -37,6 +42,10 @@ export default {
       default: '',
     },
     description: {
+      type: String,
+      default: '',
+    },
+    subdescription: {
       type: String,
       default: '',
     },
