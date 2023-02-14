@@ -1,19 +1,24 @@
 <template>
   <ion-page id="check-data">
+    <Loading v-if="loading" />
     <Header title="Проверка данных" />
     <ion-content :scroll-y="false" class="content">
       <ion-list class="ion-margin-end list">
         <ion-label class="ion-margin title">Контактные данные</ion-label>
-        <ItemInput lines :error="errorFields.phone">
-          <input
-            inputmode="tel"
-            ref="phone"
-            class="input"
-            v-model="fields.phone"
-            v-maska="{
-              mask: '+7 (###) ###-##-##',
-            }"
-          />
+        <ItemInput lines :error="errorFields.phone" class="ion-margin-top">
+          <ion-row>
+            <span class="label">Номер телефона*</span>
+            <input
+              disabled
+              inputmode="tel"
+              ref="phone"
+              class="input"
+              v-model="fields.phone"
+              v-maska="{
+                mask: '+7 (###) ###-##-##',
+              }"
+            />
+          </ion-row>
         </ItemInput>
         <ItemInput lines :error="errorFields.firstname">
           <ion-input
@@ -52,7 +57,7 @@
         <ItemDate v-model="fields.birthday" />
       </ion-list>
 
-      <Button title="Сохранить" class="button" />
+      <Button title="Сохранить" class="button" @click="saveUser" />
 
       <ion-row class="ion-margin-start">
         <ion-text class="text"
@@ -84,13 +89,16 @@ import {
 import Header from '@/components/ui/Header.vue';
 import ItemInput from '@/components/ui/ItemInput.vue';
 import Button from '@/components/ui/Button.vue';
-import { mapGetters } from 'vuex';
-import { formatDate, formatPhone } from '@/helpers/formatter';
 import ItemDate from '@/components/ui/ItemDate.vue';
+import Loading from '@/components/ui/Loading.vue';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
+import { formatDate, formatPhone } from '@/helpers/formatter';
+import { clearFields, checkFields } from '@/helpers/from';
 
 export default defineComponent({
   name: 'CheckData',
   components: {
+    Loading,
     ItemDate,
     Button,
     ItemInput,
@@ -124,13 +132,24 @@ export default defineComponent({
     ...mapGetters(['user']),
   },
   methods: {
+    ...mapActions(['updateUser']),
+    ...mapMutations(['SET_USER']),
     formatDate,
     formatPhone,
+    clearFields,
+    checkFields,
     handlerPhone(event) {
       this.fields.phone = event;
     },
-    openCalendar() {
-      console.log('we');
+    saveUser() {
+      if (!this.checkFields()) {
+        this.loading = true;
+        this.SET_USER(this.fields);
+        this.$router.replace({ name: 'Profile' });
+        this.updateUser(this.fields);
+        this.loading = false;
+        this.clearFields();
+      }
     },
   },
   mounted() {
@@ -161,10 +180,19 @@ export default defineComponent({
         color: #000000;
       }
 
+      .label {
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 15px;
+        color: #a8a8a8;
+      }
+
       .input {
         border: none;
         width: 100%;
         background: #ffffff;
+        position: relative;
+        color: #646464;
       }
 
       .input:focus {
