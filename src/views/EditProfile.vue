@@ -114,12 +114,12 @@ export default defineComponent({
     clearFields,
     ...mapMutations(['SET_USER']),
     ...mapActions(['updateUser']),
-    saveUser() {
+    async saveUser() {
       if (!this.checkFields()) {
         this.loading = true;
         this.SET_USER(this.fields);
         this.$router.replace({ name: 'Profile' });
-        this.updateUser(this.fields);
+        await this.updateUser(this.fields);
         this.loading = false;
         this.clearFields();
       }

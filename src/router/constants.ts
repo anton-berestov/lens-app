@@ -20,3 +20,4 @@ export const PATH_CHECK_SMS = '/check-sms/:redirect';
 export const PATH_HISTORY_RECORD = '/record-history';
 export const PATH_HISTORY_ORDER = '/order-history';
 export const PATH_ORDER = '/order';
+export const PATH_ORDER_RECORDING = '/order-recording';

@@ -3,10 +3,10 @@
     <ion-row class="ion-justify-content-evenly">
       <ion-col
         class="time-item"
-        :class="item.isFree ? 'selectable' : 'not-selectable'"
-        v-for="item in timeItems"
-        :key="item.time"
-        :disabled="!item.isFree"
+        v-for="(item, index) in times"
+        :key="index"
+        :class="[handlerClass(item), handlerReservedTime(item)]"
+        @click="selectTime(item)"
       >
         {{ item.time }}
       </ion-col>
@@ -14,9 +14,9 @@
   </ion-grid>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import { IonGrid, IonRow, IonCol } from '@ionic/vue';
+<script lang="js">
+import {defineComponent} from 'vue';
+import {IonGrid, IonRow, IonCol} from '@ionic/vue';
 
 export default defineComponent({
   name: 'TimeSelect',
@@ -25,26 +25,51 @@ export default defineComponent({
     IonRow,
     IonCol,
   },
+  props: {
+    time: {
+      type: Object,
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      default: ()=>{}
+    },
+    times: {
+      type: Array,
+      default: () => []
+    },
+    reserved: {
+      type: Array,
+      default: () => []
+    }
+  },
+  emits: ['select'],
   data() {
-    return {
-      timeItems: [
-        { time: '10:00', isFree: true },
-        { time: '11:00', isFree: false },
-        { time: '12:00', isFree: true },
-        { time: '13:00', isFree: true },
-        { time: '14:00', isFree: true },
-        { time: '15:00', isFree: true },
-        { time: '16:00', isFree: true },
-        { time: '17:00', isFree: false },
-        { time: '18:00', isFree: true },
-        { time: '19:00', isFree: false },
-      ],
-    };
+    return {};
+  },
+  computed: {
+    handlerTime() {
+      return this.time
+    },
+
+  },
+  methods: {
+    handlerClass(event) {
+      return this.handlerTime === event ? 'active' : 'selectable'
+    },
+    selectTime(e) {
+      if(!this.handlerReserv(e)) {
+        this.$emit('select', e);
+      }
+    },
+    handlerReservedTime(event) {
+      return this.reserved.map((e) => e === event.time ? 'not-selectable' : '')
+    },
+    handlerReserv (event) {
+      return this.reserved.find((e) => e === event.time)
+    }
   },
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 #time-select-wrapper {
   background: #ffffff;
   border-radius: 5px;
@@ -83,13 +108,14 @@ export default defineComponent({
     flex-grow: 0;
 
     &:hover,
-    &:active {
+    &:active,
+    &.active {
       background: var(--ion-color-primary);
       color: var(--ion-color-primary-contrast);
     }
 
     &.not-selectable {
-      background: var(--ion-color-danger-tint);
+      background: rgba(0, 89, 68, 0.18);
       color: var(--ion-color-primary-contrast);
     }
   }

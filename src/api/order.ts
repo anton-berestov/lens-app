@@ -1,4 +1,5 @@
 import API from '@/api/index';
+//TODO API Interfaces
 
 // @ts-ignore
 export const sendOrderDetails = async (params: any): Promise<undefined> => {

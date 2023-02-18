@@ -2,7 +2,7 @@
   <ion-card class="card-info">
     <ion-card-content class="content">
       <ion-row class="ion-align-items-center">
-        <ion-icon :icon="icon" class="ion-margin-end icon" />
+        <ion-icon :icon="icon" class="ion-margin-end icon" v-if="icon" />
         <ion-label class="title">{{ title }}</ion-label>
       </ion-row>
 

@@ -116,12 +116,12 @@ export default defineComponent({
     return {
       fields: {
         id: 0,
-        firstname: '',
-        lastname: '',
-        patronymic: '',
-        phone: '',
-        birthday: '',
-        email: '',
+        firstname: null,
+        lastname: null,
+        patronymic: null,
+        phone: null,
+        birthday: null,
+        email: null,
       },
       loading: false,
       errorFields: {},
@@ -141,12 +141,12 @@ export default defineComponent({
     handlerPhone(event) {
       this.fields.phone = event;
     },
-    saveUser() {
+    async saveUser() {
       if (!this.checkFields()) {
         this.loading = true;
         this.SET_USER(this.fields);
         this.$router.replace({ name: 'Profile' });
-        this.updateUser(this.fields);
+        await this.updateUser(this.fields);
         this.loading = false;
         this.clearFields();
       }

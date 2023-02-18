@@ -21,7 +21,7 @@ export default defineComponent({
   props: {
     modelValue: {
       type: String,
-      default: '',
+      default: null,
     },
     format: {
       type: String,

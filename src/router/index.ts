@@ -17,6 +17,7 @@ import {
   PATH_HOME,
   PATH_MAP,
   PATH_ORDER,
+  PATH_ORDER_RECORDING,
   PATH_PARAMS,
   PATH_PICKUP,
   PATH_PRODUCT,
@@ -155,6 +156,11 @@ const routes: Array<RouteRecordRaw> = [
     path: PATH_CHECK_DATA,
     name: 'CheckData',
     component: () => import('@/views/CheckData.vue'),
+  },
+  {
+    path: PATH_ORDER_RECORDING,
+    name: 'OrderRecording',
+    component: () => import('@/views/OrderRecording.vue'),
   },
 ];
 

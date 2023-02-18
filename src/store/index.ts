@@ -8,6 +8,7 @@ import {
 import { checkSms, sendPhone, updateUser } from '@/api/user';
 import { OrderProductDetails, Product } from '@/interfaces/ProductInterface';
 import { saveAddress, getAddress } from '@/api/address';
+import { getDoctor } from '@/api/recording';
 
 const modules = {};
 
@@ -41,6 +42,14 @@ export default createStore({
       user: 0,
     },
     order: '',
+    recording: {
+      time: null,
+      date: null,
+      service: null,
+    },
+    previousRecording: {},
+    opticAddress: {},
+    doctor: {},
   },
   getters: {
     popover: (state) => state.popover,
@@ -60,6 +69,12 @@ export default createStore({
     token: (state) => state.token,
     basket: (state) => state.basket,
     order: (state) => state.order,
+    time: (state) => state.recording.time,
+    date: (state) => state.recording.date,
+    service: (state) => state.recording.service,
+    opticAddress: (state) => state.opticAddress,
+    doctor: (state) => state.doctor,
+    previousRecording: (state) => state.previousRecording,
   },
   mutations: {
     SET_POPOVER: (state, payload) => (state.popover = payload),
@@ -91,6 +106,13 @@ export default createStore({
     SET_TOKEN: (state, payload) => (state.token = payload),
     SET_BASKET: (state, payload) => (state.basket = payload),
     SET_ORDER: (state, payload) => (state.order = payload),
+    SET_DATE: (state, payload) => (state.recording.date = payload),
+    SET_TIME: (state, payload) => (state.recording.time = payload),
+    SET_SERVICE: (state, payload) => (state.recording.service = payload),
+    SET_OPTIC_ADDRESS: (state, payload) => (state.opticAddress = payload),
+    SET_DOCTOR: (state, payload) => (state.doctor = payload),
+    SET_PREVIOUS_RECORDING: (state, payload) =>
+      (state.previousRecording = payload),
   },
   actions: {
     setError(context, error) {
@@ -231,6 +253,31 @@ export default createStore({
     async getAddress(context: any, params?: any) {
       return getAddress(params)
         .then(({ data }: any) => data)
+        .catch((e: any) => {
+          console.error(e);
+        });
+    },
+    async getDoctor(context: any) {
+      return getDoctor()
+        .then((data: any) => {
+          // @ts-ignore
+          const doctor = {
+            id: data[0].id,
+            avatar: data[0].attributes.avatar.data.attributes.url,
+            email: data[0].attributes.email,
+            name: data[0].attributes.name,
+            phone: data[0].attributes.phone,
+            optica: data[0].attributes.optica,
+          };
+          context.commit('SET_DOCTOR', doctor);
+          getAddress({ type: 'optic', id: data[0].attributes.optica.data.id })
+            .then(({ data }: any) => {
+              context.commit('SET_OPTIC_ADDRESS', data[0].attributes);
+            })
+            .catch((e: any) => {
+              console.error(e);
+            });
+        })
         .catch((e: any) => {
           console.error(e);
         });
