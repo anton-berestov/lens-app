@@ -75,7 +75,6 @@
         <ion-row>
           <Specification
             v-if="specification"
-            :diameter="product.diameter"
             :manufacturer="product.manufacturer"
             :type="product.type"
             :brand="product.brand"

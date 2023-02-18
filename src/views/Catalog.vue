@@ -125,6 +125,12 @@ export default defineComponent({
     await this.getRadiuses();
     await this.getTyps();
     this.loading = false;
+    this.SET_FILTER({
+      type: [],
+      period: [],
+      sphere: {},
+      radius: {},
+    });
   },
   methods: {
     ...mapMutations([

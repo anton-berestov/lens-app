@@ -1,15 +1,6 @@
 <template>
   <ion-col class="ion-margin" style="padding: 0">
-    <ion-row v-if="diameter">
-      <ion-col>
-        <ion-label class="title">Диаметр</ion-label>
-      </ion-col>
-      <ion-col>
-        <ion-title class="text">{{ diameter }}</ion-title>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="ion-margin-top" v-if="manufacturer">
+    <ion-row v-if="manufacturer">
       <ion-col>
         <ion-label class="title">Производитель</ion-label>
       </ion-col>
@@ -93,10 +84,6 @@ export default defineComponent({
     IonIcon,
   },
   props: {
-    diameter: {
-      type: String,
-      default: '',
-    },
     manufacturer: {
       type: String,
       default: '',
