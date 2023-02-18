@@ -39,6 +39,7 @@
             :value="formatDate(fields.birthday)"
             label-placement="floating"
             label="Дата рождения"
+            disabled
           ></ion-input>
           <ion-icon icon="assets/icon/calendar-courier.svg" class="icon" />
         </ItemInput>

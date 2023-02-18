@@ -65,4 +65,7 @@ export default defineComponent({
 ion-popover {
   --width: 300px !important;
 }
+ion-popover::part(content) {
+  bottom: none;
+}
 </style>

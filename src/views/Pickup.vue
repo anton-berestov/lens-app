@@ -123,15 +123,20 @@
           ></ion-input>
         </ItemInput>
 
-        <ItemInput lines>
+        <ItemInput lines id="click-trigger" class="ion-align-items-end">
           <ion-input
-            v-model="fields.birthday"
+            :value="formatDate(fields.birthday)"
             label-placement="floating"
             label="Дата рождения"
           ></ion-input>
+          <ion-icon
+            icon="assets/icon/calendar-courier.svg"
+            class="icon-calendar"
+          />
         </ItemInput>
+        <ItemDate v-model="fields.birthday" />
 
-        <ItemInput lines>
+        <ItemInput lines :error="errorFields.email">
           <ion-input
             v-model="fields.email"
             type="email"
@@ -147,7 +152,7 @@
             <a href="#">обработку персональных данных</a></ion-text
           >
         </ion-row>
-        <ion-row class="ion-margin">
+        <ion-row class="ion-margin ion-padding-bottom">
           <ion-text class="text"
             >* Поля, отмеченные звездочкой, обязательны к заполнению
           </ion-text>
@@ -181,14 +186,17 @@ import Button from '@/components/ui/Button.vue';
 import ItemInput from "@/components/ui/ItemInput.vue";
 import Popover from "@/components/ui/Popover.vue";
 import Loading from "@/components/ui/Loading.vue";
+import ItemDate from "@/components/ui/ItemDate.vue";
 import {checkFields, clearFields, checkFieldsAddress} from "@/helpers/from";
 import {sendOrderDetails, sendOrder} from "@/api/order";
 import {updateAddress} from "@/api/address";
+import {formatDate} from "@/helpers/formatter";
 
 
 export default {
   name: 'Pickup',
   components: {
+    ItemDate,
     ItemInput,
     Popover,
     Button,
@@ -270,10 +278,21 @@ export default {
     checkFields,
     clearFields,
     checkFieldsAddress,
+    formatDate,
     ...mapMutations(['SET_POPOVER', 'SET_USER', 'SET_BASKET_USER', 'SET_BASKET', 'SET_ORDER']),
     ...mapActions(['updateUser', 'saveAddress', 'getAddress']),
     created() {
       this.emptyFields = {...this.fields};
+    },
+    validateEmail() {
+      if (
+          // eslint-disable-next-line
+          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.fields.email)
+      ) {
+        this.errorFields.email = '';
+      } else {
+        this.errorFields.email = 'Некорректный эмайл';
+      }
     },
     async handlerAddress() {
       this.loading = true
@@ -459,6 +478,9 @@ export default {
       font-size: 14px;
       line-height: 17px;
       color: #000000;
+    }
+    .icon-calendar {
+      margin-bottom: 4px;
     }
 
     input {
