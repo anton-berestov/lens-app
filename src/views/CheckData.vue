@@ -2,7 +2,7 @@
   <ion-page id="check-data">
     <Loading v-if="loading" />
     <Header title="Проверка данных" />
-    <ion-content :scroll-y="false" class="content">
+    <ion-content :scroll-y="false" class="content" v-if="!loading">
       <ion-list class="ion-margin-end list">
         <ion-label class="ion-margin title">Контактные данные</ion-label>
         <ItemInput lines :error="errorFields.phone" class="ion-margin-top">
@@ -46,7 +46,7 @@
 
         <ItemInput lines id="click-trigger" class="ion-align-items-end">
           <ion-input
-            :value="formatDate(fields.birthday)"
+            :value="formatDate(fields.birthday, 'DD.MM.YYYY')"
             disabled
             label-placement="floating"
             label="Дата рождения"
@@ -94,6 +94,7 @@ import Loading from '@/components/ui/Loading.vue';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import { formatDate, formatPhone } from '@/helpers/formatter';
 import { clearFields, checkFields } from '@/helpers/from';
+import { sendRecord } from '@/api/recording';
 
 export default defineComponent({
   name: 'CheckData',
@@ -129,7 +130,7 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapGetters(['user']),
+    ...mapGetters(['user', 'doctor', 'time', 'date', 'service']),
   },
   methods: {
     ...mapActions(['updateUser']),
@@ -147,8 +148,19 @@ export default defineComponent({
         this.SET_USER(this.fields);
         this.$router.replace({ name: 'Profile' });
         await this.updateUser(this.fields);
-        this.loading = false;
         this.clearFields();
+
+        await sendRecord({
+          date: this.date,
+          reserved: true,
+          doctor: this.doctor.id,
+          optic: this.doctor.optica.data.id,
+          recording: this.time.id,
+          service: this.service,
+          user: this.user.id,
+        });
+        this.loading = false;
+        this.$router.replace({ name: 'OrderRecording' });
       }
     },
   },

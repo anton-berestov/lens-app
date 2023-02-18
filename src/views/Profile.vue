@@ -2,7 +2,7 @@
   <ion-page id="profile">
     <Header title="Профиль" contact />
     <Loading v-if="loading" />
-    <Content v-if="!loading">
+    <Content v-if="!loading" @refresh="refresh">
       <ion-card class="contact" v-if="token">
         <ion-card-content class="content">
           <ion-list>
@@ -174,7 +174,7 @@ import {
 import Header from '@/components/ui/Header.vue';
 import Content from '@/components/ui/Content.vue';
 import Button from '@/components/ui/Button.vue';
-import { mapGetters, mapMutations } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import Loading from '@/components/ui/Loading.vue';
 import Address from '@/components/Address.vue';
 import { formatPhone } from '../helpers/formatter';
@@ -210,6 +210,7 @@ export default defineComponent({
   methods: {
     formatPhone,
     ...mapMutations(['SET_TOKEN']),
+    ...mapActions(['getUser']),
     chat() {
       const win: Window = window;
       win.location = 'https://wa.me/79502822722';
@@ -218,6 +219,14 @@ export default defineComponent({
       this.SET_TOKEN('');
       localStorage.removeItem('jwt');
       localStorage.removeItem('user');
+    },
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    async refresh(complete = () => {}) {
+      try {
+        await this.getUser(this.user.id);
+      } finally {
+        complete();
+      }
     },
   },
   async mounted() {

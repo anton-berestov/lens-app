@@ -87,3 +87,34 @@ export const updateUser = async (
     console.error(e);
   }
 };
+
+export const getUser = async (
+  params: any
+): Promise<UserInterfase | undefined> => {
+  try {
+    const res = await API.get(`/users/${params}?populate=*`);
+
+    const user: UserInterfase = {
+      id: 0,
+      firstname: '',
+      lastname: '',
+      patronymic: '',
+      birthday: '',
+      email: '',
+      phone: '',
+    };
+
+    user.id = res.id;
+    user.firstname = res.firstname;
+    user.lastname = res.lastname;
+    user.patronymic = res.patronymic;
+    user.birthday = res.birthday;
+    user.email = res.email;
+    user.phone = res.phone;
+
+    localStorage.setItem('user', JSON.stringify(user));
+    return res;
+  } catch (e) {
+    console.error(e);
+  }
+};

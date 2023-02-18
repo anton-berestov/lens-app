@@ -140,6 +140,9 @@ export default defineComponent({
     handlerTime() {
       return this.time;
     },
+    handlerDate() {
+      return this.date;
+    },
   },
   data() {
     return {
@@ -160,7 +163,7 @@ export default defineComponent({
       if (this.handlerData) {
         this.loading = true;
         await sendRecord({
-          date: this.date,
+          date: this.handlerDate,
           reserved: true,
           doctor: this.handlerDoctor.id,
           optic: this.handlerDoctor.optica.data.id,

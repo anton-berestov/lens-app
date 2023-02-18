@@ -5,7 +5,7 @@ import {
   getCharacteristics,
   filterProducts,
 } from '@/api/products';
-import { checkSms, sendPhone, updateUser } from '@/api/user';
+import { checkSms, getUser, sendPhone, updateUser } from '@/api/user';
 import { OrderProductDetails, Product } from '@/interfaces/ProductInterface';
 import { saveAddress, getAddress } from '@/api/address';
 import { getDoctor } from '@/api/recording';
@@ -242,6 +242,15 @@ export default createStore({
             reject(e);
           });
       });
+    },
+    async getUser(context: any, params?: any) {
+      getUser(params)
+        .then((data) => {
+          context.commit('SET_USER', data);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     },
     async saveAddress(context: any, params?: any) {
       saveAddress(params)

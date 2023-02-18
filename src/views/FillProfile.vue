@@ -9,42 +9,50 @@
             >Заполните профиль, чтобы в дальнейшнем делать покупки еще быстрее
           </ion-label>
         </ion-item>
-        <ion-item>
+
+        <ItemInput lines>
           <ion-input
             v-model="fields.firstname"
             label-placement="floating"
             label="Фамилия"
           ></ion-input>
-        </ion-item>
-        <ion-item>
+        </ItemInput>
+
+        <ItemInput lines>
           <ion-input
             v-model="fields.lastname"
             label-placement="floating"
             label="Имя"
           ></ion-input>
-        </ion-item>
-        <ion-item>
+        </ItemInput>
+
+        <ItemInput lines>
           <ion-input
             v-model="fields.patronymic"
             label-placement="floating"
             label="Отчество"
           ></ion-input>
-        </ion-item>
-        <ion-item>
+        </ItemInput>
+
+        <ItemInput lines id="click-trigger" class="ion-align-items-end">
           <ion-input
-            v-model="fields.birthday"
+            :value="formatDate(fields.birthday)"
             label-placement="floating"
             label="Дата рождения"
           ></ion-input>
-        </ion-item>
-        <ion-item>
+          <ion-icon icon="assets/icon/calendar-courier.svg" class="icon" />
+        </ItemInput>
+        <ItemDate v-model="fields.birthday" />
+
+        <ItemInput lines :error="errorFields.email">
           <ion-input
             v-model="fields.email"
             type="email"
             label-placement="floating"
             label="Email"
+            @ionChange="validateEmail"
           ></ion-input>
-        </ion-item>
+        </ItemInput>
       </ion-list>
       <ion-row class="ion-justify-content-around button">
         <Button title="Далее" class="btn" @click="saveUser" />
@@ -64,14 +72,20 @@ import {
   IonInput,
   IonLabel,
   IonRow,
+  IonIcon,
 } from '@ionic/vue';
 import Header from '@/components/ui/Header.vue';
 import Button from '@/components/ui/Button.vue';
 import Loading from '@/components/ui/Loading.vue';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
+import { formatDate } from '@/helpers/formatter';
+import ItemInput from '@/components/ui/ItemInput.vue';
+import ItemDate from '@/components/ui/ItemDate.vue';
+
 export default defineComponent({
   name: 'FillProfile',
   components: {
+    ItemInput,
     Loading,
     Button,
     Header,
@@ -82,6 +96,8 @@ export default defineComponent({
     IonInput,
     IonLabel,
     IonRow,
+    IonIcon,
+    ItemDate,
   },
   data() {
     return {
@@ -95,6 +111,7 @@ export default defineComponent({
         email: '',
       },
       loading: false,
+      errorFields: {},
     };
   },
   computed: {
@@ -104,6 +121,7 @@ export default defineComponent({
     },
   },
   methods: {
+    formatDate,
     ...mapMutations(['SET_USER']),
     ...mapActions(['updateUser']),
     saveUser() {
@@ -115,6 +133,16 @@ export default defineComponent({
     },
     later() {
       this.$router.replace({ name: this.redirect });
+    },
+    validateEmail() {
+      if (
+        // eslint-disable-next-line
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.fields.email)
+      ) {
+        this.errorFields.email = '';
+      } else {
+        this.errorFields.email = 'Некорректный эмайл';
+      }
     },
   },
   mounted() {
@@ -144,6 +172,10 @@ export default defineComponent({
       white-space: pre-wrap;
     }
 
+    .icon {
+      margin-bottom: 4px;
+    }
+
     .button {
       position: fixed;
       bottom: 30px;
@@ -153,9 +185,11 @@ export default defineComponent({
       right: 0;
       margin: 0;
       display: flex;
+
       .btn {
         width: 40%;
       }
+
       .another {
         .custom-btn {
           --background: #ffffff;
