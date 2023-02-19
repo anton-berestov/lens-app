@@ -49,3 +49,22 @@ export const sendRecord = async (data: any): Promise<undefined> => {
     console.error(e);
   }
 };
+
+export const getRecordHistory = async (data: any): Promise<undefined> => {
+  try {
+    return API.get(`appointments?populate=*&filters[user][id]=${data}`)
+      .then(({ data }: any) => {
+        return data.map((el: any) => {
+          return {
+            date: el.attributes.date,
+            time: el.attributes.recording.data?.attributes.time,
+            doctor: el.attributes.doctor.data?.attributes.name,
+            service: el.attributes.service,
+          };
+        });
+      })
+      .catch((e: any) => console.error(e));
+  } catch (e) {
+    console.error(e);
+  }
+};

@@ -26,6 +26,7 @@
           ref="calendar"
           :min="minDate"
           :is-date-enabled="isWeekday"
+          :first-day-of-week="1"
           @ionChange="selectDate"
         >
         </ion-datetime>
@@ -145,7 +146,7 @@ export default defineComponent({
     isWeekday(dateString) {
       const date = new Date(dateString);
       const utcDay = date.getUTCDay();
-      return utcDay !== 5 && utcDay !== 6;
+      return utcDay !== 0 && utcDay !== 6;
     },
     next() {
       if (this.time && this.date && this.service) {
