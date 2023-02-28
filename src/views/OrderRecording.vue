@@ -55,7 +55,7 @@ export default defineComponent({
     IonRow,
   },
   computed: {
-    ...mapGetters(['date', 'time', 'doctor', 'opticAddress']),
+    ...mapGetters(['date', 'time', 'doctor', 'optic_address']),
     handlerDate() {
       return this.date;
     },
@@ -66,7 +66,7 @@ export default defineComponent({
       return this.doctor.name;
     },
     handlerOpticAddress() {
-      return this.opticAddress;
+      return this.optic_address;
     },
   },
   methods: {

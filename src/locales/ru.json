@@ -1,0 +1,11 @@
+{
+  "COUNT_ORDER": "{n} товар | {n} товар | {n} товара | {n} товаров",
+  "COURIER": "Курьер",
+  "EMPTY_HISTORY_ORDER": "Вы еще ничего не заказывали",
+  "FROM": "от",
+  "HISTORY_ORDER": "История заказов",
+  "ORDER": "Заказ",
+  "ORDER_NUMBER": "Заказ №",
+  "PICKUP": "Самовывоз",
+  "RUBLE_SIGN": "₽"
+}

@@ -112,7 +112,7 @@ export default defineComponent({
       'token',
       'time',
       'date',
-      'opticAddress',
+      'optic_address',
       'user',
       'service',
       'doctor',

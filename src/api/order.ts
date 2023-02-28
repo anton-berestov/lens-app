@@ -45,3 +45,81 @@ export const sendOrder = async (params: any): Promise<undefined> => {
     console.error(e);
   }
 };
+
+export const getOrderHistory = async (params: any): Promise<undefined> => {
+  try {
+    return API.get(`/orders?populate=*&filters[user][id]=${params}`)
+      .then(({ data }: any) => {
+        return data.map((el: any) => {
+          return {
+            id: el.id,
+            date: el.attributes.createdAt,
+            count: el.attributes.count,
+            price: el.attributes.total_discount,
+            deliverTo: el.attributes.deliverTo.data,
+            status: 'В процессе доставки',
+          };
+        });
+      })
+      .catch((e: any) => console.error(e));
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const getOrderById = async (params: any): Promise<undefined> => {
+  try {
+    // @ts-ignore
+    return API.get(`/orders/${params}?populate=*`)
+      .then(async ({ data }) => {
+        const res = await data.attributes.order_product_details.data.map(
+          (el: any) => {
+            return API.get(`/order-product-details/${el.id}?populate=*`)
+              .then(async (el) => {
+                const product = await API.get(
+                  `/products/${el.data.attributes.product.data.id}?populate=*`
+                ).then((el: any) => {
+                  return el.data.attributes.image.data.map((e: any) => {
+                    return e.attributes.url;
+                  });
+                });
+
+                return {
+                  product: {
+                    title: el.data.attributes.product.data.attributes.title,
+                    short_title:
+                      el.data.attributes.product.data.attributes.short_title,
+                    price: el.data.attributes.product.data.attributes.price,
+                    discount:
+                      el.data.attributes.product.data.attributes.discount,
+                    img: product,
+                  },
+
+                  price: el.data.attributes.product_discount,
+                  count: el.data.attributes.product_count,
+                  radius: {
+                    id: el.data.attributes.radius.data.id,
+                    title: el.data.attributes.radius.data.attributes.title,
+                  },
+                  sphere: {
+                    id: el.data.attributes.sphere.data.id,
+                    title: el.data.attributes.sphere.data.attributes.title,
+                  },
+                };
+              })
+              .catch((e: any) => console.error(e));
+          }
+        );
+        console.log(res);
+
+        return {
+          id: data.id,
+          date: data.attributes.createdAt,
+          order_product_details: res,
+        };
+      })
+      .catch((e: any) => console.error(e));
+  } catch (e) {
+    console.error(e);
+  }
+};

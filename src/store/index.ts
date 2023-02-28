@@ -47,9 +47,10 @@ export default createStore({
       date: null,
       service: null,
     },
-    previousRecording: {},
-    opticAddress: {},
+    previous_recording: {},
+    optic_address: {},
     doctor: {},
+    order_history: [],
   },
   getters: {
     popover: (state) => state.popover,
@@ -72,9 +73,9 @@ export default createStore({
     time: (state) => state.recording.time,
     date: (state) => state.recording.date,
     service: (state) => state.recording.service,
-    opticAddress: (state) => state.opticAddress,
+    optic_address: (state) => state.optic_address,
     doctor: (state) => state.doctor,
-    previousRecording: (state) => state.previousRecording,
+    previous_recording: (state) => state.previous_recording,
   },
   mutations: {
     SET_POPOVER: (state, payload) => (state.popover = payload),
@@ -109,10 +110,10 @@ export default createStore({
     SET_DATE: (state, payload) => (state.recording.date = payload),
     SET_TIME: (state, payload) => (state.recording.time = payload),
     SET_SERVICE: (state, payload) => (state.recording.service = payload),
-    SET_OPTIC_ADDRESS: (state, payload) => (state.opticAddress = payload),
+    SET_OPTIC_ADDRESS: (state, payload) => (state.optic_address = payload),
     SET_DOCTOR: (state, payload) => (state.doctor = payload),
     SET_PREVIOUS_RECORDING: (state, payload) =>
-      (state.previousRecording = payload),
+      (state.previous_recording = payload),
   },
   actions: {
     setError(context, error) {

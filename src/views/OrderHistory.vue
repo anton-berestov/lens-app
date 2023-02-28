@@ -1,24 +1,40 @@
 <template>
   <ion-page id="order-history">
-    <Header back title="История заказов" />
-    <Content id="order-history">
+    <Header back :title="$t('HISTORY_ORDER')" />
+    <Loading v-if="loading" />
+    <Content id="order-history" v-if="!loading" @refresh="refresh">
       <Info
         v-if="false"
         icon="assets/icon/empty-cart.svg"
-        title="Вы еще ничего не заказывали"
+        :title="$t('EMPTY_HISTORY_ORDER')"
       />
-      <CardOrder />
+      <CardOrder
+        v-for="(item, index) in history"
+        :key="index"
+        :date="item.date"
+        :order="item.id"
+        :count="item.count"
+        :price="item.price"
+        :status="item.status"
+        :pickup="pickupHandler"
+        @click="
+          $router.push({ name: 'OrderItemHistory', params: { id: item.id } })
+        "
+      />
     </Content>
   </ion-page>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import { defineComponent } from 'vue';
 import { IonPage } from '@ionic/vue';
 import Header from '@/components/ui/Header.vue';
 import Content from '@/components/ui/Content.vue';
 import Info from '@/components/ui/Info.vue';
 import CardOrder from '@/components/CardOrder.vue';
+import Loading from "@/components/ui/Loading.vue";
+import { getOrderHistory } from '@/api/order';
+import { mapGetters } from 'vuex';
 
 export default defineComponent({
   name: 'OrderHistory',
@@ -28,6 +44,34 @@ export default defineComponent({
     Header,
     Content,
     Info,
+    Loading
+  },
+  data() {
+    return {
+      history: [],
+      loading: false
+    };
+  },
+  computed: {
+    ...mapGetters(['user']),
+    pickupHandler () {
+      return this.history.deliverTo?.attributes ? this.$t('COURIER') : this.$t('PICKUP')
+    }
+  },
+  methods: {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    async refresh(complete = () => {}) {
+      try {
+        this.history = await getOrderHistory(this.user.id);
+      } finally {
+        complete();
+      }
+    },
+  },
+  async mounted() {
+    this.loading = true
+    this.history = await getOrderHistory(this.user.id);
+    this.loading = false
   },
 });
 </script>

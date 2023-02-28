@@ -2,11 +2,16 @@
   <ion-card class="card">
     <ion-card-content class="content">
       <ion-label class="title"
-        >Заказ № {{ order }} от {{ formatDate(date, 'LL') }}</ion-label
+        >{{ $t('ORDER_NUMBER') }} {{ order }} {{ $t('FROM') }}
+        {{ formatDate(date, 'LL') }}</ion-label
       >
       <ion-row class="container-text">
-        <ion-label class="ion-margin-end text">{{ count }} товар</ion-label>
-        <ion-label class="ion-margin-end text">{{ price }} ₽</ion-label>
+        <ion-label class="ion-margin-end text">{{
+          $tc('COUNT_ORDER', count)
+        }}</ion-label>
+        <ion-label class="ion-margin-end text"
+          >{{ price }} {{ $t('RUBLE_SIGN') }}
+        </ion-label>
         <ion-label class="text" style="border: none">{{ pickup }}</ion-label>
       </ion-row>
       <ion-item lines="none">
@@ -32,20 +37,20 @@ export default defineComponent({
   name: 'CardOrder',
   props: {
     order: {
-      type: String,
-      default: '',
+      type: Number,
+      default: 0,
     },
     date: {
       type: String,
       default: '',
     },
     count: {
-      type: String,
-      default: '',
+      type: Number,
+      default: 0,
     },
     price: {
-      type: String,
-      default: '',
+      type: Number,
+      default: 0,
     },
     pickup: {
       type: String,

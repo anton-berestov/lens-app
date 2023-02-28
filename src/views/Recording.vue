@@ -3,14 +3,14 @@
     <Header title="Запись к врачу" contact />
     <ion-content :fullscreen="true">
       <CardInfo
-        v-if="previousRecording.date && previousRecording.time"
+        v-if="previous_recording.date && previous_recording.time"
         title="Вы записаны к врачу"
-        :description="formatDate(previousRecording.date, 'DD MMMM YYYY')"
-        :subdescription="previousRecording.time"
+        :description="formatDate(previous_recording.date, 'DD MMMM YYYY')"
+        :subdescription="previous_recording.time"
       />
 
       <ion-row
-        v-if="previousRecording.date && previousRecording.time"
+        v-if="previous_recording.date && previous_recording.time"
         class="ion-justify-content-center ion-align-items-center"
       >
         <ion-label class="title-new">Новая запись</ion-label>
@@ -106,13 +106,13 @@ export default defineComponent({
     }
   },
   computed: {
-    ...mapGetters(['previousRecording']),
+    ...mapGetters(['previous_recording']),
     handlerDisabledButton() {
       return !(this.time && this.date && this.service)
     }
   },
   watch: {
-    previousRecording(oldVal, newVal) {
+    previous_recording(oldVal, newVal) {
       if (newVal) {
         this.$refs.calendar.$el.reset()
         this.time = null

@@ -5,6 +5,10 @@ import store from './store/index';
 
 import { IonicVue } from '@ionic/vue';
 import Maska from 'maska';
+import { showToast } from '@/helpers/toast';
+import moment from 'moment';
+import 'moment/locale/ru';
+import i18n from '@/helpers/i18n';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -28,11 +32,6 @@ import './theme/variables.css';
 // @ts-ignore
 import YmapPlugin from 'vue-yandex-maps';
 
-// @ts-ignore
-import { showToast } from '@/helpers/toast';
-import moment from 'moment';
-import 'moment/locale/ru';
-
 declare global {
   interface Window {
     $store: any;
@@ -51,6 +50,7 @@ const app = createApp(App)
   .use(IonicVue, { mode: 'ios' })
   .use(store)
   .use(router)
+  .use(i18n)
   .use(YmapPlugin, settings)
   .use(Maska);
 
