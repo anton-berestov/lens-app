@@ -1,11 +1,18 @@
 {
   "COUNT_ORDER": "{n} товар | {n} товар | {n} товара | {n} товаров",
   "COURIER": "Курьер",
+  "DELIVERY_ADDRESS": "Адрес доставки",
+  "DELIVERY_METHOD": "Способ получения",
   "EMPTY_HISTORY_ORDER": "Вы еще ничего не заказывали",
   "FROM": "от",
   "HISTORY_ORDER": "История заказов",
   "ORDER": "Заказ",
   "ORDER_NUMBER": "Заказ №",
+  "ORDER_PRICE": "Сумма заказа",
+  "PACKAGING": "упк",
   "PICKUP": "Самовывоз",
-  "RUBLE_SIGN": "₽"
+  "RADIUS": "Радиус",
+  "REPEAT_ORDER": "Повторить заказ",
+  "RUBLE_SIGN": "₽",
+  "SPHERE": "Сфера"
 }
