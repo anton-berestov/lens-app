@@ -2,7 +2,7 @@
   <ion-col class="ion-margin" style="padding: 0">
     <ion-row v-if="manufacturer">
       <ion-col>
-        <ion-label class="title">Производитель</ion-label>
+        <ion-label class="title">{{ $t('MANUFACTURER') }}</ion-label>
       </ion-col>
       <ion-col>
         <ion-title class="text">{{ manufacturer }}</ion-title>
@@ -11,7 +11,7 @@
 
     <ion-row class="ion-margin-top" v-if="type">
       <ion-col>
-        <ion-label class="title">Тип линз</ion-label>
+        <ion-label class="title">{{ $t('LENS-TYPE') }}</ion-label>
       </ion-col>
       <ion-col>
         <ion-title class="text">{{ type }}</ion-title>
@@ -20,7 +20,7 @@
 
     <ion-row class="ion-margin-top" v-if="brand">
       <ion-col>
-        <ion-label class="title">Бренд</ion-label>
+        <ion-label class="title">{{ $t('BRAND') }}</ion-label>
       </ion-col>
       <ion-col>
         <ion-title class="text">{{ brand }}</ion-title>
@@ -29,7 +29,7 @@
 
     <ion-row class="ion-margin-top" style="position: relative" v-if="period">
       <ion-col>
-        <ion-label class="title">Срок замены</ion-label>
+        <ion-label class="title">{{ $t('REPLACEMENT-PERIOD') }}</ion-label>
         <ion-buttons class="btn-question-period">
           <ion-button @click="openPopover">
             <ion-icon
@@ -47,14 +47,14 @@
 
     <ion-row class="ion-margin-top" v-if="material">
       <ion-col>
-        <ion-label class="title">Материал</ion-label>
+        <ion-label class="title">{{ $t('MATERIAL') }}</ion-label>
       </ion-col>
       <ion-col>
         <ion-title class="text">{{ material }}</ion-title>
       </ion-col>
     </ion-row>
   </ion-col>
-  <Popover button-ok="OK" @handler="closePopover" />
+  <Popover :button-ok="$t('OK')" @handler="closePopover" />
 </template>
 
 <script lang="ts">
@@ -110,15 +110,13 @@ export default defineComponent({
     openPopover() {
       this.SET_POPOVER({
         show: true,
-        message: [
-          'Максимальный срок использования линзы. После этого срока применять линзы нельзя, так как это может плохо сказаться на здоровье ваших глаз.',
-        ],
+        message: [''],
       });
     },
     closePopover() {
       this.SET_POPOVER({
         show: false,
-        message: [],
+        message: [this.$t('REPLACEMENT-PERIOD-MESSAGE')],
       });
     },
   },

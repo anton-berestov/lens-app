@@ -26,14 +26,14 @@
           >{{ discountPrice }} ₽</ion-card-subtitle
         >
         <ion-card-subtitle class="old-price" v-if="discount"
-          >{{ price }} ₽
+          >{{ price }} {{ $t('RUBLE-SIGN') }}
         </ion-card-subtitle>
       </ion-row>
     </ion-card-header>
   </ion-card>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from 'vue';
 import {
   IonCard,

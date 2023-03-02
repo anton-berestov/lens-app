@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -52,7 +52,7 @@ export default defineComponent({
       this.open = false;
       this.$emit('isOpen', this.open);
     },
-    select(option: any) {
+    select(option) {
       this.open = false;
       if (typeof option !== 'string') {
         this.$emit('update:modelValue', option);

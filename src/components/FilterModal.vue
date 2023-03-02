@@ -10,10 +10,10 @@
       <ion-col>
         <ion-row class="ion-justify-content-center">
           <ion-icon icon="assets/icon/line-menu.svg" class="show-hide-icon" />
-          <ion-title class="title">Фильтры</ion-title>
+          <ion-title class="title">{{ $t('FILTERS') }}</ion-title>
         </ion-row>
         <ion-row class="ion-margin">
-          <ion-title class="text">Срок замены</ion-title>
+          <ion-title class="text">{{ $t('REPLACEMENT-PERIOD') }}</ion-title>
         </ion-row>
 
         <ion-row class="ion-margin">
@@ -25,7 +25,7 @@
         </ion-row>
 
         <ion-row class="ion-margin" style="position: relative">
-          <ion-title class="text">Тип линз</ion-title>
+          <ion-title class="text">{{ $t('LENS-TYPE') }}</ion-title>
           <ion-buttons class="btn-question">
             <ion-button @click="openPopover">
               <ion-icon
@@ -46,20 +46,20 @@
 
         <ion-row class="ion-margin" :class="{ activeClass: isActive }">
           <ion-col style="padding-left: 0" class="ion-margin-end">
-            <ion-title class="text">Сфера</ion-title>
+            <ion-title class="text">{{ $t('SPHERE') }}</ion-title>
             <Select
               :options="sphere"
-              placeholder="Выбрать"
+              :placeholder="$t('SELECT')"
               class="ion-margin-top"
               @isOpen="openSelect"
               v-model="filter.sphere"
             />
           </ion-col>
           <ion-col style="padding-right: 0">
-            <ion-title class="text">Радиус кривизны</ion-title>
+            <ion-title class="text">{{ $t('RADIUS-CURVATURE') }}</ion-title>
             <Select
               :options="radius"
-              placeholder="Выбрать"
+              :placeholder="$t('SELECT')"
               class="ion-margin-top"
               @isOpen="openSelect"
               v-model="filter.radius"
@@ -101,18 +101,18 @@
             style="color: #ffffff"
             class="action-button"
             @click="apply"
-            >Применить
+            >{{ $t('APPLY') }}
           </ion-button>
         </ion-buttons>
         <ion-buttons>
           <ion-button fill="outline" class="action-button" @click="clear"
-            >Сбросить
+            >{{ $t('RESET') }}
           </ion-button>
         </ion-buttons>
       </ion-row>
     </ion-content>
   </ion-modal>
-  <Popover button-ok="OK" @handler="closePopover" />
+  <Popover :button-ok="$t('OK')" @handler="closePopover" />
 </template>
 
 <script lang="js">
