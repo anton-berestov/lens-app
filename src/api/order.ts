@@ -72,7 +72,6 @@ export const getOrderById = async (params: any): Promise<undefined> => {
     // @ts-ignore
     return API.get(`/orders/${params}?populate=*`)
       .then(async ({ data }) => {
-        console.log(data);
         return Promise.all(
           data.attributes.order_product_details.data.map((el: any) => {
             return API.get(`/order-product-details/${el.id}?populate=*`)
@@ -87,6 +86,7 @@ export const getOrderById = async (params: any): Promise<undefined> => {
 
                 return {
                   product: {
+                    id: el.data.attributes.product.data.id,
                     title: el.data.attributes.product.data.attributes.title,
                     short_title:
                       el.data.attributes.product.data.attributes.short_title,

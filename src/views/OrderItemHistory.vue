@@ -96,7 +96,11 @@
         </ion-col>
       </ion-row>
 
-      <Button :title="$t('REPEAT-ORDER')" class="repeat-button" />
+      <Button
+        :title="$t('REPEAT-ORDER')"
+        class="repeat-button"
+        @click="repeatOrder"
+      />
     </ion-content>
   </ion-page>
 </template>
@@ -119,6 +123,8 @@ import Loading from '@/components/ui/Loading.vue';
 import Button from '@/components/ui/Button.vue';
 import { getOrderById } from '@/api/order';
 import { formatDate } from '@/helpers/formatter';
+import { discountPrice } from '@/helpers/discountPrice';
+import { mapActions, mapMutations } from 'vuex';
 
 export default defineComponent({
   name: 'OrderItemHistory',
@@ -149,17 +155,76 @@ export default defineComponent({
     },
   },
   methods: {
+    ...mapActions([
+      'getProducts',
+      'getTypes',
+      'getRadius',
+      'getSphere',
+      'getPeriod',
+    ]),
+    ...mapMutations([
+      'SET_ORDER_PRODUCT_DETAILS',
+      'SET_TYPE',
+      'SET_RADIUS',
+      'SET_RADIUS',
+      'SET_RADIUS',
+      'SET_BASKET_COUNT',
+      'SET_TOTAL_AMOUNT',
+      'SET_TOTAL_DISCOUNT',
+    ]),
     formatDate,
     imageHandler(image) {
       return image.length
         ? `${process.env.VUE_APP_API_PUBLIC}${image}`
         : 'assets/image/no-image.png';
     },
+    async repeatOrder() {
+      this.loading = true;
+      await this.getProducts({ populate: '*' });
+      await this.getPeriods();
+      await this.getSpheres();
+      await this.getRadiuses();
+      await this.getTyps();
+      this.order_item.order_product_details.map((el) => {
+        console.log(el);
+        const a = {
+          product: el.product.id,
+          radius: el.radius.id,
+          sphere: el.sphere.id,
+          product_count: el.count,
+          product_amount: Number(el.product.price) * el.count,
+          product_discount:
+            discountPrice(el.product.price, el.product.discount ?? 0) *
+            el.count,
+        };
+        this.SET_ORDER_PRODUCT_DETAILS(a);
+        this.SET_BASKET_COUNT();
+        this.SET_TOTAL_AMOUNT();
+        this.SET_TOTAL_DISCOUNT();
+        this.$router.replace({ name: 'Basket' });
+        this.loading = false;
+      });
+    },
+    async getTyps() {
+      const types = await this.getTypes();
+      this.SET_TYPE(types);
+    },
+    async getRadiuses() {
+      const radiuses = await this.getRadius();
+      this.SET_RADIUS(radiuses);
+    },
+    async getSpheres() {
+      const spheres = await this.getSphere();
+      this.SET_RADIUS(spheres);
+    },
+    async getPeriods() {
+      const periods = await this.getPeriod();
+      this.SET_RADIUS(periods);
+    },
   },
   async created() {
     this.loading = true;
     this.order_item = await getOrderById(this.id);
-    console.log(this.order_item);
     this.loading = false;
   },
 });
