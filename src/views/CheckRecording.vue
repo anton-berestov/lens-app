@@ -27,10 +27,12 @@
       />
 
       <ion-card class="card-info" v-if="handlerAvatar">
-        <ion-card-content class="content">
-          <ion-row class="ion-nowrap ion-align-items-center">
-            <ion-row>
-              <ion-row class="ion-align-items-center">
+        <ion-card-content class="content" style="padding: 16px 6px">
+          <ion-item lines="none">
+            <ion-row class="row">
+              <ion-row
+                class="ion-align-items-center ion-justify-content-start row"
+              >
                 <ion-icon
                   icon="assets/icon/doctor.svg"
                   class="ion-margin-end icon"
@@ -43,19 +45,20 @@
                   {{ handlerDoctor.name }}
                 </ion-label>
                 <ion-label class="description" style="margin-top: 8px">
-                  {{ handlerDoctor.phone }}
+                  {{ formatPhone(handlerDoctor.phone) }}
                 </ion-label>
               </ion-row>
             </ion-row>
-            <ion-avatar style="width: 40%; height: 100%">
+
+            <ion-avatar>
               <img :src="handlerAvatar" />
             </ion-avatar>
-          </ion-row>
+          </ion-item>
         </ion-card-content>
       </ion-card>
       <Skeleton v-if="!handlerAvatar" class="ion-margin-start ion-margin-end" />
 
-      <ion-row class="ion-margin-start" v-if="handlerData">
+      <ion-row class="ion-margin-start ion-margin-end" v-if="handlerData">
         <ion-text class="text"
           >Оформляя заказ, вы даете согласие на
           <a href="#">обработку персональных данных</a></ion-text
@@ -79,13 +82,14 @@ import {
   IonLabel,
   IonAvatar,
   IonText,
+  IonItem,
 } from '@ionic/vue';
 import Header from '@/components/ui/Header.vue';
 import CardInfo from '@/components/CardInfo.vue';
 import Button from '@/components/ui/Button.vue';
 import Loading from '@/components/ui/Loading.vue';
-import { mapActions, mapGetters, mapMutations } from 'vuex';
-import { formatDate } from '@/helpers/formatter';
+import { mapActions, mapGetters } from 'vuex';
+import { formatDate, formatPhone } from '@/helpers/formatter';
 import { sendRecord } from '@/api/recording';
 import Skeleton from '@/components/ui/Skeleton.vue';
 
@@ -106,6 +110,7 @@ export default defineComponent({
     IonLabel,
     IonAvatar,
     IonText,
+    IonItem,
   },
   computed: {
     ...mapGetters([
@@ -123,7 +128,7 @@ export default defineComponent({
         : 'https://ionicframework.com/docs/img/demos/avatar.svg';
     },
     handlerOpticAddress() {
-      return this.opticAddress;
+      return this.optic_address;
     },
     handlerData() {
       return (
@@ -153,6 +158,7 @@ export default defineComponent({
   methods: {
     ...mapActions(['getAddress', 'getDoctor']),
     formatDate,
+    formatPhone,
     async recording() {
       if (!this.token) {
         this.$router.push({ name: 'Auth', params: { redirect: 'Recording' } });
@@ -194,6 +200,16 @@ export default defineComponent({
     margin: 0 10px;
   }
 
+  .content {
+    .row {
+      width: 100%;
+    }
+
+    .description {
+      width: 100%;
+    }
+  }
+
   .text {
     font-weight: 400;
     font-size: 12px;
@@ -204,6 +220,10 @@ export default defineComponent({
       color: #097ac6;
       text-decoration: none;
     }
+  }
+  ion-avatar {
+    width: 100px;
+    height: 80px;
   }
 }
 </style>
