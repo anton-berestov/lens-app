@@ -4,7 +4,7 @@
     <ion-content :fullscreen="true">
       <CardInfo
         v-if="previous_recording.date && previous_recording.time"
-        :title="В$t('RECORDING-DOCTOR-TITLE')"
+        :title="$t('RECORDING-DOCTOR-TITLE')"
         :description="formatDate(previous_recording.date, 'DD MMMM YYYY')"
         :subdescription="previous_recording.time"
       />
