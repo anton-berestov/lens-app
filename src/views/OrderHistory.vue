@@ -16,7 +16,7 @@
         :count="item.count"
         :price="item.price"
         :status="item.status"
-        :pickup="pickupHandler"
+        :pickup="pickupHandler(item.deliverTo)"
         @click="
           $router.push({ name: 'OrderItemHistory', params: { id: item.id } })
         "
@@ -54,9 +54,7 @@ export default defineComponent({
   },
   computed: {
     ...mapGetters(['user']),
-    pickupHandler () {
-      return this.history.deliverTo?.attributes ? this.$t('COURIER') : this.$t('PICKUP')
-    }
+
   },
   methods: {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -67,7 +65,11 @@ export default defineComponent({
         complete();
       }
     },
+    pickupHandler (event) {
+      return event  ? this.$t('COURIER') : this.$t('PICKUP')
+    }
   },
+
   async mounted() {
     this.loading = true
     this.history = await getOrderHistory(this.user.id);
