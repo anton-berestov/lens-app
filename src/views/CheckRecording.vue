@@ -27,7 +27,7 @@
       />
 
       <ion-card class="card-info" v-if="handlerAvatar">
-        <ion-card-content class="content" style="padding: 16px 6px">
+        <ion-card-content class="content" style="padding: 20px 6px">
           <ion-item lines="none">
             <ion-row class="row">
               <ion-row

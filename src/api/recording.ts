@@ -13,7 +13,7 @@ export const getDoctor = async (): Promise<undefined> => {
 export const checkDate = async (params: any): Promise<undefined> => {
   try {
     return API.get(
-      `recordings?populate=*&filters[appointment][date]=${params}&filters[appointment][reserved]=true`
+      `recordings?populate=*&filters[appointments][date]=${params}&filters[appointments][reserved]=true`
     )
       .then(({ data }: any) =>
         data.map((el: any) => {
@@ -52,7 +52,9 @@ export const sendRecord = async (data: any): Promise<undefined> => {
 
 export const getRecordHistory = async (data: any): Promise<undefined> => {
   try {
-    return API.get(`appointments?populate=*&filters[user][id]=${data}`)
+    return API.get(
+      `appointments?populate=*&filters[visit]=true&filters[user][id]=${data}}`
+    )
       .then(({ data }: any) => {
         return data.map((el: any) => {
           return {
