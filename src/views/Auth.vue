@@ -1,12 +1,10 @@
 <template>
   <ion-page>
-    <Header title="Вход" back />
+    <Header :title="$t('AUTH')" back />
     <ion-content :scroll-y="false" id="auth">
       <ion-list class="list">
         <ion-row class="ion-margin">
-          <ion-label class="text"
-            >Для авторизации введите номер телефона
-          </ion-label>
+          <ion-label class="text">$t('AUTH-TITLE') </ion-label>
         </ion-row>
         <ion-row>
           <ion-item class="input-item">
@@ -26,14 +24,14 @@
 
         <ion-row class="row">
           <Button
-            title="Получить код"
+            :title="$t('GET-THE-CODE')"
             :disabled="disabled"
             class="button-code"
             @click="send"
           />
           <ion-label class="ion-margin-start ion-margin-end data-text"
-            >Оформляя заказ, вы даете согласие на
-            <a href="#">обработку персональных данных</a>
+            >{{ $t('AGREEMENT-TEXT') }}
+            <a href="#">{{ $t('PERSONAL-DATA') }}</a>
           </ion-label>
         </ion-row>
       </ion-list>

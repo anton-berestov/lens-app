@@ -1,22 +1,22 @@
 <template>
   <ion-page id="home">
-    <Header title="Приморский центр охраны зрения" custom contact />
+    <Header :title="$t('NAME')" custom contact />
     <ion-content :fullscreen="true">
       <Card
         class="pressed"
-        title="Заказать контактные линзы"
+        :title="$t('ORDER-CARD-TITLE')"
         img="assets/image/ordering_contact_lenses.png"
         @click="$router.replace({ name: 'Catalog' })"
       />
       <Card
         class="pressed"
-        title="Записаться к врачу"
+        :title="$t('RECORDING-CARD-TITLE')"
         img="assets/image/recording_with_a_doctor.png"
         @click="$router.replace({ name: 'Recording' })"
       />
       <Card
         class="pressed"
-        title="Акции и новости"
+        :title="$t('ACTION-CARD-TITLE')"
         img="assets/image/actions_news.png"
         @click="$router.push({ name: 'ActionsNews' })"
         v-if="false"

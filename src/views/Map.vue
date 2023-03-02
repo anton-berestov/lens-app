@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <Header back title="Расположение" />
+    <Header back :title="$t('LOCATION')" />
     <ion-content :scroll-y="false">
       <div class="map">
         <yandex-map
@@ -16,7 +16,7 @@
           ></ymap-marker>
         </yandex-map>
         <div class="info-box">
-          <span class="text">Вход в оптику с лицевой части здания </span>
+          <span class="text">{{ $t('MAP-TEXT') }}</span>
         </div>
       </div>
     </ion-content>

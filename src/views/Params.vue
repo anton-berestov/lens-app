@@ -1,14 +1,14 @@
 <template>
   <ion-page id="params">
-    <Header title="Параметры" contact back />
+    <Header :title="$t('OPTIONS')" contact back />
     <ion-content :fullscreen="true" class="params-content">
       <ion-row class="ion-margin">
-        <ion-label>Для добавления в корзину выберите параметры линз</ion-label>
+        <ion-label>{{ $t('OPTIONS-TITLE') }}</ion-label>
       </ion-row>
       <ion-row class="ion-padding">
         <Segment
-          title-left="Одинаковые"
-          title-right="Разные"
+          :title-left="$t('IDENTICAL')"
+          :title-right="$t('DIFFERENT')"
           @change="activeSegment"
         />
       </ion-row>
@@ -16,20 +16,20 @@
       <div>
         <ion-row class="ion-margin" :class="{ activeClass: isActive }">
           <ion-col style="padding-left: 0" class="ion-margin-end">
-            <ion-title class="text">Сфера</ion-title>
+            <ion-title class="text">{{ $t('SPHERE') }}</ion-title>
             <Select
               :options="sphere"
-              placeholder="Выбрать"
+              :placeholder="$t('SELECT')"
               class="ion-margin-top"
               @isOpen="openSelect"
               v-model="select.sphere"
             />
           </ion-col>
           <ion-col style="padding-right: 0">
-            <ion-title class="text">Радиус кривизны</ion-title>
+            <ion-title class="text">{{ $t('RADIUS-CURVATURE') }}</ion-title>
             <Select
               :options="radius"
-              placeholder="Выбрать"
+              :placeholder="$t('SELECT')"
               class="ion-margin-top"
               @isOpen="openSelect"
               v-model="select.radius"
@@ -40,7 +40,7 @@
           class="ion-margin ion-justify-content-start ion-align-items-center"
           :class="{ openSelect: isActive }"
         >
-          <ion-label class="text">Количество</ion-label>
+          <ion-label class="text">{{ $t('QUANTITY') }}</ion-label>
           <div class="box ion-margin-start">
             <ion-button size="small" class="button" @click="countOneMinus">
               <ion-icon :icon="minus"></ion-icon>
@@ -56,20 +56,20 @@
       <div v-if="different">
         <ion-row class="ion-margin" :class="{ activeClass: isActiveTwo }">
           <ion-col style="padding-left: 0" class="ion-margin-end">
-            <ion-title class="text">Сфера</ion-title>
+            <ion-title class="text">{{ $t('SPHERE') }}</ion-title>
             <Select
               :options="sphere"
-              placeholder="Выбрать"
+              :placeholder="$t('SELECT')"
               class="ion-margin-top"
               @isOpen="openSelectTwo"
               v-model="select.sphere2"
             />
           </ion-col>
           <ion-col style="padding-right: 0">
-            <ion-title class="text">Радиус кривизны</ion-title>
+            <ion-title class="text">{{ $t('RADIUS-CURVATURE') }}</ion-title>
             <Select
               :options="radius"
-              placeholder="Выбрать"
+              :placeholder="$t('SELECT')"
               class="ion-margin-top"
               @isOpen="openSelectTwo"
               v-model="select.radius2"
@@ -80,7 +80,7 @@
           class="ion-margin ion-justify-content-start ion-align-items-center"
           :class="{ openSelectTwo: isActiveTwo }"
         >
-          <ion-label class="text">Количество</ion-label>
+          <ion-label class="text">{{ $t('QUANTITY') }}</ion-label>
           <div class="box ion-margin-start">
             <ion-button size="small" class="button" @click="countTwoMinus">
               <ion-icon :icon="minus"></ion-icon>
@@ -94,7 +94,7 @@
       </div>
 
       <ion-row class="row">
-        <Button title="Применить" class="button" @click="apply" />
+        <Button :title="$t('APPLY')" class="button" @click="apply" />
       </ion-row>
     </ion-content>
     <Popover button-ok="OK" @handler="closePopover" />
@@ -222,7 +222,7 @@ export default defineComponent({
         this.$router.replace({name: 'Basket'})
 
       } else {
-        this.SET_POPOVER({ show: true, message: ['Выберите параметры линз'] });
+        this.SET_POPOVER({ show: true, message: [this.$t('OPTIONS-MESSAGE')] });
       }
     },
     closePopover() {

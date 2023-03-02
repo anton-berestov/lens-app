@@ -1,10 +1,10 @@
 <template>
   <ion-page id="basket">
-    <Header title="Корзина" />
+    <Header :title="$t('BASKET')" />
     <Info
       v-if="!order_product_details.length"
-      title="Корзина пуста"
-      description="Для заказа товара перейдите в каталог или воспользуйтесь поиском"
+      :title="$t('BASKET-EMPTY')"
+      :description="$t('BASKET-EMPTY-DESCRIPTION')"
       icon="assets/icon/empty-basket.svg"
     />
     <ion-content
@@ -20,7 +20,7 @@
         <ion-buttons>
           <ion-button class="clear-button" @click="clearBasket">
             <ion-icon icon="assets/icon/clear-basket.svg" class="icon" />
-            <span>Очистить корзину</span>
+            <span>{{ $t('EMPTY-BASKET') }}</span>
           </ion-button>
         </ion-buttons>
       </ion-row>
@@ -44,13 +44,13 @@
                 </ion-row>
                 <ion-row class="ion-margin-top">
                   <ion-label class="label"
-                    >Сфера
+                    >{{ $t('SPHERE') }}
                     <span class="text">{{
                       order.sphere.title
                     }}</span></ion-label
                   >
                   <ion-label class="ion-margin-start label"
-                    >Радиус
+                    >{{ $t('RADIUS') }}
                     <span class="text">{{
                       order.radius.title
                     }}</span></ion-label
@@ -86,17 +86,17 @@
           <ion-card-content class="basket-info-card-content">
             <ion-row class="ion-align-items-center">
               <ion-icon icon="assets/icon/purchases.svg" class="icon" />
-              <ion-label class="title">Ваши покупки</ion-label>
+              <ion-label class="title">{{ $t('YOUR-PURCHASES') }}</ion-label>
             </ion-row>
             <ion-row class="ion-margin-top">
               <ion-label class="text"
-                >Всего товаров:
+                >{{ $t('TOTAL-GOODS') }}:
                 <span class="value">{{ basket_count }}</span></ion-label
               >
             </ion-row>
             <ion-row style="margin-top: 8px">
               <ion-label class="text"
-                >Итого к оплате:
+                >{{ $t('TOTAL-PAYABLE') }}:
                 <span class="value">{{ `${total_discount} ₽` }}</span>
                 <span class="discount" v-if="total_discount !== total_amount">{{
                   `${total_amount} ₽`
@@ -106,16 +106,20 @@
           </ion-card-content>
         </ion-card>
       </ion-row>
-      <Button title="Заказать" class="order-button" @click.prevent="toOrder" />
+      <Button
+        :title="$t('TO-ORDER')"
+        class="order-button"
+        @click.prevent="toOrder"
+      />
     </ion-content>
     <Popover
-      button-ok="Очистить"
-      button-cancel="Отмена"
+      :button-ok="$t('CLEAR')"
+      :button-cancel="$t('CANCEL')"
       @handler="changeBasket"
     />
     <Button
       v-if="!order_product_details.length"
-      title="Перейти в каталог"
+      :title="$t('TO-CATALOG')"
       @click="$router.push({ path: PATH_CATALOG })"
       class="catalog-button"
     />
@@ -234,7 +238,7 @@ export default defineComponent({
     clearBasket() {
       this.SET_POPOVER({
         show: true,
-        message: ['Вы уверены, что хотите очистить корзину?'],
+        message: [this.$t('EMPTY-BASKET-TEXT')],
       });
     },
     countMinus(idx) {

@@ -1,6 +1,6 @@
 <template>
   <ion-page id="profile">
-    <Header title="Профиль" contact />
+    <Header :title="$t('PROFILE')" contact />
     <Loading v-if="loading" />
     <Content v-if="!loading" @refresh="refresh">
       <ion-card class="contact" v-if="token">
@@ -47,7 +47,7 @@
                   style="display: flex"
                   @click="$router.push({ name: 'OrderHistory' })"
                 >
-                  <ion-label class="text">Мои заказы</ion-label>
+                  <ion-label class="text">{{ $t('MY-ORDERS') }}</ion-label>
                   <ion-icon icon="assets/icon/arrow.svg"></ion-icon>
                 </ion-col>
               </ion-row>
@@ -65,7 +65,7 @@
                   style="display: flex"
                   @click="$router.push({ name: 'RecordHistory' })"
                 >
-                  <ion-label class="text">Мои обращения к врачу</ion-label>
+                  <ion-label class="text">{{ $t('MY-VISITS') }}</ion-label>
                   <ion-icon icon="assets/icon/arrow.svg"></ion-icon>
                 </ion-col>
               </ion-row>
@@ -74,13 +74,13 @@
         </ion-card-content>
       </ion-card>
 
-      <Address title="Адрес оптики" />
+      <Address :title="$t('OPTICS-ADDRESS')" />
 
       <ion-card class="contact">
         <ion-card-content class="content">
           <ion-list>
             <ion-item lines="none">
-              <ion-label class="title">Связаться с нами:</ion-label>
+              <ion-label class="title">{{ $t('CONNECT') }}</ion-label>
             </ion-item>
 
             <ion-item>
@@ -96,7 +96,7 @@
                     href="tel:+79502822722"
                     class="ion-margin-start text"
                     style="color: #17a1fa"
-                    >+7 950 282 27 22</a
+                    >{{ $t('PHONE') }}</a
                   >
                 </ion-col>
               </ion-row>
@@ -115,7 +115,7 @@
                   style="display: flex"
                   @click="chat"
                 >
-                  <ion-label class="text">Написать в чат</ion-label>
+                  <ion-label class="text">{{ $t('WRITE-TO-CHAT') }}</ion-label>
                   <ion-icon icon="assets/icon/arrow.svg"></ion-icon>
                 </ion-col>
               </ion-row>
@@ -126,12 +126,10 @@
 
       <ion-row class="row" v-if="!token">
         <ion-row class="ion-margin swiper-slide-shadow-bottom">
-          <ion-label class="text-no-auth"
-            >Войдите в профиль для оформления заказов или записи к врачу
-          </ion-label>
+          <ion-label class="text-no-auth">{{ $t('PROFILE-TEXT') }} </ion-label>
         </ion-row>
         <Button
-          title="Войти"
+          :title="$t('TO-ENTER')"
           class="auth-button"
           @click="
             $router.push({ name: 'Auth', params: { redirect: 'Profile' } })
@@ -144,12 +142,14 @@
         v-if="token"
       >
         <ion-buttons>
-          <ion-button class="logout-button" @click="logout"
-            >Выйти из аккаунта</ion-button
-          >
+          <ion-button class="logout-button" @click="logout">{{
+            $t('LOGOUT')
+          }}</ion-button>
         </ion-buttons>
         <ion-buttons>
-          <ion-button class="delete-button">Удалить аккаунт</ion-button>
+          <ion-button class="delete-button">{{
+            $t('DELETE-ACCOUNT')
+          }}</ion-button>
         </ion-buttons>
       </ion-row>
     </Content>

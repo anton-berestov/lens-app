@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <Header title="Акции" back />
+    <Header :title="$t('ACTION')" back />
     <ion-content :fullscreen="true">
       <div class="wrapper">
         <div class="image-box">
@@ -10,19 +10,18 @@
           <div class="header">
             <ion-icon icon="assets/icon/sale.svg" class="icon" />
             <p class="title">
-              Акция «Скидка 10% при заказе двух упаковок линз»
+              {{ $t('ACTION-TITLE') }}
             </p>
           </div>
 
           <span class="description">
-            Акция действует с 10 по 31 октября 2022 г. Закажите 2 упаковки линз
-            в приложении и получите скидку размером 10%
+            {{ $t('ACTION-DESCRIPTION') }}
           </span>
         </div>
 
         <ion-row class="ion-justify-content-center">
           <Button
-            title="Перейти в каталог"
+            :title="$t('TO-CATALOG')"
             class="custom-btn"
             @click="
               $router.push({

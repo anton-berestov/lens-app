@@ -1,20 +1,18 @@
 <template>
   <ion-page id="fill-profile">
-    <Header title="Заполнение профиля" />
+    <Header :title="$t('FILL-PROFILE')" />
     <Loading v-if="loading" :is-open="loading" />
     <ion-content class="content">
       <ion-list class="ion-margin-end">
         <ion-item lines="none">
-          <ion-label class="label"
-            >Заполните профиль, чтобы в дальнейшнем делать покупки еще быстрее
-          </ion-label>
+          <ion-label class="label">{{ $t('FILL-PROFILE-TEXT') }} </ion-label>
         </ion-item>
 
         <ItemInput lines>
           <ion-input
             v-model="fields.firstname"
             label-placement="floating"
-            label="Фамилия"
+            :label="$t('FIRSTNAME')"
           ></ion-input>
         </ItemInput>
 
@@ -22,7 +20,7 @@
           <ion-input
             v-model="fields.lastname"
             label-placement="floating"
-            label="Имя"
+            :label="$t('LASTNAME')"
           ></ion-input>
         </ItemInput>
 
@@ -30,7 +28,7 @@
           <ion-input
             v-model="fields.patronymic"
             label-placement="floating"
-            label="Отчество"
+            :label="$t('PATRONYMIC')"
           ></ion-input>
         </ItemInput>
 
@@ -38,7 +36,7 @@
           <ion-input
             :value="formatDate(fields.birthday)"
             label-placement="floating"
-            label="Дата рождения"
+            :label="$t('DATE-BIRTH')"
             disabled
           ></ion-input>
           <ion-icon icon="assets/icon/calendar-courier.svg" class="icon" />
@@ -50,14 +48,14 @@
             v-model="fields.email"
             type="email"
             label-placement="floating"
-            label="Email"
+            :label="$t('EMAIL')"
             @ionChange="validateEmail"
           ></ion-input>
         </ItemInput>
       </ion-list>
       <ion-row class="ion-justify-content-around button">
-        <Button title="Далее" class="btn" @click="saveUser" />
-        <Button title="Заполнить позже" class="btn another" @click="later" />
+        <Button :title="$t('FURTHER')" class="btn" @click="saveUser" />
+        <Button :title="$t('FILL-LATER')" class="btn another" @click="later" />
       </ion-row>
     </ion-content>
   </ion-page>
@@ -142,7 +140,7 @@ export default defineComponent({
       ) {
         this.errorFields.email = '';
       } else {
-        this.errorFields.email = 'Некорректный эмайл';
+        this.errorFields.email = this.$t('INCORRECT-EMAIL');
       }
     },
   },

@@ -2,15 +2,15 @@
   <ion-card class="card">
     <ion-card-content class="content">
       <ion-label class="title"
-        >{{ $t('ORDER_NUMBER') }} {{ order }} {{ $t('FROM') }}
+        >{{ $t('ORDER-NUMBER') }} {{ order }} {{ $t('FROM') }}
         {{ formatDate(date, 'LL') }}</ion-label
       >
       <ion-row class="container-text">
         <ion-label class="ion-margin-end text">{{
-          $tc('COUNT_ORDER', count)
+          $tc('COUNT-ORDER', count)
         }}</ion-label>
         <ion-label class="ion-margin-end text"
-          >{{ price }} {{ $t('RUBLE_SIGN') }}
+          >{{ price }} {{ $t('RUBLE-SIGN') }}
         </ion-label>
         <ion-label class="text" style="border: none">{{ pickup }}</ion-label>
       </ion-row>

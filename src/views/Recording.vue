@@ -1,10 +1,10 @@
 <template>
   <ion-page id="recording">
-    <Header title="Запись к врачу" contact />
+    <Header :title="$t('RECORDING-DOCTOR')" contact />
     <ion-content :fullscreen="true">
       <CardInfo
         v-if="previous_recording.date && previous_recording.time"
-        title="Вы записаны к врачу"
+        :title="В$t('RECORDING-DOCTOR-TITLE')"
         :description="formatDate(previous_recording.date, 'DD MMMM YYYY')"
         :subdescription="previous_recording.time"
       />
@@ -13,11 +13,13 @@
         v-if="previous_recording.date && previous_recording.time"
         class="ion-justify-content-center ion-align-items-center"
       >
-        <ion-label class="title-new">Новая запись</ion-label>
+        <ion-label class="title-new">{{ $t('NEW-RECORDING') }}</ion-label>
       </ion-row>
 
       <ion-row class="ion-margin">
-        <ion-label class="ion-margin-bottom title">Выберите дату</ion-label>
+        <ion-label class="ion-margin-bottom title">{{
+          $t('SELECT-DATE')
+        }}</ion-label>
         <ion-datetime
           :value="date"
           presentation="date"
@@ -33,7 +35,9 @@
       </ion-row>
 
       <ion-row class="ion-margin time" v-if="date">
-        <ion-label class="ion-margin-bottom title">Выберите время</ion-label>
+        <ion-label class="ion-margin-bottom title">{{
+          $t('SELECT-TIME')
+        }}</ion-label>
         <TimeSelect
           v-if="!loading"
           @select="selectTime"
@@ -45,16 +49,18 @@
       </ion-row>
 
       <ion-row class="ion-padding" v-if="date && time">
-        <ion-label class="ion-margin-bottom title">Выберите услугу</ion-label>
+        <ion-label class="ion-margin-bottom title">{{
+          $t('SELECT-SERVICE')
+        }}</ion-label>
         <Segment
-          title-left="Подбор очковой коррекции"
-          title-right="Подбор контактной коррекции"
+          :title-left="$t('SPECTACLE-CORRECTION-SELECTION')"
+          :title-right="$t('SELECTION-CONTACT-CORRECTION')"
           @change="handlerSegment($event)"
         />
       </ion-row>
 
       <Button
-        title="Продолжить"
+        :title="$t('CONTINUE')"
         id="next-step"
         class="button-next"
         @click="next"
@@ -138,9 +144,9 @@ export default defineComponent({
     },
     handlerSegment(event) {
       if (event === 'left') {
-        this.service = 'Подбор очковой коррекции'
+        this.service = this.$t('SPECTACLE-CORRECTION-SELECTION')
       } else {
-        this.service = 'Подбор контактной коррекции'
+        this.service = this.$t('SELECTION-CONTACT-CORRECTION')
       }
     },
     isWeekday(dateString) {
@@ -156,10 +162,10 @@ export default defineComponent({
         this.$router.push({name: 'CheckRecording'})
       }
       if (!this.date) {
-        this.$toast(['Выберете дату'], 4000);
+        this.$toast([this.$t('SELECT-DATE')], 4000);
       }
       if (!this.time) {
-        this.$toast(['Выберете время'], 4000);
+        this.$toast([this.$t('SELECT-TIME')], 4000);
       }
 
     }
@@ -168,20 +174,6 @@ export default defineComponent({
     this.time = null
     this.date = null
     this.times = await getTime()
-    // setTimeout(() => {
-    //   const shadow = this.$refs.calendar?.$el.shadowRoot;
-    //
-    //   const days = shadow.querySelectorAll('.calendar-day');
-    //   const day_of_week = shadow.querySelectorAll('.day-of-week')
-    //
-    //   day_of_week.forEach((el) => {
-    //     el.setAttribute('part', 'day-of-week')
-    //   })
-    //
-    //   days.forEach((day) => {
-    //     day.setAttribute('part', 'day');
-    //   });
-    // }, 100);
   },
 });
 </script>

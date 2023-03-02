@@ -1,10 +1,10 @@
 <template>
   <ion-page id="chat">
-    <Header title="Чат" back />
+    <Header :title="$t('CHAT')" back />
     <Content white-color>
       <Info
-        title="Вы можете задать любой вопрос"
-        description="Мы ответим в ближайшее время!"
+        :title="$t('CHAT-EMPTY')"
+        :description="$t('CHAT-EMPTY-DESCRIPTION')"
         icon="assets/icon/empty-chat.svg"
       />
     </Content>
@@ -12,7 +12,7 @@
       class="ion-padding-start ion-nowrap ion-padding-end row-input-message"
     >
       <div class="box">
-        <input type="text" placeholder="Сообщение" class="input" />
+        <input type="text" :placeholder="$t('MESSAGE')" class="input" />
         <ion-buttons class="button-icon">
           <ion-button>
             <ion-icon icon="assets/icon/clip.svg" class="icon"></ion-icon>

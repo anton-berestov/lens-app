@@ -1,12 +1,12 @@
 <template>
   <ion-page id="record-history">
-    <Header back title="История обращений" />
+    <Header back :title="$t('HISTORY-VISITS')" />
     <Loading v-if="loading" />
     <Content v-if="!loading" @refresh="refresh">
       <Info
         v-if="!history.length"
         icon="assets/icon/empty-history.svg"
-        title="У вас не было обращений к врачу"
+        :title="$t('EMPTY-HISTIRY-VISITS')"
       />
       <ion-list class="list" v-if="history.length">
         <ion-item
@@ -16,10 +16,16 @@
         >
           <ion-col>
             <ion-label class="title"
-              >Обращение от {{ formatDate(item.date, 'LL') }} ({{ item.time }})
+              >{{ $t('MESSAGE FROM') }} {{ formatDate(item.date, 'LL') }} ({{
+                item.time
+              }})
             </ion-label>
-            <ion-label class="text">Врач: {{ item.doctor }}</ion-label>
-            <ion-label class="text">Услуга: {{ item.service }}</ion-label>
+            <ion-label class="text"
+              >{{ $t('DOCTOR') }}: {{ item.doctor }}</ion-label
+            >
+            <ion-label class="text"
+              >{{ $t('SERVICE') }}: {{ item.service }}</ion-label
+            >
           </ion-col>
         </ion-item>
       </ion-list>

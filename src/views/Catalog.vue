@@ -1,13 +1,13 @@
 <template>
   <ion-page>
-    <Header title="Каталог" />
+    <Header :title="$t('CATALOG')" />
     <Loading :is-open="loading" v-if="loading" />
     <Content @refresh="refresh" v-if="!loading">
       <div class="container" style="margin: 5px">
         <ion-row class="ion-nowrap ion-justify-content-between search">
           <ion-searchbar
             class="search"
-            placeholder="Поиск в каталоге"
+            :placeholder="$t('CATALOG-SEARCH')"
             @ionFocus="$router.push({ name: 'Search' })"
           ></ion-searchbar>
           <ion-buttons style="padding-bottom: 6px; padding-right: 10px">
@@ -110,10 +110,12 @@ export default defineComponent({
     IonButtons,
     IonSearchbar,
   },
-  data: () => ({
-    isFilter: false,
-    loading: false,
-  }),
+  data() {
+    return {
+      isFilter: false,
+      loading: false,
+    };
+  },
   computed: {
     ...mapGetters(['filter', 'products']),
   },

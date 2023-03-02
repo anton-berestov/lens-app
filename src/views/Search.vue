@@ -5,7 +5,7 @@
         <ion-row class="ion-align-items-center">
           <ion-searchbar
             ref="inputRef"
-            placeholder="Поиск в каталоге"
+            :placeholder="$t('CATALOG-SEARCH')"
             class="searchbar"
             v-model="search"
           ></ion-searchbar>
@@ -16,8 +16,8 @@
       <Info
         v-if="search.length && !onProducts.length"
         icon="assets/icon/empty.svg"
-        title="Ничего не найдено"
-        description="Напишите по-другому название товара или перейдите в каталог"
+        :title="$t('SEARCH-EMPTY')"
+        :description="$t('SEARCH-EMPTY-DESCRIPTION')"
         @update="update"
       />
       <ion-list class="ion-margin-top list">
@@ -37,7 +37,7 @@
         </ion-item>
       </ion-list>
       <Button
-        title="Перейти в каталог"
+        :title="$t('TO-CATALOG')"
         v-if="search.length && !onProducts.length"
         class="button"
         @click="$router.push({ name: 'Catalog' })"

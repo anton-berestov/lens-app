@@ -1,12 +1,12 @@
 <template>
   <ion-page id="order-history">
-    <Header back :title="$t('HISTORY_ORDER')" />
+    <Header back :title="$t('HISTORY-ORDER')" />
     <Loading v-if="loading" />
     <Content id="order-history" v-if="!loading" @refresh="refresh">
       <Info
         v-if="false"
         icon="assets/icon/empty-cart.svg"
-        :title="$t('EMPTY_HISTORY_ORDER')"
+        :title="$t('EMPTY-HISTORY-ORDER')"
       />
       <CardOrder
         v-for="(item, index) in history"

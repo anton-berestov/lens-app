@@ -5,15 +5,15 @@
         <img src="assets/icon/check.svg" />
       </div>
       <div class="text">
-        <p class="title">Вы успешно записаны!</p>
+        <p class="title">{{ $t('YOU-SUCCESSFULL-RECORDING') }}</p>
       </div>
 
       <div class="info">
         <ion-col class="col1">
-          <ion-row class="ion-margin title">Дата</ion-row>
-          <ion-row class="ion-margin title">Время</ion-row>
-          <ion-row class="ion-margin title">Врач</ion-row>
-          <ion-row class="ion-margin title">Адрес</ion-row>
+          <ion-row class="ion-margin title">{{ $t('DATE') }}</ion-row>
+          <ion-row class="ion-margin title">{{ $t('TIME') }}</ion-row>
+          <ion-row class="ion-margin title">{{ $t('DOCTOR') }}</ion-row>
+          <ion-row class="ion-margin title">{{ $t('ADDRESS') }}</ion-row>
         </ion-col>
         <ion-col class="col2">
           <ion-row class="ion-margin description">{{
@@ -28,11 +28,7 @@
       </div>
 
       <ion-row class="ion-justify-content-center button-wrapper">
-        <Button
-          title="Перейти на главную"
-          class="button"
-          @click="toRecording"
-        />
+        <Button :title="$t('TO-MAIN')" class="button" @click="toRecording" />
       </ion-row>
     </ion-content>
   </ion-page>

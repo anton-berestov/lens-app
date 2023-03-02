@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <Header back title="Линзы" />
+    <Header back :title="$t('PRODUCT-TITLE')" />
     <Loading v-if="loading" />
     <Content @refresh="refresh" v-if="!loading">
       <ion-list class="container">
@@ -47,7 +47,7 @@
                 delivery = false;
               }
             "
-            >Характеристики
+            >{{ $t('CHARACTERISTICS') }}
           </ion-label>
           <ion-label
             :class="['text', { active: description }, 'ion-margin']"
@@ -58,7 +58,7 @@
                 delivery = false;
               }
             "
-            >Описание
+            >{{ $t('DESCRIPTION') }}
           </ion-label>
           <ion-label
             :class="['text', { active: delivery }, 'ion-margin']"
@@ -69,7 +69,7 @@
                 delivery = true;
               }
             "
-            >Доставка
+            >{{ $t('DELIVERY') }}
           </ion-label>
         </ion-row>
         <ion-row>
@@ -87,7 +87,7 @@
 
         <ion-row class="ion-justify-content-center">
           <Button
-            title="В корзину"
+            :title="$t('ADD-TO-CART')"
             class="custom-btn"
             @click="addInCart(product)"
           />

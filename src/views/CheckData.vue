@@ -1,13 +1,15 @@
 <template>
   <ion-page id="check-data">
     <Loading v-if="loading" />
-    <Header title="Проверка данных" />
+    <Header :title="$t('DATA-CHECKING')" />
     <ion-content :scroll-y="false" class="content" v-if="!loading">
       <ion-list class="ion-margin-end list">
-        <ion-label class="ion-margin title">Контактные данные</ion-label>
+        <ion-label class="ion-margin title">{{
+          $t('CONTACT-DETAILS')
+        }}</ion-label>
         <ItemInput lines :error="errorFields.phone" class="ion-margin-top">
           <ion-row>
-            <span class="label">Номер телефона*</span>
+            <span class="label">{{ $t('PHONE-NUMBER') }}*</span>
             <input
               disabled
               inputmode="tel"
@@ -24,7 +26,7 @@
           <ion-input
             v-model="fields.firstname"
             label-placement="floating"
-            label="Фамилия*"
+            :label="$t('FIRSTNAME-REQUIRED')"
           ></ion-input>
         </ItemInput>
 
@@ -32,7 +34,7 @@
           <ion-input
             v-model="fields.lastname"
             label-placement="floating"
-            label="Имя*"
+            :label="$t('LASTNAME-REQUIRED')"
           ></ion-input>
         </ItemInput>
 
@@ -40,7 +42,7 @@
           <ion-input
             v-model="fields.patronymic"
             label-placement="floating"
-            label="Отчество*"
+            :label="$t('PATRONYMIC-REQUIRED')"
           ></ion-input>
         </ItemInput>
 
@@ -49,7 +51,7 @@
             :value="formatDate(fields.birthday, 'DD.MM.YYYY')"
             disabled
             label-placement="floating"
-            label="Дата рождения"
+            :label="$t('DATE-BIRTH')"
           ></ion-input>
           <ion-icon icon="assets/icon/calendar-courier.svg" class="icon" />
         </ItemInput>
@@ -57,18 +59,16 @@
         <ItemDate v-model="fields.birthday" />
       </ion-list>
 
-      <Button title="Сохранить" class="button" @click="saveUser" />
+      <Button :title="$t('SAVE')" class="button" @click="saveUser" />
 
       <ion-row class="ion-margin-start">
         <ion-text class="text"
-          >Оформляя заказ, вы даете согласие на
-          <a href="#">обработку персональных данных</a></ion-text
+          >{{ $t('AGREEMENT-TEXT') }}
+          <a href="#">{{ $t('PERSONAL-DATA') }}</a></ion-text
         >
       </ion-row>
       <ion-row class="ion-margin">
-        <ion-text class="text"
-          >* Поля, отмеченные звездочкой, обязательны к заполнению
-        </ion-text>
+        <ion-text class="text">{{ $t('REQUIRED-TEXT') }} </ion-text>
       </ion-row>
     </ion-content>
   </ion-page>

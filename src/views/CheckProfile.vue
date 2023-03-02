@@ -1,10 +1,10 @@
 <template>
   <ion-page id="check-profile">
-    <Header title="Проверка данных" />
+    <Header :title="$t('DATA-CHECKING')" />
     <ion-content class="container">
       <ion-list class="ion-margin-end">
         <ion-item lines="none">
-          <ion-label class="title">Контактные данные</ion-label>
+          <ion-label class="title">{{ $t('CONTACT-DETAILS') }}</ion-label>
         </ion-item>
         <ion-item class="input-wrp">
           <input
@@ -19,36 +19,55 @@
             @focus="fields.phone === '' ? (fields.phone = '+7 (') : null"
           />
           <span position="floating" class="label floating-label" for="phone"
-            >Номер телефона*
+            >{{ $t('PHONE-NUMBER') }}*
           </span>
         </ion-item>
-        <ion-item>
-          <ion-label position="floating" class="label">Фамимлия*</ion-label>
-          <ion-input v-model="fields.firstname"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating" class="label">Имя*</ion-label>
-          <ion-input v-model="fields.lastname"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating" class="label">Отчество*</ion-label>
-          <ion-input v-model="fields.patronymic"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating" class="label">Дата рождения</ion-label>
-          <ion-input v-model="fields.birthday"></ion-input>
-        </ion-item>
+
+        <ItemInput :error="errorFields.firstname">
+          <ion-input
+            v-model="fields.firstname"
+            label-placement="floating"
+            :label="$t('FIRSTNAME-REQUIRED')"
+          ></ion-input>
+        </ItemInput>
+
+        <ItemInput lines :error="errorFields.lastname">
+          <ion-input
+            v-model="fields.lastname"
+            label-placement="floating"
+            :label="$t('LASTNAME-REQUIRED')"
+          ></ion-input>
+        </ItemInput>
+
+        <ItemInput lines :error="errorFields.patronymic">
+          <ion-input
+            v-model="fields.patronymic"
+            label-placement="floating"
+            :label="$t('PATRONYMIC-REQUIRED')"
+          ></ion-input>
+        </ItemInput>
+
+        <ItemInput lines id="click-trigger" class="ion-align-items-end">
+          <ion-input
+            :value="formatDate(fields.birthday, 'DD.MM.YYYY')"
+            disabled
+            label-placement="floating"
+            :label="$t('DATE-BIRTH')"
+          ></ion-input>
+          <ion-icon icon="assets/icon/calendar-courier.svg" class="icon" />
+        </ItemInput>
       </ion-list>
-      <Button title="Сохранить" class="button" :disabled="disabled" />
+
+      <Button :title="$t('SAVE')" class="button" :disabled="disabled" />
       <ion-row>
         <ion-label class="ion-margin label data-text"
-          >Оформляя заказ, вы даете согласие на
-          <a href="#">обработку персональных данных</a></ion-label
+          >{{ $t('AGREEMENT-TEXT') }}
+          <a href="#">{{ $t('PERSONAL-DATA') }}</a></ion-label
         >
       </ion-row>
       <ion-row>
         <ion-label class="ion-margin label note"
-          >* Поля, отмеченные звездочкой, обязательны к заполнению
+          >{{ $t('REQUIRED-TEXT') }}
         </ion-label>
       </ion-row>
     </ion-content>
@@ -93,6 +112,8 @@ export default defineComponent({
         birthday: '',
       },
       disabled: true,
+      errorFields: {},
+      requiredFields: ['phone', 'firstname', 'lastname', 'patronymic'],
     };
   },
   computed: {

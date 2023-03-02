@@ -26,7 +26,7 @@ export default defineComponent({
     IonRefresherContent,
     IonGrid,
   },
-  props: {},
+  props: {} || [],
   emits: ['refresh', 'onScrollEnd'],
   data: () => ({
     refreshing: false,

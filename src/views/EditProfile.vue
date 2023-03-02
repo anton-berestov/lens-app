@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <Header title="Мои данные" back />
+    <Header :title="$t('MY-DETAILS')" back />
     <Loading v-if="loading" />
     <ion-content id="my-data">
       <ion-list class="ion-margin-end">
@@ -8,7 +8,7 @@
           <ion-input
             v-model="fields.firstname"
             label-placement="floating"
-            label="Фамилия*"
+            :label="$t('FIRSTNAME-REQUIRED')"
           ></ion-input>
         </ItemInput>
 
@@ -16,7 +16,7 @@
           <ion-input
             v-model="fields.lastname"
             label-placement="floating"
-            label="Имя*"
+            :label="$t('LASTNAME-REQUIRED')"
           ></ion-input>
         </ItemInput>
 
@@ -24,7 +24,7 @@
           <ion-input
             v-model="fields.patronymic"
             label-placement="floating"
-            label="Отчество*"
+            :label="$t('PATRONYMIC-REQUIRED')"
           ></ion-input>
         </ItemInput>
 
@@ -32,7 +32,7 @@
           <ion-input
             :value="formatDate(fields.birthday)"
             label-placement="floating"
-            label="Дата рождения"
+            :label="$t('DATE-BIRTH')"
             disabled
           ></ion-input>
           <ion-icon icon="assets/icon/calendar-courier.svg" class="icon" />
@@ -44,13 +44,13 @@
             v-model="fields.email"
             type="email"
             label-placement="floating"
-            label="Email"
+            :label="$t('EMAIL')"
             @ionChange="validateEmail"
           ></ion-input>
         </ItemInput>
       </ion-list>
 
-      <Button title="Сохранить" class="button" @click="saveUser" />
+      <Button :title="$t('SAVE')" class="button" @click="saveUser" />
     </ion-content>
   </ion-page>
 </template>
@@ -131,7 +131,7 @@ export default defineComponent({
       ) {
         this.errorFields.email = '';
       } else {
-        this.errorFields.email = 'Некорректный эмайл';
+        this.errorFields.email = this.$t('INCORRECT-EMAIL');
       }
     },
   },

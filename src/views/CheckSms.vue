@@ -1,10 +1,10 @@
 <template>
   <ion-page>
-    <Header title="Вход" back />
+    <Header :title="$t('AUTH')" back />
     <ion-content :scroll-y="false" id="check-sms">
       <ion-list class="list">
         <ion-row class="ion-margin">
-          <ion-label class="text">Введите код подтверждения из SMS</ion-label>
+          <ion-label class="text">{{ $t('SMS-TITLE') }}</ion-label>
         </ion-row>
         <ion-row>
           <ion-item lines="none" class="input-item">
@@ -24,14 +24,12 @@
 
         <ion-row class="ion-margin row" v-if="!repeat">
           <ion-label class="repeat-title">
-            {{
-              `Повторная отправка кода подтверждения возможна через ${currentTime} сек`
-            }}
+            {{ $t('RESENDING-TEXT') }} {{ currentTime }} {{ $t('SEC') }}
           </ion-label>
         </ion-row>
         <ion-row class="row" v-if="repeat">
           <Button
-            title="Повторный код"
+            :title="$t('REPEAT-CODE')"
             class="button-code"
             @click="repeatCode"
           />

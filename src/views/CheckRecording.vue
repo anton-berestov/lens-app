@@ -1,11 +1,11 @@
 <template>
   <ion-page id="check-recording">
-    <Header back title="Визит к врачу" />
+    <Header back :title="$t('VISIT-TO-DOCTOR')" />
     <Loading v-if="loading" />
     <ion-content :scroll-y="false" v-if="!loading">
       <CardInfo
         v-if="date && handlerTime"
-        title="Дата и время визита"
+        :title="$t('DATE-TIME-VISIT')"
         icon="assets/icon/calendar-pickup.svg"
         :description="formatDate(date, 'DD MMMM YYYY')"
         :subdescription="handlerTime.time"
@@ -17,7 +17,7 @@
 
       <CardInfo
         v-if="handlerOpticAddress.city"
-        title="Адрес оптики"
+        :title="$t('OPTICS-ADDRESS')"
         icon="assets/icon/location-profile.svg"
         :description="`г. ${handlerOpticAddress.city}, ул. ${handlerOpticAddress.street}, ${handlerOpticAddress.number} пом. ${handlerOpticAddress.apartment}`"
       />
@@ -37,7 +37,7 @@
                   icon="assets/icon/doctor.svg"
                   class="ion-margin-end icon"
                 />
-                <ion-label class="title">Врач</ion-label>
+                <ion-label class="title">{{ $t('DOCTOR') }}</ion-label>
               </ion-row>
 
               <ion-row class="description-row">
@@ -60,12 +60,16 @@
 
       <ion-row class="ion-margin-start ion-margin-end" v-if="handlerData">
         <ion-text class="text"
-          >Оформляя заказ, вы даете согласие на
-          <a href="#">обработку персональных данных</a></ion-text
+          >{{ $t('AGREEMENT-TEXT') }}
+          <a href="#">{{ $t('PERSONAL-DATA') }}</a></ion-text
         >
       </ion-row>
 
-      <Button title="Записаться" class="recording-button" @click="recording" />
+      <Button
+        :title="$t('RECORDING')"
+        class="recording-button"
+        @click="recording"
+      />
     </ion-content>
   </ion-page>
 </template>

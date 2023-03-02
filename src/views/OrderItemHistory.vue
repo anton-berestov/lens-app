@@ -5,7 +5,7 @@
     <ion-content :scroll-y="false" id="order-item-history" v-if="!loading">
       <ion-row>
         <ion-label class="ion-margin-top ion-margin-start title"
-          >{{ $t('ORDER_NUMBER') }} {{ order_item.id }} от
+          >{{ $t('ORDER-NUMBER') }} {{ order_item.id }} от
           {{ formatDate(order_item.date, 'LL') }}
         </ion-label>
       </ion-row>
@@ -44,7 +44,7 @@
                 </ion-row>
                 <ion-row class="ion-margin-top row-price">
                   <ion-label class="ion-margin-end price"
-                    >{{ item.product.price }} {{ $t('RUBLE_SIGN') }}</ion-label
+                    >{{ item.product.price }} {{ $t('RUBLE-SIGN') }}</ion-label
                   >
                   <ion-label class="ion-margin-end"
                     >{{ item.count }} {{ $t('PACKAGING') }}</ion-label
@@ -58,18 +58,18 @@
 
       <ion-row class="ion-margin ion-align-items-center">
         <ion-col>
-          <ion-label class="text">{{ $t('ORDER_PRICE') }}</ion-label>
+          <ion-label class="text">{{ $t('ORDER-PRICE') }}</ion-label>
         </ion-col>
         <ion-col>
           <ion-label class="text-value"
-            >{{ order_item.total_discount }} {{ $t('RUBLE_SIGN') }}</ion-label
+            >{{ order_item.total_discount }} {{ $t('RUBLE-SIGN') }}</ion-label
           >
         </ion-col>
       </ion-row>
 
       <ion-row class="ion-margin ion-align-items-center">
         <ion-col>
-          <ion-label class="text">{{ $t('DELIVERY_METHOD') }}</ion-label>
+          <ion-label class="text">{{ $t('DELIVERY-METHOD') }}</ion-label>
         </ion-col>
         <ion-col>
           <ion-label v-if="!order_item.deliverTo" class="text-value">{{
@@ -86,7 +86,7 @@
         v-if="order_item.deliverTo"
       >
         <ion-col>
-          <ion-label class="text">{{ $t('DELIVERY_ADDRESS') }}</ion-label>
+          <ion-label class="text">{{ $t('DELIVERY-ADDRESS') }}</ion-label>
         </ion-col>
         <ion-col>
           <ion-label class="text-value">
@@ -96,7 +96,7 @@
         </ion-col>
       </ion-row>
 
-      <Button :title="$t('REPEAT_ORDER')" class="repeat-button" />
+      <Button :title="$t('REPEAT-ORDER')" class="repeat-button" />
     </ion-content>
   </ion-page>
 </template>

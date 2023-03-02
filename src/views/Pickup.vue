@@ -1,18 +1,18 @@
 <template>
   <ion-page id="pickup">
-    <Header title="Оформление заказа" back />
+    <Header :title="$t('CHECKOUT')" back />
     <Loading v-if="loading" />
     <ion-content v-if="!loading">
       <ion-row class="ion-padding-top ion-padding-start ion-padding-end">
         <Segment
-          title-left="Самовывоз"
-          title-right="Курьер"
+          :title-left="$t('PICKUP')"
+          :title-right="$t('COURIER')"
           @change="handlerSegment($event)"
           :disabled="handlerAmountDiscount"
           :value="this.handler"
         />
       </ion-row>
-      <Address title="Адрес получения" v-if="handler === 'left'" />
+      <Address :title="$t('PICKUP-ADDRESS')" v-if="handler === 'left'" />
 
       <ion-card class="delivery" v-if="handler === 'right'">
         <ion-card-content class="content">
@@ -21,14 +21,14 @@
               icon="assets/icon/delivery.svg"
               class="ion-margin-end icon"
             />
-            <ion-label class="title">Адрес доставки</ion-label>
+            <ion-label class="title">{{ $t('DELIVERY-ADDRESS') }}</ion-label>
           </ion-row>
 
           <ItemInput lines :error="errorFields.street">
             <ion-input
               v-model="address.street"
               label-placement="floating"
-              label="Улица,дом*"
+              :label="$t('STREET-HOUSE-REQUIRED')"
             ></ion-input>
           </ItemInput>
 
@@ -37,7 +37,7 @@
               <ion-input
                 v-model="address.apartment"
                 label-placement="floating"
-                label="Квартира"
+                :label="$t('APARTMENT')"
                 type="tel"
               ></ion-input>
             </ItemInput>
@@ -45,7 +45,7 @@
               <ion-input
                 v-model="address.entrance"
                 label-placement="floating"
-                label="Подъезд"
+                :label="$t('ENTRANCE')"
                 type="tel"
               ></ion-input>
             </ItemInput>
@@ -53,7 +53,7 @@
               <ion-input
                 v-model="address.floor"
                 label-placement="floating"
-                label="Этаж"
+                :label="$t('FLOOR')"
                 type="tel"
               ></ion-input>
             </ItemInput>
@@ -63,7 +63,7 @@
             <ion-input
               v-model="address.comment"
               label-placement="floating"
-              label="Комментарий курьеру"
+              :label="$t('COMMENT-COURIER')"
             ></ion-input>
           </ItemInput>
 
@@ -73,34 +73,36 @@
               labelPlacement="end"
               justify="start"
             >
-              <ion-label class="checkbox-title">Запомнить адрес</ion-label>
+              <ion-label class="checkbox-title">{{
+                $t('REMEMBER-ADDRESS')
+              }}</ion-label>
             </ion-checkbox>
           </ItemInput>
         </ion-card-content>
       </ion-card>
 
       <CardInfo
-        title="Дата получения"
+        :title="$t('DATE-RECEIVING')"
         :icon="handlerIconCalendar"
         description="16 октября - ориентировочная дата получения. Мы дополнительно сообщим вам о доставке."
       />
 
       <CardInfo
-        title="Оплата"
+        :title="$t('PAYMENT')"
         :icon="handlerIconPayment"
-        description="Оплата товара при получении"
+        :description="$t('PAYMENT-DESCRIPTION')"
       />
 
       <ion-list class="contact-form">
         <ion-row class="ion-margin-top ion-margin-start">
-          <ion-label class="title">Контактные данные</ion-label>
+          <ion-label class="title">{{ $t('CONTACT-DETAILS') }}</ion-label>
         </ion-row>
         <ItemInput lines :error="errorFields.firstname">
           <ion-input
             v-model="fields.firstname"
             :error="errorFields.firstname"
             label-placement="floating"
-            label="Фамилия*"
+            :label="$t('FIRSTNAME-REQUIRED')"
             required
           ></ion-input>
         </ItemInput>
@@ -109,7 +111,7 @@
           <ion-input
             v-model="fields.lastname"
             label-placement="floating"
-            label="Имя*"
+            :label="$t('LASTNAME-REQUIRED')"
             required
           ></ion-input>
         </ItemInput>
@@ -118,7 +120,7 @@
           <ion-input
             v-model="fields.patronymic"
             label-placement="floating"
-            label="Отчество*"
+            :label="$t('PATRONYMIC-REQUIRED')"
             required
           ></ion-input>
         </ItemInput>
@@ -127,7 +129,7 @@
           <ion-input
             :value="formatDate(fields.birthday)"
             label-placement="floating"
-            label="Дата рождения"
+            :label="$t('DATE-BIRTH')"
           ></ion-input>
           <ion-icon
             icon="assets/icon/calendar-courier.svg"
@@ -141,25 +143,27 @@
             v-model="fields.email"
             type="email"
             label-placement="floating"
-            label="Email"
+            :label="$t('EMAIL')"
           ></ion-input>
         </ItemInput>
-        <Button title="Оформить заказ" class="button-checkout" @click="send" />
+        <Button
+          :title="$t('CHECKOUT-ORDER')"
+          class="button-checkout"
+          @click="send"
+        />
 
         <ion-row class="ion-margin">
           <ion-text class="text"
-            >Оформляя заказ, вы даете согласие на
-            <a href="#">обработку персональных данных</a></ion-text
+            >{{ $t('AGREEMENT-TEXT') }}
+            <a href="#">{{ $t('PERSONAL-DATA') }}</a></ion-text
           >
         </ion-row>
         <ion-row class="ion-margin ion-padding-bottom">
-          <ion-text class="text"
-            >* Поля, отмеченные звездочкой, обязательны к заполнению
-          </ion-text>
+          <ion-text class="text">{{ $t('REQUIRED-TEXT') }} </ion-text>
         </ion-row>
       </ion-list>
     </ion-content>
-    <Popover button-ok="OK" @handler="closePopover" />
+    <Popover :button-ok="$t('OK')" @handler="closePopover" />
   </ion-page>
 </template>
 
@@ -291,7 +295,7 @@ export default {
       ) {
         this.errorFields.email = '';
       } else {
-        this.errorFields.email = 'Некорректный эмайл';
+        this.errorFields.email = this.$t('INCORRECT-EMAIL');
       }
     },
     async handlerAddress() {
@@ -418,7 +422,7 @@ export default {
         this.SET_POPOVER({
           show: true,
           message: [
-            'Доставка курьером возможна при заказе от 2 000 ₽',
+            this.$t('PICKUP-MESSAGE')
           ],
         });
       } else {

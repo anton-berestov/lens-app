@@ -3,14 +3,12 @@
     <ion-content :scroll-y="false">
       <Info
         icon="assets/icon/check.svg"
-        :title="`Ваш заказ № ${order} успешно оформлен!`"
-        description="Ожидайте звонка оператора для подтверждения заказа"
+        :title="`${$t('YOUR-ORDER-NUMMBER')} ${order} ${$t(
+          'COMPLETED-SUCCESSFULLY'
+        )}`"
+        :description="$t('ORDER-DESCRIPTION')"
       />
-      <Button
-        title="Перейти на главную"
-        class="button"
-        @click.prevent="toHome"
-      />
+      <Button :title="$t('TO-MAIN')" class="button" @click.prevent="toHome" />
     </ion-content>
   </ion-page>
 </template>
