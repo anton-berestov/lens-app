@@ -185,8 +185,7 @@ export default defineComponent({
       await this.getSpheres();
       await this.getRadiuses();
       await this.getTyps();
-      this.order_item.order_product_details.map((el) => {
-        console.log(el);
+      this.order_item.order_product_details.map(async (el) => {
         const a = {
           product: el.product.id,
           radius: el.radius.id,
@@ -201,7 +200,7 @@ export default defineComponent({
         this.SET_BASKET_COUNT();
         this.SET_TOTAL_AMOUNT();
         this.SET_TOTAL_DISCOUNT();
-        this.$router.replace({ name: 'Basket' });
+        await this.$router.replace({ name: 'Basket' });
         this.loading = false;
       });
     },

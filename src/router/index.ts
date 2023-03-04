@@ -37,23 +37,41 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Home',
         component: () => import('@/views/Home.vue'),
       },
+    ],
+    redirect: PATH_HOME,
+  },
+  {
+    path: PATH_RECORDING,
+    component: () => import('@/layouts/LayoutHome.vue'),
+    children: [
       {
         path: PATH_RECORDING,
         name: 'Recording',
         component: () => import('@/views/Recording.vue'),
       },
+    ],
+  },
+  {
+    path: PATH_BASKET,
+    component: () => import('@/layouts/LayoutHome.vue'),
+    children: [
       {
         path: PATH_BASKET,
         name: 'Basket',
         component: () => import('@/views/Basket.vue'),
       },
+    ],
+  },
+  {
+    path: PATH_PROFILE,
+    component: () => import('@/layouts/LayoutHome.vue'),
+    children: [
       {
         path: PATH_PROFILE,
         name: 'Profile',
         component: () => import('@/views/Profile.vue'),
       },
     ],
-    redirect: PATH_HOME,
   },
   {
     path: PATH_CATALOG,

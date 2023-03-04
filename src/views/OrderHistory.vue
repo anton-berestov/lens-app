@@ -4,7 +4,7 @@
     <Loading v-if="loading" />
     <Content id="order-history" v-if="!loading" @refresh="refresh">
       <Info
-        v-if="false"
+        v-if="!history.length"
         icon="assets/icon/empty-cart.svg"
         :title="$t('EMPTY-HISTORY-ORDER')"
       />
