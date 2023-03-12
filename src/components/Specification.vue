@@ -110,13 +110,13 @@ export default defineComponent({
     openPopover() {
       this.SET_POPOVER({
         show: true,
-        message: [''],
+        message: [this.$t('REPLACEMENT-PERIOD-MESSAGE')],
       });
     },
     closePopover() {
       this.SET_POPOVER({
         show: false,
-        message: [this.$t('REPLACEMENT-PERIOD-MESSAGE')],
+        message: [''],
       });
     },
   },
