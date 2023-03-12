@@ -9,6 +9,7 @@
         <Segment
           :title-left="$t('IDENTICAL')"
           :title-right="$t('DIFFERENT')"
+          :value="segment"
           @change="activeSegment"
         />
       </ion-row>
@@ -160,6 +161,7 @@ export default defineComponent({
       plus: addOutline,
       minus: removeOutline,
       different: false,
+      segment: 'left',
       countOne: 1,
       countTwo: 1,
       product: {},
@@ -250,6 +252,7 @@ export default defineComponent({
       } else {
         this.different = false;
       }
+      this.segment = val
     },
     openSelect(e) {
       this.isActive = e;
