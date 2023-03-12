@@ -38,7 +38,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.pressed:hover {
+.pressed:active {
   --background: #deeeea;
 }
 </style>

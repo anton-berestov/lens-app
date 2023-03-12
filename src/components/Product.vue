@@ -198,7 +198,7 @@ export default defineComponent({
   }
 }
 
-#product-card:hover {
+#product-card:active {
   --background: #deeeea;
 }
 </style>
