@@ -2,36 +2,35 @@
   <ion-card class="card">
     <ion-card-content class="content">
       <ion-label class="title"
-        >{{ $t('ORDER-NUMBER') }} {{ order }} {{ $t('FROM') }}
-        {{ formatDate(date, 'LL') }}</ion-label
+      >{{ $t('ORDER-NUMBER') }} {{ order }} {{ $t('FROM') }}
+        {{ formatDate(date, 'LL') }}
+      </ion-label
       >
       <ion-row class="container-text">
         <ion-label class="ion-margin-end text">{{
-          $tc('COUNT-ORDER', count)
-        }}</ion-label>
+            $tc('COUNT-ORDER', count)
+          }}
+        </ion-label>
         <ion-label class="ion-margin-end text"
-          >{{ price }} {{ $t('RUBLE-SIGN') }}
+        >{{ price }} {{ $t('RUBLE-SIGN') }}
         </ion-label>
         <ion-label class="text" style="border: none">{{ pickup }}</ion-label>
       </ion-row>
-      <ion-item lines="none">
-        <ion-badge slot="start">{{ status }}</ion-badge>
-      </ion-item>
+      <Badge :status="status" ba/>
     </ion-card-content>
   </ion-card>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
 import {
   IonCard,
   IonCardContent,
   IonLabel,
   IonRow,
-  IonItem,
-  IonBadge,
 } from '@ionic/vue';
-import { formatDate } from '@/helpers/formatter';
+import {formatDate} from '@/helpers/formatter';
+import Badge from "@/components/ui/Badge.vue";
 
 export default defineComponent({
   name: 'CardOrder',
@@ -62,12 +61,11 @@ export default defineComponent({
     },
   },
   components: {
+    Badge,
     IonCard,
     IonCardContent,
     IonLabel,
     IonRow,
-    IonItem,
-    IonBadge,
   },
   methods: {
     formatDate,

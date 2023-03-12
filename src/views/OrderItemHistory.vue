@@ -10,10 +10,7 @@
         </ion-label>
       </ion-row>
 
-      <ion-item lines="none" style="--background: #ecebeb">
-        <ion-badge slot="start">Получено</ion-badge>
-      </ion-item>
-
+     <Badge :status="order_item.status" background="#ecebeb"/>
       <ion-row
         class="wrapper"
         v-for="(item, index) in order_item.order_product_details"
@@ -115,8 +112,6 @@ import {
   IonCardContent,
   IonCol,
   IonLabel,
-  IonItem,
-  IonBadge,
 } from '@ionic/vue';
 import Header from '@/components/ui/Header.vue';
 import Loading from '@/components/ui/Loading.vue';
@@ -125,10 +120,12 @@ import { getOrderById } from '@/api/order';
 import { formatDate } from '@/helpers/formatter';
 import { discountPrice } from '@/helpers/discountPrice';
 import { mapActions, mapMutations } from 'vuex';
+import Badge from "@/components/ui/Badge.vue";
 
 export default defineComponent({
   name: 'OrderItemHistory',
   components: {
+    Badge,
     Loading,
     Header,
     IonPage,
@@ -138,8 +135,6 @@ export default defineComponent({
     IonCardContent,
     IonCol,
     IonLabel,
-    IonItem,
-    IonBadge,
     Button,
   },
   data() {

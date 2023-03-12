@@ -33,6 +33,7 @@ export const sendOrder = async (params: any): Promise<undefined> => {
       count: params.order.count,
       total_amount: params.order.total_amount,
       total_discount: params.order.total_discount,
+      status_delivery: 1,
       user: {
         id: params.order.user,
       },
@@ -57,7 +58,7 @@ export const getOrderHistory = async (params: any): Promise<undefined> => {
             count: el.attributes.count,
             price: el.attributes.total_discount,
             deliverTo: el.attributes.deliverTo.data,
-            status: 'В процессе доставки',
+            status: el.attributes.status_delivery.data?.attributes.title,
           };
         });
       })
@@ -112,13 +113,13 @@ export const getOrderById = async (params: any): Promise<undefined> => {
           })
         ).then((results: any) => {
           console.log(results);
-
           return {
             id: data.id,
             date: data.attributes.createdAt,
             order_product_details: results,
             total_amount: data.attributes.total_amount,
             total_discount: data.attributes.total_discount,
+            status: data.attributes.status_delivery.data?.attributes.title,
             deliverTo: data.attributes.deliverTo?.data
               ? data.attributes.deliverTo?.data.attributes
               : '',

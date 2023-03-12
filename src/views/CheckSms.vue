@@ -116,8 +116,17 @@ export default defineComponent({
         });
       }
 
-      if (this.redirect === 'Profile') {
+      if (this.redirect === 'Profile' &&
+          this.token &&
+          this.user.firstname &&
+          this.user.lastname &&
+          this.user.patronymic) {
         this.$router.replace({ name: this.redirect });
+      } else {
+        this.$router.replace({
+          name: 'FillProfile',
+          params: { redirect: this.redirect },
+        });
       }
     },
     repeatCode() {

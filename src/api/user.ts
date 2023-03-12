@@ -1,4 +1,4 @@
-import { UserInterfase } from '@/interfaces/UserInterfase';
+import {UserInterfase} from '@/interfaces/UserInterfase';
 import API from '@/api/index';
 
 export const sendPhone = async (params: object) => {
@@ -14,7 +14,7 @@ export const checkSms = async (
   params: object
 ): Promise<UserInterfase | undefined> => {
   try {
-    const { user, jwt }: any = await API.post(`/sms/callback`, params);
+    const {user, jwt}: any = await API.post(`/sms/callback`, params);
 
     const User: UserInterfase = {
       id: 0,
@@ -118,3 +118,16 @@ export const getUser = async (
     console.error(e);
   }
 };
+
+
+export const removeUser = async (params: any): Promise<undefined> => {
+  try {
+    const res = await API.delete(`/users/${params}`)
+    console.log(res)
+// @ts-ignore
+    return res
+  } catch (e) {
+    console.error(e)
+  }
+
+}

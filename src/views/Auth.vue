@@ -1,36 +1,36 @@
 <template>
   <ion-page>
-    <Header :title="$t('AUTH')" back />
+    <Header :title="$t('AUTH')" back/>
     <ion-content :scroll-y="false" id="auth">
       <ion-list class="list">
         <ion-row class="ion-margin">
-          <ion-label class="text">$t('AUTH-TITLE') </ion-label>
+          <ion-label class="text">{{ $t('AUTH-TITLE') }}</ion-label>
         </ion-row>
         <ion-row>
           <ion-item class="input-item">
             <input
-              inputmode="tel"
-              ref="phone"
-              class="input"
-              v-model="phone"
-              v-maska="{
+                inputmode="tel"
+                ref="phone"
+                class="input"
+                v-model="phone"
+                v-maska="{
                 mask: '+7 (###) ###-##-##',
               }"
-              @keyup="handlerPhone"
-              @focus="phone === '' ? (phone = '+7 (') : null"
+                @keyup="handlerPhone"
+                @focus="phone === '' ? (phone = '+7 (') : null"
             />
           </ion-item>
         </ion-row>
 
         <ion-row class="row">
           <Button
-            :title="$t('GET-THE-CODE')"
-            :disabled="disabled"
-            class="button-code"
-            @click="send"
+              :title="$t('GET-THE-CODE')"
+              :disabled="disabled"
+              class="button-code"
+              @click="send"
           />
           <ion-label class="ion-margin-start ion-margin-end data-text"
-            >{{ $t('AGREEMENT-TEXT') }}
+          >{{ $t('AGREEMENT-TEXT') }}
             <a href="#">{{ $t('PERSONAL-DATA') }}</a>
           </ion-label>
         </ion-row>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
 import {
   IonPage,
   IonContent,
@@ -51,7 +51,7 @@ import {
 } from '@ionic/vue';
 import Header from '@/components/ui/Header.vue';
 import Button from '@/components/ui/Button.vue';
-import { mapActions } from 'vuex';
+import {mapActions} from 'vuex';
 
 export default defineComponent({
   name: 'Auth',
@@ -80,19 +80,19 @@ export default defineComponent({
     ...mapActions(['sendPhone']),
     handlerPhone() {
       this.phone.length === 18
-        ? (this.disabled = false)
-        : (this.disabled = true);
+          ? (this.disabled = false)
+          : (this.disabled = true);
     },
     setFocus() {
       this.$refs.phone.focus();
     },
     send() {
       const phone = this.phone.replace(/[^0-9,.]/g, '');
-      this.sendPhone({ phone });
+      this.sendPhone({phone});
 
       this.$router.replace({
         name: 'CheckSms',
-        params: { redirect: this.redirect },
+        params: {redirect: this.redirect},
       });
 
       localStorage.setItem('phone', phone);
