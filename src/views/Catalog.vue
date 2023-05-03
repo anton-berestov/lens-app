@@ -204,7 +204,13 @@ export default defineComponent({
         this.SET_LOADING(false);
       }
 
-      if (!a.sphere || !a.radius || !a.period || !a.type.length) {
+      console.log(a);
+      if (
+        !Object.keys(a.sphere).length &&
+        !Object.keys(a.radius).length &&
+        !a.period.length &&
+        !a.type.length
+      ) {
         this.getProducts({ populate: '*' });
       }
     },
