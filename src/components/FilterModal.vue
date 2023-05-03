@@ -5,6 +5,7 @@
     @willPresent="onChange"
     @didDismiss="$emit('hide')"
     class="filter-modal"
+    ref="modal"
   >
     <ion-content :scroll-y="true">
       <ion-col>
@@ -201,6 +202,7 @@ export default defineComponent({
       this.$emit('hide')
       this.SET_FILTER(this.filter)
       this.filterProducts()
+      this.$refs.modal.$el.dismiss();
     },
     clear() {
       this.filter.type = []

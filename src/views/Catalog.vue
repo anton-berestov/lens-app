@@ -125,13 +125,13 @@ export default defineComponent({
     await this.getSpheres();
     await this.getRadiuses();
     await this.getTyps();
-    this.SET_LOADING(false);
     this.SET_FILTER({
       type: [],
       period: [],
       sphere: {},
       radius: {},
     });
+    this.SET_LOADING(false);
   },
   methods: {
     ...mapMutations([
@@ -202,6 +202,10 @@ export default defineComponent({
         this.SET_FILTER(a);
         this.filterProducts();
         this.SET_LOADING(false);
+      }
+
+      if (!a.sphere || !a.radius || !a.period || !a.type.length) {
+        this.getProducts({ populate: '*' });
       }
     },
   },

@@ -4,7 +4,7 @@
       <li v-for="(option, index) in options" :key="index">
         <label>
           <span>
-            {{ option.title }}
+            {{ $t(option.title) }}
             <img
               src="assets/icon/close.svg"
               class="img"
