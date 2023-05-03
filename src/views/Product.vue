@@ -25,9 +25,6 @@
           <ion-row class="row">
             <ion-label class="title">{{ product.title }}</ion-label>
           </ion-row>
-          <ion-row class="row">
-            <ion-label class="title">{{ product.short_title }}</ion-label>
-          </ion-row>
           <ion-row class="ion-margin-top row">
             <ion-label class="price">{{ discountPrice }} ₽</ion-label>
             <ion-label

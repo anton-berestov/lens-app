@@ -55,7 +55,7 @@
           <Product
             v-for="product in products"
             :key="product.id"
-            :title="product.short_title"
+            :title="product.title"
             :price="product.price"
             :img="product.image"
             :discount="product.discount"
@@ -113,20 +113,19 @@ export default defineComponent({
   data() {
     return {
       isFilter: false,
-      loading: false,
     };
   },
   computed: {
-    ...mapGetters(['filter', 'products']),
+    ...mapGetters(['filter', 'products', 'loading']),
   },
   async mounted() {
-    this.loading = true;
+    this.SET_LOADING(true);
     await this.getProducts({ populate: '*' });
     await this.getPeriods();
     await this.getSpheres();
     await this.getRadiuses();
     await this.getTyps();
-    this.loading = false;
+    this.SET_LOADING(false);
     this.SET_FILTER({
       type: [],
       period: [],
@@ -142,6 +141,7 @@ export default defineComponent({
       'SET_RADIUS',
       'SET_RADIUS',
       'SET_RADIUS',
+      'SET_LOADING',
     ]),
     ...mapActions([
       'getProducts',
@@ -183,7 +183,7 @@ export default defineComponent({
       this.isFilter = false;
     },
     close(el: any) {
-      this.loading = true;
+      this.SET_LOADING(true);
       const a = { ...this.filter };
 
       if (el.parent === 'sphere' || el.parent === 'radius') {
@@ -193,7 +193,7 @@ export default defineComponent({
         //Отправляем на фильтрацию
         this.SET_FILTER(a);
         this.filterProducts();
-        this.loading = false;
+        this.SET_LOADING(false);
       }
 
       if (el.parent === 'type' || el.parent === 'period') {
@@ -201,7 +201,7 @@ export default defineComponent({
         //Отправляем на фильтрацию
         this.SET_FILTER(a);
         this.filterProducts();
-        this.loading = false;
+        this.SET_LOADING(false);
       }
     },
   },

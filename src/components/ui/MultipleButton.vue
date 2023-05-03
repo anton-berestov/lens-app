@@ -7,7 +7,10 @@
           :value="option.title"
           @click="onChange(option)"
         />
-        <span>{{ option.title }}</span>
+        <span v-if="flag">{{
+          $tc('COUNT-REPLACEMENT-PERIOD', Number(option.title))
+        }}</span>
+        <span v-if="!flag">{{ $t(option.title) }}</span>
       </label>
     </li>
   </ul>
@@ -18,7 +21,7 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'MultipleButton',
-  props: ['checked', 'options'],
+  props: ['checked', 'options', 'flag'],
   emits: ['update:modelValue'],
   methods: {
     onChange(value) {

@@ -51,6 +51,7 @@ export default createStore({
     optic_address: {},
     doctor: {},
     order_history: [],
+    loading: false,
   },
   getters: {
     popover: (state) => state.popover,
@@ -76,6 +77,7 @@ export default createStore({
     optic_address: (state) => state.optic_address,
     doctor: (state) => state.doctor,
     previous_recording: (state) => state.previous_recording,
+    loading: (state) => state.loading,
   },
   mutations: {
     SET_POPOVER: (state, payload) => (state.popover = payload),
@@ -114,17 +116,20 @@ export default createStore({
     SET_DOCTOR: (state, payload) => (state.doctor = payload),
     SET_PREVIOUS_RECORDING: (state, payload) =>
       (state.previous_recording = payload),
+    SET_LOADING: (state, payload) => (state.loading = payload),
   },
   actions: {
     setError(context, error) {
       context.commit('SET_ERROR', error);
     },
     async getProducts(context: any, params?: object) {
+      context.commit('SET_LOADING', true);
       return new Promise((resolve, reject) => {
         getProducts(params)
           .then((data) => {
             context.commit('SET_PRODUCTS', data);
             resolve(data);
+            context.commit('SET_LOADING', false);
           })
           .catch((e) => {
             console.error(e);
@@ -193,11 +198,13 @@ export default createStore({
     },
 
     async filterProducts(context: any) {
+      context.commit('SET_LOADING', true);
       return new Promise((resolve, reject) => {
         filterProducts(context.getters.filter)
           .then((data) => {
             context.commit('SET_PRODUCTS', data);
             resolve(data);
+            context.commit('SET_LOADING', false);
           })
           .catch((e) => {
             console.error(e);

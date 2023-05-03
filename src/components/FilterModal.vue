@@ -20,6 +20,7 @@
           <MultipleButton
             :options="period"
             :checked="filter.period"
+            :flag="true"
             v-model="filter.period"
           />
         </ion-row>
@@ -197,9 +198,9 @@ export default defineComponent({
       this.SET_POPOVER({show: true, message: messages})
     },
     apply() {
+      this.$emit('hide')
       this.SET_FILTER(this.filter)
       this.filterProducts()
-      this.$emit('hide')
     },
     clear() {
       this.filter.type = []

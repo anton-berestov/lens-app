@@ -14,7 +14,7 @@
         <ion-label class="title">{{ $t('LENS-TYPE') }}</ion-label>
       </ion-col>
       <ion-col>
-        <ion-title class="text">{{ type }}</ion-title>
+        <ion-title class="text">{{ $t(type) }}</ion-title>
       </ion-col>
     </ion-row>
 
@@ -41,7 +41,9 @@
         </ion-buttons>
       </ion-col>
       <ion-col>
-        <ion-title class="text">{{ period }}</ion-title>
+        <ion-title class="text">{{
+          $tc('COUNT-REPLACEMENT-PERIOD', Number(period))
+        }}</ion-title>
       </ion-col>
     </ion-row>
 

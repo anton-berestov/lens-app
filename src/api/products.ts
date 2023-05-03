@@ -25,23 +25,22 @@ export const getProducts = async (
       paramString = qs.stringify(params);
     }
     const products: Product[] = [];
-    const response = await API.get(`/products?${paramString}`);
-    if (response.data) {
-      // console.log(response.data);
-      response.data.map((p: any) => {
+    const response = await API.get(`/products/catalog?${paramString}`);
+
+    if (response) {
+      response.map((p: any) => {
         //extract images
         const images: Image[] = [];
 
         // if Product has images map to Image Interface
-        if (Object.hasOwnProperty.call(p.attributes, 'image')) {
-          const img = p.attributes.image.data ?? [];
+        if (Object.hasOwnProperty.call(p, 'image')) {
+          const img = p.image ?? [];
           img.map((i: any) => {
             images.push({
               id: Number(i.id),
-              url: process.env.VUE_APP_API_PUBLIC + i.attributes.url,
+              url: process.env.VUE_APP_API_PUBLIC + i.url,
               thumbnailUrl:
-                process.env.VUE_APP_API_PUBLIC +
-                  i.attributes.formats.thumbnail.url ?? '',
+                process.env.VUE_APP_API_PUBLIC + i.formats.thumbnail.url ?? '',
               alternativeText: '',
               caption: '',
             });
@@ -50,71 +49,71 @@ export const getProducts = async (
 
         // if Product has brand map to Brand Interface
         const brand: Brand = { id: 0, title: '' };
-        if ({}.propertyIsEnumerable.call(p.attributes, 'brand')) {
-          const b = p.attributes.brand.data;
+        if ({}.propertyIsEnumerable.call(p, 'brand')) {
+          const b = p.brand;
           brand.id = b?.id;
-          brand.title = b?.attributes.title;
+          brand.title = b?.title;
         }
         // if Product has brand map to Diameter Interface
         const diameter: Diameter = { id: 0, title: '' };
-        if ({}.propertyIsEnumerable.call(p.attributes, 'diameter')) {
-          const b = p.attributes.diameter.data;
+        if ({}.propertyIsEnumerable.call(p, 'diameter')) {
+          const b = p.diameter;
           diameter.id = b?.id;
-          diameter.title = b?.attributes.title;
+          diameter.title = b?.title;
         }
         // if Product has manufacturer map to Producer Interface
         const manufacturer: Manufacturer = { id: 0, title: '' };
-        if (Object.hasOwnProperty.call(p.attributes, 'manufacturer')) {
-          const m = p.attributes.manufacturer.data;
+        if (Object.hasOwnProperty.call(p, 'manufacturer')) {
+          const m = p.manufacturer;
           manufacturer.id = m?.id;
-          manufacturer.title = m?.attributes.title;
+          manufacturer.title = m?.title;
         }
         // if Product has manufacturer map to Material Interface
         const material: Material = { id: 0, title: '' };
-        if (Object.hasOwnProperty.call(p.attributes, 'material')) {
-          const m = p.attributes.material.data;
+        if (Object.hasOwnProperty.call(p, 'material')) {
+          const m = p.material;
           material.id = m?.id;
           material.title = m?.attributes.title;
         }
         // if Product has manufacturer map to Period Interface
         const period: Period = { id: 0, title: '' };
-        if (Object.hasOwnProperty.call(p.attributes, 'period')) {
-          const m = p.attributes.period.data;
+        if (Object.hasOwnProperty.call(p, 'period')) {
+          const m = p.period;
           period.id = m?.id;
-          period.title = m?.attributes.title;
+          period.title = m?.title;
         }
         // if Product has manufacturer map to Radius Interface
         const radius: Radius[] = [];
-        if (Object.hasOwnProperty.call(p.attributes, 'radius')) {
-          const m = p.attributes.radius.data;
+        if (Object.hasOwnProperty.call(p, 'radius')) {
+          const m = p.radius;
           m.map((el: any) => {
-            radius.push({ id: el.id, title: el.attributes.title });
+            radius.push({ id: el.id, title: el.title });
           });
         }
         // if Product has manufacturer map to Sphere Interface
         const sphere: Sphere[] = [];
-        if (Object.hasOwnProperty.call(p.attributes, 'sphere')) {
-          const m = p.attributes.sphere.data;
+        if (Object.hasOwnProperty.call(p, 'sphere')) {
+          const m = p.sphere;
           m.map((el: any) => {
-            sphere.push({ id: el.id, title: el.attributes.title });
+            sphere.push({ id: el.id, title: el.title });
           });
         }
         // if Product has manufacturer map to Sphere Interface
         const type: Type = { id: 0, title: '', description: '' };
-        if (Object.hasOwnProperty.call(p.attributes, 'type')) {
-          const m = p.attributes.type.data;
+        if (Object.hasOwnProperty.call(p, 'type')) {
+          const m = p.type;
           type.id = m?.id;
-          type.title = m?.attributes.title;
-          type.description = m?.attributes.description;
+          type.title = m?.title;
+          type.description = m?.description;
         }
         // console.log(sphere);
 
         products.push({
           id: p.id,
-          title: p.attributes.title,
-          short_title: p.attributes.short_title,
-          price: p.attributes.price,
-          discount: p.attributes.discount,
+          title: p.title,
+          short_title: p.short_title,
+          price: p.price,
+          discount: p.discount,
           image: images,
           brand: brand.title,
           diameter: diameter.title,

@@ -145,5 +145,9 @@
   "WRITE-TO-CHAT": "Написать в чат",
   "YOU-SUCCESSFULL-RECORDING": "Вы успешно записаны!",
   "YOUR-ORDER-NUMMBER": "Ваш заказ №",
-  "YOUR-PURCHASES": "Ваши покупки"
+  "YOUR-PURCHASES": "Ваши покупки",
+  "COUNT-REPLACEMENT-PERIOD": "{n} дней | {n} день | {n} дней | {n} дней",
+  "toric": "Торические",
+  "multifocal": "Мультифокальные",
+  "regular": "Простые"
 }

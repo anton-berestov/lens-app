@@ -152,14 +152,9 @@ export default defineComponent({
       }
     }
 
-    .swiper-pagination {
-      bottom: -3px !important;
-      position: relative;
-    }
-
     .swiper {
       .image {
-        width: 100%;
+        // width: 100%;
         height: 85px;
       }
     }
