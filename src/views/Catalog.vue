@@ -120,7 +120,7 @@ export default defineComponent({
     ...mapGetters(['filter', 'products', 'loading', 'categories']),
   },
   async mounted() {
-    await this.getCategories({ populate: '*' });
+    await this.getCategories();
     await this.getPeriods();
     await this.getSpheres();
     await this.getRadiuses();
@@ -154,7 +154,7 @@ export default defineComponent({
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     async refresh(complete = () => {}) {
       try {
-        await this.getCategories({ populate: '*' });
+        await this.getCategories();
         await this.getPeriods();
         await this.getSpheres();
         await this.getRadiuses();

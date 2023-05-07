@@ -166,7 +166,7 @@ import Button from '@/components/ui/Button.vue';
 import {discountPrice} from "@/helpers/discountPrice";
 import Popover from "@/components/ui/Popover.vue";
 import Loading from '@/components/ui/Loading.vue';
-import {getProduct, getMetaProducts} from '@/api/products'
+import { getMetaProducts} from '@/api/products'
 
 export default defineComponent({
   name: 'Params',
@@ -217,93 +217,19 @@ export default defineComponent({
       countOne: 1,
       countTwo: 1,
       product: {},
-      loading: false
     };
   },
   async mounted() {
-    this.loading = true
-    const product  = await getProduct(this.id, { populate: '*' })
-    const meta = await getMetaProducts(product.title, product.type, product.price)
-
-    meta.map((el)=> {
-      if (Object.hasOwnProperty.call(el, 'radius')) {
-          el.radius.map((p)=> {
-            if(this.radius.length) {
-              this.radius.map((e)=> {
-                if(e.id !== p.id) {
-                  this.radius.push(p)
-                }
-              })
-            } else {
-              this.radius.push(p)
-            }
-          })
-      }
-
-      if (Object.hasOwnProperty.call(el, 'sphere')) {
-          el.sphere.map((p)=> {
-            if (this.sphere.length) {
-              this.sphere.map((e)=> {
-                if (e.id !== p.id){
-                  this.sphere.push(p)
-                }
-              })
-            } else {
-              this.sphere.push(p)
-            }
-          })
-      }
-
-      if (Object.hasOwnProperty.call(el, 'adds')) {
-          el.adds.map((p)=> {
-            if (this.adds.length) {
-              this.adds.map((e)=> {
-                if (e.id !== p.id) {
-                  this.adds.push(p)
-                }
-              })
-            } else {
-              this.adds.push(p)
-            }
-          })
-      }
-
-      if (Object.hasOwnProperty.call(el, 'axes')) {
-          el.axes.map((p)=> {
-            if (this.axes.length) {
-              this.axes.map((e)=> {
-                if (e.id !== p.id) {
-                  this.axes.push(p)
-                }
-              })
-            } else {
-              this.axes.push(p)
-            }
-          })
-      }
-
-      if (Object.hasOwnProperty.call(el, 'cylinders')) {
-          el.cylinders.map((p)=> {
-            if (this.cylinders.length) {
-              this.cylinders.map((e)=> {
-                if (e.id !== p.id) {
-                  this.cylinders.push(p)
-                }
-              })
-            } else {
-              this.cylinders.push(p)
-            }
-          })
-      }
-    })
-    this.loading = false
-    console.log('dsafdgf');
+    this.SET_LOADING(true)
+    const meta = await getMetaProducts(this.id)
+    await this.getMeta(meta);
+    this.SET_LOADING(false)
   },
   computed: {
-    ...mapGetters(['products']),
+    ...mapGetters(['products', 'loading']),
   },
   methods: {
-    ...mapMutations(['SET_POPOVER', 'SET_ORDER_PRODUCT_DETAILS', 'SET_BASKET_COUNT', 'SET_TOTAL_AMOUNT', 'SET_TOTAL_DISCOUNT']),
+    ...mapMutations(['SET_POPOVER', 'SET_ORDER_PRODUCT_DETAILS', 'SET_BASKET_COUNT', 'SET_TOTAL_AMOUNT', 'SET_TOTAL_DISCOUNT', 'SET_LOADING']),
     apply() {
       if (
         !this.different &&
@@ -387,6 +313,83 @@ export default defineComponent({
     openSelectTwo(e) {
       this.isActiveTwo = e;
     },
+    getMeta(meta) {
+      console.log(meta)
+      meta.map((el)=> {
+      if (Object.hasOwnProperty.call(el, 'radius')) {
+          el.radius.map((p)=> {
+            if(this.radius.length) {
+              this.radius.map((e)=> {
+                if(e.id !== p.id) {
+                  this.radius.push(p)
+                }
+              })
+            } else {
+              this.radius.push(p)
+            }
+          })
+      }
+
+      if (Object.hasOwnProperty.call(el, 'sphere')) {
+          el.sphere.map((p)=> {
+            if (this.sphere.length) {
+              this.sphere.map((e)=> {
+                if (e.id !== p.id){
+                  this.sphere.push(p)
+                }
+              })
+            } else {
+              this.sphere.push(p)
+            }
+          })
+      }
+
+      // if (Object.hasOwnProperty.call(el, 'adds')) {
+      //     el.adds.map((p)=> {
+      //       if (this.adds.length) {
+      //         this.adds.map((e)=> {
+      //           if (e.id !== p.id) {
+      //             this.adds.push(p)
+      //           }
+      //         })
+      //       } else {
+      //         this.adds.push(p)
+      //       }
+      //     })
+      // }
+
+      // if (Object.hasOwnProperty.call(el, 'axes')) {
+      //   if(el.axes.length) {
+      //     el.axes.map((p)=> {
+      //       if (this.axes.length) {
+      //         this.axes.map((e)=> {
+      //           if (e.id !== p.id) {
+      //             this.axes.push(p)
+      //           }
+      //         })
+      //       } else {
+      //         this.axes.push(p)
+      //       }
+      //     })
+      //   }
+      // }
+
+      // if (Object.hasOwnProperty.call(el, 'cylinders')) {
+      //     el.cylinders.map((p)=> {
+      //       if (this.cylinders.length) {
+      //         this.cylinders.map((e)=> {
+      //           console.log(p.id)
+      //           if (e.id !== p.id) {
+      //             this.cylinders.push(p)
+      //           }
+      //         })
+      //       } else {
+      //         this.cylinders.push(p)
+      //       }
+      //     })
+      // }
+    })
+    }
   },
 });
 </script>

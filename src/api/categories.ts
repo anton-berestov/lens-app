@@ -1,18 +1,23 @@
 import qs from 'qs';
 import API from './index';
 import { Categorie } from '@/interfaces/CategorieInterface';
-import { Image, Period, Type } from '@/interfaces/ProductInterface';
+import { Brand, Image, Period, Type } from '@/interfaces/ProductInterface';
 
-export const getCategories = async (
-  params?: any
-): Promise<Categorie[] | undefined> => {
+export const getCategories = async (): Promise<Categorie[] | undefined> => {
   try {
-    // empty paramstring
-    let paramString = '';
-    // params include
-    if (params) {
-      paramString = qs.stringify(params);
-    }
+    const paramString = qs.stringify({
+      populate: [
+        'title',
+        'description',
+        'price',
+        'image',
+        'period',
+        'brand',
+        'delivery',
+        'discount',
+        'type',
+      ],
+    });
     const categories: Categorie[] = [];
     const { data } = await API.get(`/categories?${paramString}`);
 
@@ -20,7 +25,7 @@ export const getCategories = async (
       data.map((p: any) => {
         //extract images
         const images: Image[] = [];
-        // if Product has images map to Image Interface
+        // if Categorie has images map to Image Interface
         if (Object.hasOwnProperty.call(p.attributes, 'image')) {
           const img = p.attributes.image.data ?? [];
           img.map((i: any) => {
@@ -36,7 +41,7 @@ export const getCategories = async (
           });
         }
 
-        // if Product has manufacturer map to Period Interface
+        // if Categorie has manufacturer map to Period Interface
         const period: Period = { id: 0, title: '' };
         if (Object.hasOwnProperty.call(p.attributes, 'period')) {
           const m = p.attributes.period.data;
@@ -44,7 +49,15 @@ export const getCategories = async (
           period.title = m?.attributes.title;
         }
 
-        // if Product has manufacturer map to Type Interface
+        // if Categorie has manufacturer map to Period Interface
+        const brand: Brand = { id: 0, title: '' };
+        if (Object.hasOwnProperty.call(p.attributes, 'brand')) {
+          const m = p.attributes.brand.data;
+          brand.id = m?.id;
+          brand.title = m?.attributes.title;
+        }
+
+        // if Categorie has manufacturer map to Type Interface
         const type: Type = { id: 0, title: '', description: '' };
         if (Object.hasOwnProperty.call(p.attributes, 'type')) {
           const m = p.attributes.type.data;
@@ -52,6 +65,7 @@ export const getCategories = async (
           type.title = m?.attributes.title;
           type.description = m?.attributes.description;
         }
+
         // // console.log(sphere);
         categories.push({
           id: p.id,
@@ -60,6 +74,7 @@ export const getCategories = async (
           price: p.attributes.price,
           image: images,
           period: period.title,
+          brand: brand.title,
           type: type.title,
           discount: p.attributes.discount,
           delivery: p.attributes.delivery,

@@ -18,14 +18,15 @@ import qs from 'qs';
 import API from './index';
 
 export const getMetaProducts = async (
-  title: any,
-  type: any,
-  price: any
+  id: any
 ): Promise<Product[] | undefined> => {
   try {
+    const paramString = qs.stringify({
+      populate: ['radius', 'sphere', 'adds', 'axes', 'cylinders'],
+    });
     const meta: any = [];
     const { data } = await API.get(
-      `/products?populate=*&filters[title]=${title}&filters[type][title]=${type}&filters[price]=${price}`
+      `/products?${paramString}&filters[categorie]=${id}`
     );
 
     // console.log(data);

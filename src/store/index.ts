@@ -127,10 +127,10 @@ export default createStore({
     setError(context, error) {
       context.commit('SET_ERROR', error);
     },
-    async getCategories(context: any, params?: object) {
+    async getCategories(context: any) {
       context.commit('SET_LOADING', true);
       return new Promise((resolve, reject) => {
-        getCategories(params)
+        getCategories()
           .then((data) => {
             context.commit('SET_CATEGORIES', data);
             resolve(data);

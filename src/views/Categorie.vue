@@ -77,7 +77,7 @@
             v-if="specification"
             :manufacturer="categorie.manufacturer"
             :type="categorie.type"
-            :brand="categorie.title"
+            :brand="categorie.brand"
             :period="categorie.period"
             :material="categorie.material"
           />
@@ -89,7 +89,7 @@
           <Button
             :title="$t('ADD-TO-CART')"
             class="custom-btn"
-            @click="addInCart(product)"
+            @click="addInCart(categorie)"
           />
         </ion-row>
       </ion-list>
@@ -200,8 +200,8 @@ export default defineComponent({
         complete();
       }
     },
-    addInCart(product) {
-      this.$router.push({name: 'Params', params: {id: product.id}})
+    addInCart(categorie) {
+      this.$router.push({name: 'Params', params: {id: categorie.id}})
     }
   },
 });
