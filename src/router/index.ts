@@ -20,7 +20,7 @@ import {
   PATH_ORDER_RECORDING,
   PATH_PARAMS,
   PATH_PICKUP,
-  PATH_PRODUCT,
+  PATH_CATEGORIE,
   PATH_PROFILE,
   PATH_RECORD_HISTORY,
   PATH_RECORDING,
@@ -88,10 +88,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Search.vue'),
       },
       {
-        path: PATH_PRODUCT,
-        name: 'Product',
+        path: PATH_CATEGORIE,
+        name: 'Categorie',
         props: true,
-        component: () => import('@/views/Product.vue'),
+        component: () => import('@/views/Categorie.vue'),
       },
       {
         path: PATH_PARAMS,

@@ -20,7 +20,9 @@
       </div>
     </ion-row>
     <ion-card-header class="header">
-      <ion-card-title class="title">{{ title }}</ion-card-title>
+      <ion-card-title class="title"
+        >{{ title }} <span>{{ $t(type) }}</span></ion-card-title
+      >
       <ion-row class="ion-align-items-center row">
         <ion-card-subtitle class="price"
           >{{ discountPrice }} ₽</ion-card-subtitle
@@ -78,6 +80,10 @@ export default defineComponent({
       default: () => [],
     },
     discount: {
+      type: String,
+      default: '',
+    },
+    type: {
       type: String,
       default: '',
     },

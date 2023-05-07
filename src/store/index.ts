@@ -9,6 +9,8 @@ import { checkSms, getUser, sendPhone, updateUser } from '@/api/user';
 import { OrderProductDetails, Product } from '@/interfaces/ProductInterface';
 import { saveAddress, getAddress } from '@/api/address';
 import { getDoctor } from '@/api/recording';
+import { getCategories } from '@/api/categories';
+import { Categorie } from '@/interfaces/CategorieInterface';
 
 const modules = {};
 
@@ -25,6 +27,7 @@ export default createStore({
       sphere: {},
       radius: {},
     },
+    categories: Array<Categorie>(),
     products: Array<Product>(),
     characteristics: {
       type: [],
@@ -58,6 +61,7 @@ export default createStore({
     error: (state) => state.error,
     filter: (state) => state.filter,
     products: (state) => state.products,
+    categories: (state) => state.categories,
     order_product_details: (state) => state.basket.order_product_details,
     basket_count: (state) => state.basket.count,
     total_amount: (state) => state.basket.total_amount,
@@ -83,6 +87,7 @@ export default createStore({
     SET_POPOVER: (state, payload) => (state.popover = payload),
     SET_ERROR: (state, payload) => (state.error = payload),
     SET_FILTER: (state, payload) => (state.filter = payload),
+    SET_CATEGORIES: (state, payload) => (state.categories = payload),
     SET_PRODUCTS: (state, payload) => (state.products = payload),
     SET_ORDER_PRODUCT_DETAILS: (state, payload: OrderProductDetails) =>
       state.basket.order_product_details.push(payload),
@@ -121,6 +126,21 @@ export default createStore({
   actions: {
     setError(context, error) {
       context.commit('SET_ERROR', error);
+    },
+    async getCategories(context: any, params?: object) {
+      context.commit('SET_LOADING', true);
+      return new Promise((resolve, reject) => {
+        getCategories(params)
+          .then((data) => {
+            context.commit('SET_CATEGORIES', data);
+            resolve(data);
+            context.commit('SET_LOADING', false);
+          })
+          .catch((e) => {
+            console.error(e);
+            reject(e);
+          });
+      });
     },
     async getProducts(context: any, params?: object) {
       context.commit('SET_LOADING', true);

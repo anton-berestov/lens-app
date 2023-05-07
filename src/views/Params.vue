@@ -1,7 +1,8 @@
 <template>
   <ion-page id="params">
     <Header :title="$t('OPTIONS')" contact back />
-    <ion-content :fullscreen="true" class="params-content">
+    <Loading v-if="loading" />
+    <ion-content v-if="!loading" class="params-content">
       <ion-row class="ion-margin">
         <ion-label>{{ $t('OPTIONS-TITLE') }}</ion-label>
       </ion-row>
@@ -34,6 +35,48 @@
               class="ion-margin-top"
               @isOpen="openSelect"
               v-model="select.radius"
+            />
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin" :class="{ activeClass: isActive }">
+          <ion-col
+            style="padding-left: 0"
+            class="ion-margin-end"
+            v-if="adds.length"
+          >
+            <ion-title class="text">{{ $t('ADDS') }}</ion-title>
+            <Select
+              :options="adds"
+              :placeholder="$t('SELECT')"
+              class="ion-margin-top"
+              @isOpen="openSelect"
+              v-model="select.add"
+            />
+          </ion-col>
+          <ion-col style="padding-right: 0" v-if="axes.length">
+            <ion-title class="text">{{ $t('AXES') }}</ion-title>
+            <Select
+              :options="axes"
+              :placeholder="$t('SELECT')"
+              class="ion-margin-top"
+              @isOpen="openSelect"
+              v-model="select.ax"
+            />
+          </ion-col>
+        </ion-row>
+        <ion-row
+          class="ion-margin"
+          :class="{ activeClass: isActive }"
+          v-if="cylinders.length"
+        >
+          <ion-col style="padding-left: 0">
+            <ion-title class="text">{{ $t('CYLINDERS') }}</ion-title>
+            <Select
+              :options="cylinders"
+              :placeholder="$t('SELECT')"
+              class="ion-margin-top"
+              @isOpen="openSelect"
+              v-model="select.cylinder"
             />
           </ion-col>
         </ion-row>
@@ -122,6 +165,8 @@ import { addOutline, removeOutline } from 'ionicons/icons';
 import Button from '@/components/ui/Button.vue';
 import {discountPrice} from "@/helpers/discountPrice";
 import Popover from "@/components/ui/Popover.vue";
+import Loading from '@/components/ui/Loading.vue';
+import {getProduct, getMetaProducts} from '@/api/products'
 
 export default defineComponent({
   name: 'Params',
@@ -139,6 +184,7 @@ export default defineComponent({
     IonTitle,
     IonButton,
     IonIcon,
+    Loading
   },
   props: {
     id: {
@@ -155,9 +201,15 @@ export default defineComponent({
       select: {
         radius: {},
         sphere: {},
+        cylinder: {},
+        add: {},
+        ax:{},
         radius2: {},
         sphere2: {},
       },
+      adds: [],
+      axes: [],
+      cylinders: [],
       plus: addOutline,
       minus: removeOutline,
       different: false,
@@ -165,12 +217,87 @@ export default defineComponent({
       countOne: 1,
       countTwo: 1,
       product: {},
+      loading: false
     };
   },
-  mounted() {
-    this.radius = this.products.find((el) => el.id == this.id).radius;
-    this.sphere = this.products.find((el) => el.id == this.id).sphere;
-    this.product = this.products.find((el) => el.id == this.id);
+  async mounted() {
+    this.loading = true
+    const product  = await getProduct(this.id, { populate: '*' })
+    const meta = await getMetaProducts(product.title, product.type, product.price)
+
+    meta.map((el)=> {
+      if (Object.hasOwnProperty.call(el, 'radius')) {
+          el.radius.map((p)=> {
+            if(this.radius.length) {
+              this.radius.map((e)=> {
+                if(e.id !== p.id) {
+                  this.radius.push(p)
+                }
+              })
+            } else {
+              this.radius.push(p)
+            }
+          })
+      }
+
+      if (Object.hasOwnProperty.call(el, 'sphere')) {
+          el.sphere.map((p)=> {
+            if (this.sphere.length) {
+              this.sphere.map((e)=> {
+                if (e.id !== p.id){
+                  this.sphere.push(p)
+                }
+              })
+            } else {
+              this.sphere.push(p)
+            }
+          })
+      }
+
+      if (Object.hasOwnProperty.call(el, 'adds')) {
+          el.adds.map((p)=> {
+            if (this.adds.length) {
+              this.adds.map((e)=> {
+                if (e.id !== p.id) {
+                  this.adds.push(p)
+                }
+              })
+            } else {
+              this.adds.push(p)
+            }
+          })
+      }
+
+      if (Object.hasOwnProperty.call(el, 'axes')) {
+          el.axes.map((p)=> {
+            if (this.axes.length) {
+              this.axes.map((e)=> {
+                if (e.id !== p.id) {
+                  this.axes.push(p)
+                }
+              })
+            } else {
+              this.axes.push(p)
+            }
+          })
+      }
+
+      if (Object.hasOwnProperty.call(el, 'cylinders')) {
+          el.cylinders.map((p)=> {
+            if (this.cylinders.length) {
+              this.cylinders.map((e)=> {
+                if (e.id !== p.id) {
+                  this.cylinders.push(p)
+                }
+              })
+            } else {
+              this.cylinders.push(p)
+            }
+          })
+      }
+    })
+    this.loading = false
+    console.log('dsafdgf');
   },
   computed: {
     ...mapGetters(['products']),

@@ -5,8 +5,8 @@
     <Content @refresh="refresh" v-if="!loading">
       <ion-list class="container">
         <ion-row class="ion-margin wrapper" style="position: relative">
-          <div class="discount" v-if="product.discount">
-            <p class="discount-text">{{ `-${product.discount}%` }}</p>
+          <div class="discount" v-if="categorie.discount">
+            <p class="discount-text">{{ `-${categorie.discount}%` }}</p>
           </div>
           <swiper
             ref="swiper"
@@ -16,21 +16,24 @@
             :autoplay="true"
             class="swiper"
           >
-            <swiper-slide v-for="(image, index) in product.image" :key="index">
+            <swiper-slide
+              v-for="(image, index) in categorie.image"
+              :key="index"
+            >
               <img :src="image.url" class="image" />
             </swiper-slide>
           </swiper>
         </ion-row>
         <ion-row class="ion-margin">
           <ion-row class="row">
-            <ion-label class="title">{{ product.title }}</ion-label>
+            <ion-label class="title">{{ categorie.title }}</ion-label>
           </ion-row>
           <ion-row class="ion-margin-top row">
-            <ion-label class="price">{{ discountPrice }} ₽</ion-label>
+            <ion-label class="price">от {{ discountPrice }} ₽</ion-label>
             <ion-label
-              v-if="product.discount"
+              v-if="categorie.discount"
               class="ion-margin-start old-price"
-              >{{ product.price }} ₽
+              >{{ categorie.price }} ₽
             </ion-label>
           </ion-row>
         </ion-row>
@@ -72,14 +75,14 @@
         <ion-row>
           <Specification
             v-if="specification"
-            :manufacturer="product.manufacturer"
-            :type="product.type"
-            :brand="product.brand"
-            :period="product.period"
-            :material="product.material"
+            :manufacturer="categorie.manufacturer"
+            :type="categorie.type"
+            :brand="categorie.title"
+            :period="categorie.period"
+            :material="categorie.material"
           />
-          <Description v-if="description" />
-          <Delivery v-if="delivery" />
+          <Description v-if="description" :text="categorie.description" />
+          <Delivery v-if="delivery" :text="categorie.delivery" />
         </ion-row>
 
         <ion-row class="ion-justify-content-center">
@@ -169,21 +172,21 @@ export default defineComponent({
       specification: true,
       description: false,
       delivery: false,
-      product: [],
+      categorie: [],
       loading: false
     };
   },
-  mounted() {
+  async mounted() {
     this.loading = true
-    this.product = this.products.find((el) => el.id == this.id)
+    this.categorie = await this.categories.find((el) => el.id == this.id)
     this.loading = false
   },
   computed: {
-    ...mapGetters(['products']),
+    ...mapGetters(['categories']),
     discountPrice() {
-      return this.product.discount
-          ? discountPrice(this.product.price, this.product.discount)
-          : this.product.price;
+      return this.categorie.discount
+          ? discountPrice(this.categorie.price, this.categorie.discount)
+          : this.categorie.price;
     },
   },
   methods: {

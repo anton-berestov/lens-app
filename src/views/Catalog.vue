@@ -53,18 +53,19 @@
 
         <div class="wrapper">
           <Product
-            v-for="product in products"
-            :key="product.id"
-            :title="product.title"
-            :price="product.price"
-            :img="product.image"
-            :discount="product.discount"
+            v-for="categorie in categories"
+            :key="categorie.id"
+            :title="categorie.title"
+            :price="categorie.price"
+            :img="categorie.image"
+            :discount="categorie.discount"
+            :type="categorie.type"
             class="product"
             @click="
               $router.push({
-                name: 'Product',
+                name: 'Categorie',
                 params: {
-                  id: product.id,
+                  id: categorie.id,
                 },
               })
             "
@@ -116,11 +117,10 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapGetters(['filter', 'products', 'loading']),
+    ...mapGetters(['filter', 'products', 'loading', 'categories']),
   },
   async mounted() {
-    this.SET_LOADING(true);
-    await this.getProducts({ populate: '*' });
+    await this.getCategories({ populate: '*' });
     await this.getPeriods();
     await this.getSpheres();
     await this.getRadiuses();
@@ -131,7 +131,6 @@ export default defineComponent({
       sphere: {},
       radius: {},
     });
-    this.SET_LOADING(false);
   },
   methods: {
     ...mapMutations([
@@ -150,11 +149,12 @@ export default defineComponent({
       'getSphere',
       'getPeriod',
       'filterProducts',
+      'getCategories',
     ]),
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     async refresh(complete = () => {}) {
       try {
-        await this.getProducts({ populate: '*' });
+        await this.getCategories({ populate: '*' });
         await this.getPeriods();
         await this.getSpheres();
         await this.getRadiuses();
@@ -204,7 +204,6 @@ export default defineComponent({
         this.SET_LOADING(false);
       }
 
-      console.log(a);
       if (
         !Object.keys(a.sphere).length &&
         !Object.keys(a.radius).length &&

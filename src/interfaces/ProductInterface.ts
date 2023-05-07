@@ -61,6 +61,19 @@ export interface Sphere {
   title: string;
 }
 
+export interface Adds {
+  id: number;
+  title: string;
+}
+export interface Axes {
+  id: number;
+  title: string;
+}
+export interface Cylinders {
+  id: number;
+  title: string;
+}
+
 export interface Type {
   id: number;
   title: string;
