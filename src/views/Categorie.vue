@@ -2,7 +2,7 @@
   <ion-page>
     <Header back :title="$t('PRODUCT-TITLE')" />
     <Loading v-if="loading" />
-    <Content @refresh="refresh" v-if="!loading">
+    <ion-content v-if="!loading">
       <ion-list class="container">
         <ion-row class="ion-margin wrapper" style="position: relative">
           <div class="discount" v-if="categorie.discount">
@@ -93,13 +93,13 @@
           />
         </ion-row>
       </ion-list>
-    </Content>
+    </ion-content>
   </ion-page>
 </template>
 
 <script lang="js">
 import {defineComponent} from 'vue';
-import {IonPage, IonRow, IonList, IonLabel} from '@ionic/vue';
+import {IonPage, IonRow, IonList, IonLabel, IonContent} from '@ionic/vue';
 import {Swiper, SwiperSlide} from 'swiper/vue';
 import {
   Controller,
@@ -115,7 +115,7 @@ import Specification from '@/components/Specification.vue';
 import Description from '@/components/Description.vue';
 import Delivery from '@/components/Delivery.vue';
 import Button from "@/components/ui/Button.vue";
-import {mapActions, mapGetters} from "vuex";
+import { mapGetters} from "vuex";
 
 
 import 'swiper/css';
@@ -125,7 +125,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/zoom';
 import '@ionic/vue/css/ionic-swiper.css';
-import Content from "@/components/ui/Content.vue";
 import Loading from "@/components/ui/Loading.vue";
 import {discountPrice} from "@/helpers/discountPrice";
 
@@ -141,7 +140,6 @@ export default defineComponent({
   },
   components: {
     Loading,
-    Content,
     Button,
     Header,
     IonPage,
@@ -152,7 +150,8 @@ export default defineComponent({
     IonLabel,
     Specification,
     Description,
-    Delivery
+    Delivery,
+    IonContent
   },
   data() {
     return {
@@ -190,16 +189,6 @@ export default defineComponent({
     },
   },
   methods: {
-    ...mapActions(['getProduct']),
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    async refresh(complete = () => {
-    }) {
-      try {
-        this.product = await this.getProduct(this.id);
-      } finally {
-        complete();
-      }
-    },
     addInCart(categorie) {
       this.$router.push({name: 'Params', params: {id: categorie.id}})
     }
@@ -279,7 +268,7 @@ export default defineComponent({
   }
 
   .custom-btn {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
   }
 }
 </style>

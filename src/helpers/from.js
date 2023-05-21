@@ -23,6 +23,7 @@ export function checkFields(e) {
     });
   } else {
     Object.keys(this.fields).forEach((i) => {
+      console.log(Object.keys(this.fields[i]).length);
       if (
         this.requiredFields.indexOf(i) >= 0 &&
         !this.fields[i] &&
@@ -32,6 +33,54 @@ export function checkFields(e) {
         hasErrors = true;
       } else {
         this.errorFields[i] = false;
+      }
+    });
+  }
+  return hasErrors;
+}
+
+export function checkSelect(e) {
+  let hasErrors = false;
+  if (typeof e === 'object' && e?.response?.data?.errors) {
+    const { errors } = e.response.data;
+    Object.keys(errors).forEach((i) => {
+      this.errorFields[i] = errors[i].join(', ');
+    });
+  } else {
+    Object.keys(this.fields).forEach((i) => {
+      if (
+        this.requiredFields.indexOf(i) >= 0 &&
+        !Object.keys(this.fields[i]).length &&
+        this.fields[i] !== 0
+      ) {
+        this.errorFields[i] = 'Обязательно для заполнения';
+        hasErrors = true;
+      } else {
+        this.errorFields[i] = false;
+      }
+    });
+  }
+  return hasErrors;
+}
+
+export function checkSelectTwo(e) {
+  let hasErrors = false;
+  if (typeof e === 'object' && e?.response?.data?.errors) {
+    const { errors } = e.response.data;
+    Object.keys(errors).forEach((i) => {
+      this.errorFieldsTwo[i] = errors[i].join(', ');
+    });
+  } else {
+    Object.keys(this.fieldsTwo).forEach((i) => {
+      if (
+        this.requiredFieldsTwo.indexOf(i) >= 0 &&
+        !Object.keys(this.fieldsTwo[i]).length &&
+        this.fieldsTwo[i] !== 0
+      ) {
+        this.errorFieldsTwo[i] = 'Обязательно для заполнения';
+        hasErrors = true;
+      } else {
+        this.errorFieldsTwo[i] = false;
       }
     });
   }

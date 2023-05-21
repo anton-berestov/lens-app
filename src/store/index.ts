@@ -176,9 +176,10 @@ export default createStore({
       });
     },
 
-    async getProduct(context: any, id: number, params?: object) {
-      console.log(params);
-      const product = await getProduct(id, { populate: '*' });
+    async getProduct(context: any, params?: object) {
+      context.commit('SET_LOADING', true);
+      const product = await getProduct(params);
+      context.commit('SET_LOADING', false);
       return product;
     },
 

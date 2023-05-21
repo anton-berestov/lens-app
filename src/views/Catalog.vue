@@ -131,7 +131,7 @@
           <Product
             v-for="product in products"
             :key="product.id"
-            :title="product.title"
+            :short_title="product.short_title"
             :price="product.price"
             :img="product.image"
             :discount="product.discount"

@@ -153,7 +153,6 @@ export const getProducts = async (
 };
 
 export const getProduct = async (
-  id: number,
   params?: any
 ): Promise<Product | undefined> => {
   try {
@@ -161,10 +160,40 @@ export const getProduct = async (
     let paramString = '';
     // params include
     if (params) {
-      paramString = qs.stringify(params);
+      if (params) {
+        paramString = qs.stringify({
+          populate: '*',
+          filters: {
+            categorie: {
+              id: params.categorie,
+            },
+            radius: {
+              id: params.radius.id,
+            },
+            sphere: {
+              id: params.sphere.id,
+            },
+            adds: {
+              id: params.add.id,
+            },
+            axes: {
+              id: params.ax.id,
+            },
+            cylinders: {
+              id: params.cylinder.id,
+            },
+            dominants: {
+              id: params.dominant.id,
+            },
+          },
+          encodeValuesOnly: true,
+        });
+      }
     }
+    console.log(paramString);
     const product: Product = { title: '', short_title: '', price: '' };
-    const response = await API.get(`/products/${id}/?${paramString}`);
+    const response = await API.get(`/products?${paramString}`);
+    console.log(response.data);
     if (response.data) {
       const p = response.data;
       // console.log(response.data);
