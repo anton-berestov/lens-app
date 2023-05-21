@@ -26,6 +26,10 @@ export default createStore({
       period: [],
       sphere: {},
       radius: {},
+      add: {},
+      ax: {},
+      cylinder: {},
+      dominant: {},
     },
     categories: Array<Categorie>(),
     products: Array<Product>(),
@@ -34,6 +38,10 @@ export default createStore({
       period: [],
       sphere: [],
       radius: [],
+      adds: [],
+      axes: [],
+      cylinders: [],
+      dominants: [],
     },
     user: {},
     token: '',
@@ -71,6 +79,10 @@ export default createStore({
     period: (state) => state.characteristics.period,
     sphere: (state) => state.characteristics.sphere,
     radius: (state) => state.characteristics.radius,
+    adds: (state) => state.characteristics.adds,
+    axes: (state) => state.characteristics.axes,
+    cylinders: (state) => state.characteristics.cylinders,
+    dominants: (state) => state.characteristics.dominants,
     user: (state) => state.user,
     token: (state) => state.token,
     basket: (state) => state.basket,
@@ -110,6 +122,12 @@ export default createStore({
     SET_PERIOD: (state, payload) => (state.characteristics.period = payload),
     SET_SPHERE: (state, payload) => (state.characteristics.sphere = payload),
     SET_RADIUS: (state, payload) => (state.characteristics.radius = payload),
+    SET_ADDS: (state, payload) => (state.characteristics.adds = payload),
+    SET_AXES: (state, payload) => (state.characteristics.axes = payload),
+    SET_CYLINDERS: (state, payload) =>
+      (state.characteristics.cylinders = payload),
+    SET_DOMINANTS: (state, payload) =>
+      (state.characteristics.dominants = payload),
     SET_USER: (state, payload) => (state.user = payload),
     SET_TOKEN: (state, payload) => (state.token = payload),
     SET_BASKET: (state, payload) => (state.basket = payload),
@@ -208,6 +226,61 @@ export default createStore({
         getCharacteristics('spheres')
           .then((data) => {
             context.commit('SET_SPHERE', data);
+            resolve(data);
+          })
+          .catch((e) => {
+            console.error(e);
+            reject(e);
+          });
+      });
+    },
+    async getAdds(context: any) {
+      return new Promise((resolve, reject) => {
+        getCharacteristics('adds')
+          .then((data) => {
+            context.commit('SET_ADDS', data);
+            resolve(data);
+          })
+          .catch((e) => {
+            console.error(e);
+            reject(e);
+          });
+      });
+    },
+
+    async getAxes(context: any) {
+      return new Promise((resolve, reject) => {
+        getCharacteristics('axes')
+          .then((data) => {
+            context.commit('SET_AXES', data);
+            resolve(data);
+          })
+          .catch((e) => {
+            console.error(e);
+            reject(e);
+          });
+      });
+    },
+
+    async getCylinders(context: any) {
+      return new Promise((resolve, reject) => {
+        getCharacteristics('cylinders')
+          .then((data) => {
+            context.commit('SET_CYLINDERS', data);
+            resolve(data);
+          })
+          .catch((e) => {
+            console.error(e);
+            reject(e);
+          });
+      });
+    },
+
+    async getDominants(context: any) {
+      return new Promise((resolve, reject) => {
+        getCharacteristics('dominants')
+          .then((data) => {
+            context.commit('SET_DOMINANTS', data);
             resolve(data);
           })
           .catch((e) => {

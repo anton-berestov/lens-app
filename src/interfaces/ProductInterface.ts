@@ -15,6 +15,7 @@ export interface Product {
   radius?: Array<Radius>;
   sphere?: Array<Sphere>;
   type?: string;
+  categorie?: number;
 }
 
 // Image Interface to use in Frontend

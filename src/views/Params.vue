@@ -16,73 +16,100 @@
       </ion-row>
 
       <div>
-        <ion-row class="ion-margin" :class="{ activeClass: isActive }">
-          <ion-col style="padding-left: 0" class="ion-margin-end">
+        <ion-row class="ion-margin">
+          <ion-col
+            style="padding-left: 0"
+            class="ion-margin-end"
+            :class="{ sphereRadiusClass: isSphere }"
+            v-if="sphere.length"
+          >
             <ion-title class="text">{{ $t('SPHERE') }}</ion-title>
             <Select
               :options="sphere"
               :placeholder="$t('SELECT')"
               class="ion-margin-top"
-              @isOpen="openSelect"
+              @isOpen="openSphere"
               v-model="select.sphere"
             />
           </ion-col>
-          <ion-col style="padding-right: 0">
+          <ion-col
+            style="padding-right: 0"
+            :class="{ sphereRadiusClass: isRadius }"
+            v-if="radius.length"
+          >
             <ion-title class="text">{{ $t('RADIUS-CURVATURE') }}</ion-title>
             <Select
               :options="radius"
               :placeholder="$t('SELECT')"
               class="ion-margin-top"
-              @isOpen="openSelect"
+              @isOpen="openRadius"
               v-model="select.radius"
             />
           </ion-col>
         </ion-row>
-        <ion-row class="ion-margin" :class="{ activeClass: isActive }">
+        <ion-row class="ion-margin">
           <ion-col
             style="padding-left: 0"
             class="ion-margin-end"
             v-if="adds.length"
+            :class="{ axAddClass: isAdd }"
           >
             <ion-title class="text">{{ $t('ADDS') }}</ion-title>
             <Select
               :options="adds"
               :placeholder="$t('SELECT')"
               class="ion-margin-top"
-              @isOpen="openSelect"
+              @isOpen="openAdd"
               v-model="select.add"
             />
           </ion-col>
-          <ion-col style="padding-right: 0" v-if="axes.length">
+          <ion-col
+            style="padding-right: 0"
+            v-if="axes.length"
+            :class="{ axAddClass: isAx }"
+          >
             <ion-title class="text">{{ $t('AXES') }}</ion-title>
             <Select
               :options="axes"
               :placeholder="$t('SELECT')"
               class="ion-margin-top"
-              @isOpen="openSelect"
+              @isOpen="openAx"
               v-model="select.ax"
             />
           </ion-col>
         </ion-row>
-        <ion-row
-          class="ion-margin"
-          :class="{ activeClass: isActive }"
-          v-if="cylinders.length"
-        >
-          <ion-col style="padding-left: 0">
+        <ion-row class="ion-margin">
+          <ion-col
+            style="padding-left: 0"
+            :class="{ cylinderClass: isCylinder }"
+            v-if="cylinders.length"
+          >
             <ion-title class="text">{{ $t('CYLINDERS') }}</ion-title>
             <Select
               :options="cylinders"
               :placeholder="$t('SELECT')"
               class="ion-margin-top"
-              @isOpen="openSelect"
+              @isOpen="openCylinder"
               v-model="select.cylinder"
+            />
+          </ion-col>
+          <ion-col
+            style="padding-left: 0"
+            :class="{ dominantClass: isDominant }"
+            v-if="dominants.length"
+          >
+            <ion-title class="text">{{ $t('DOMINANT') }}</ion-title>
+            <Select
+              :options="dominants"
+              :placeholder="$t('SELECT')"
+              class="ion-margin-top"
+              @isOpen="openDominant"
+              v-model="select.dominant"
             />
           </ion-col>
         </ion-row>
         <ion-row
           class="ion-margin ion-justify-content-start ion-align-items-center"
-          :class="{ openSelect: isActive }"
         >
           <ion-label class="text">{{ $t('QUANTITY') }}</ion-label>
           <div class="box ion-margin-start">
@@ -97,32 +124,101 @@
         </ion-row>
       </div>
 
-      <div v-if="different">
-        <ion-row class="ion-margin" :class="{ activeClass: isActiveTwo }">
-          <ion-col style="padding-left: 0" class="ion-margin-end">
+      <div v-if="different" class="ion-margin-top ion-padding-top">
+        <ion-row class="ion-margin">
+          <ion-col
+            style="padding-left: 0"
+            class="ion-margin-end"
+            :class="{ sphereRadiusClassTwo: isSphereTwo }"
+            v-if="sphere.length"
+          >
             <ion-title class="text">{{ $t('SPHERE') }}</ion-title>
             <Select
               :options="sphere"
               :placeholder="$t('SELECT')"
               class="ion-margin-top"
-              @isOpen="openSelectTwo"
+              @isOpen="openSphereTwo"
               v-model="select.sphere2"
             />
           </ion-col>
-          <ion-col style="padding-right: 0">
+          <ion-col
+            style="padding-right: 0"
+            :class="{ sphereRadiusClassTwo: isRadiusTwo }"
+            v-if="radius.length"
+          >
             <ion-title class="text">{{ $t('RADIUS-CURVATURE') }}</ion-title>
             <Select
               :options="radius"
               :placeholder="$t('SELECT')"
               class="ion-margin-top"
-              @isOpen="openSelectTwo"
+              @isOpen="openRadiusTwo"
               v-model="select.radius2"
+            />
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin">
+          <ion-col
+            style="padding-left: 0"
+            class="ion-margin-end"
+            v-if="adds.length"
+            :class="{ axAddClassTwo: isAddTwo }"
+          >
+            <ion-title class="text">{{ $t('ADDS') }}</ion-title>
+            <Select
+              :options="adds"
+              :placeholder="$t('SELECT')"
+              class="ion-margin-top"
+              @isOpen="openAddTwo"
+              v-model="select.add"
+            />
+          </ion-col>
+          <ion-col
+            style="padding-right: 0"
+            v-if="axes.length"
+            :class="{ axAddClassTwo: isAxTwo }"
+          >
+            <ion-title class="text">{{ $t('AXES') }}</ion-title>
+            <Select
+              :options="axes"
+              :placeholder="$t('SELECT')"
+              class="ion-margin-top"
+              @isOpen="openAxTwo"
+              v-model="select.ax"
+            />
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin">
+          <ion-col
+            style="padding-left: 0"
+            :class="{ cylinderClassTwo: isCylinderTwo }"
+            v-if="cylinders.length"
+          >
+            <ion-title class="text">{{ $t('CYLINDERS') }}</ion-title>
+            <Select
+              :options="cylinders"
+              :placeholder="$t('SELECT')"
+              class="ion-margin-top"
+              @isOpen="openCylinderTwo"
+              v-model="select.cylinder"
+            />
+          </ion-col>
+          <ion-col
+            style="padding-left: 0"
+            :class="{ dominantClassTwo: isDominantTwo }"
+            v-if="dominants.length"
+          >
+            <ion-title class="text">{{ $t('DOMINANT') }}</ion-title>
+            <Select
+              :options="dominants"
+              :placeholder="$t('SELECT')"
+              class="ion-margin-top"
+              @isOpen="openDominant"
+              v-model="select.cylinder"
             />
           </ion-col>
         </ion-row>
         <ion-row
           class="ion-margin ion-justify-content-start ion-align-items-center"
-          :class="{ openSelectTwo: isActiveTwo }"
         >
           <ion-label class="text">{{ $t('QUANTITY') }}</ion-label>
           <div class="box ion-margin-start">
@@ -194,8 +290,18 @@ export default defineComponent({
   },
   data() {
     return {
-      isActive: false,
-      isActiveTwo: false,
+      isCylinder: false,
+      isAx: false,
+      isAdd: false,
+      isRadius: false,
+      isSphere: false,
+      isDominant: false,
+      isCylinderTwo: false,
+      isAxTwo: false,
+      isAddTwo: false,
+      isRadiusTwo: false,
+      isSphereTwo: false,
+      isDominantTwo: false,
       radius: [],
       sphere: [],
       select: {
@@ -210,6 +316,7 @@ export default defineComponent({
       adds: [],
       axes: [],
       cylinders: [],
+      dominants: [],
       plus: addOutline,
       minus: removeOutline,
       different: false,
@@ -307,88 +414,50 @@ export default defineComponent({
       }
       this.segment = val
     },
-    openSelect(e) {
-      this.isActive = e;
+    openSphere(e) {
+      this.isSphere = e
     },
-    openSelectTwo(e) {
-      this.isActiveTwo = e;
+    openRadius (e) {
+      this.isRadius = e
+    },
+    openCylinder(e) {
+      this.isCylinder = e
+    },
+    openAx(e) {
+      this.isAx = e
+    },
+    openAdd(e) {
+      this.isAdd = e
+    },
+    openDominant(e) {
+      this.isDomonant = e
+    },
+    openSphereTwo(e) {
+      this.isSphereTwo = e
+    },
+    openRadiusTwo (e) {
+      this.isRadiusTwo = e
+    },
+    openCylinderTwo(e) {
+      this.isCylinderTwo = e
+    },
+    openAxTwo(e) {
+      this.isAxTwo = e
+    },
+    openAddTwo(e) {
+      this.isAddTwo = e
+    },
+    openDominantTwo(e) {
+      this.isDomonant = e
     },
     getMeta(meta) {
       console.log(meta)
-      meta.map((el)=> {
-      if (Object.hasOwnProperty.call(el, 'radius')) {
-          el.radius.map((p)=> {
-            if(this.radius.length) {
-              this.radius.map((e)=> {
-                if(e.id !== p.id) {
-                  this.radius.push(p)
-                }
-              })
-            } else {
-              this.radius.push(p)
-            }
-          })
-      }
-
-      if (Object.hasOwnProperty.call(el, 'sphere')) {
-          el.sphere.map((p)=> {
-            if (this.sphere.length) {
-              this.sphere.map((e)=> {
-                if (e.id !== p.id){
-                  this.sphere.push(p)
-                }
-              })
-            } else {
-              this.sphere.push(p)
-            }
-          })
-      }
-
-      // if (Object.hasOwnProperty.call(el, 'adds')) {
-      //     el.adds.map((p)=> {
-      //       if (this.adds.length) {
-      //         this.adds.map((e)=> {
-      //           if (e.id !== p.id) {
-      //             this.adds.push(p)
-      //           }
-      //         })
-      //       } else {
-      //         this.adds.push(p)
-      //       }
-      //     })
-      // }
-
-      // if (Object.hasOwnProperty.call(el, 'axes')) {
-      //   if(el.axes.length) {
-      //     el.axes.map((p)=> {
-      //       if (this.axes.length) {
-      //         this.axes.map((e)=> {
-      //           if (e.id !== p.id) {
-      //             this.axes.push(p)
-      //           }
-      //         })
-      //       } else {
-      //         this.axes.push(p)
-      //       }
-      //     })
-      //   }
-      // }
-
-      // if (Object.hasOwnProperty.call(el, 'cylinders')) {
-      //     el.cylinders.map((p)=> {
-      //       if (this.cylinders.length) {
-      //         this.cylinders.map((e)=> {
-      //           console.log(p.id)
-      //           if (e.id !== p.id) {
-      //             this.cylinders.push(p)
-      //           }
-      //         })
-      //       } else {
-      //         this.cylinders.push(p)
-      //       }
-      //     })
-      // }
-    })
+      this.radius = meta.radiuses
+      this.sphere = meta.spheres
+      this.axes = meta.axis
+      this.cylinders = meta.cylinders
+      this.dominants = meta.dominants
+      this.adds = meta.adds
     }
   },
 });
@@ -429,7 +498,34 @@ export default defineComponent({
       --background: none;
     }
 
-    .activeClass {
+    .sphereRadiusClass {
+      margin-bottom: 170px;
+    }
+
+    .axAddClass {
+      margin-bottom: 170px;
+    }
+
+    .cylinderClass {
+      margin-bottom: 170px;
+    }
+
+    .dominantClass {
+      margin-bottom: 170px;
+    }
+    .sphereRadiusClassTwo {
+      margin-bottom: 170px;
+    }
+
+    .axAddClassTwo {
+      margin-bottom: 170px;
+    }
+
+    .cylinderClassTwo {
+      margin-bottom: 170px;
+    }
+
+    .dominantClassTwo {
       margin-bottom: 170px;
     }
 

@@ -1,7 +1,7 @@
 <template>
   <ion-modal
     :is-open="show"
-    :initial-breakpoint="0.7"
+    :initial-breakpoint="0.9"
     @willPresent="onChange"
     @didDismiss="$emit('hide')"
     class="filter-modal"
@@ -46,54 +46,128 @@
           />
         </ion-row>
 
-        <ion-row class="ion-margin" :class="{ activeClass: isActive }">
-          <ion-col style="padding-left: 0" class="ion-margin-end">
+        <ion-row class="ion-margin">
+          <ion-col
+            style="padding-left: 0"
+            class="ion-margin-end"
+            :class="{ sphereRadius: isSphere }"
+          >
             <ion-title class="text">{{ $t('SPHERE') }}</ion-title>
             <Select
               :options="sphere"
               :placeholder="$t('SELECT')"
               class="ion-margin-top"
-              @isOpen="openSelect"
+              @isOpen="openShpere"
               v-model="filter.sphere"
             />
           </ion-col>
-          <ion-col style="padding-right: 0">
+          <ion-col style="padding-right: 0" :class="{ sphereRadius: isRadius }">
             <ion-title class="text">{{ $t('RADIUS-CURVATURE') }}</ion-title>
             <Select
               :options="radius"
               :placeholder="$t('SELECT')"
               class="ion-margin-top"
-              @isOpen="openSelect"
+              @isOpen="openRadius"
               v-model="filter.radius"
+            />
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin">
+          <ion-col
+            style="padding-left: 0"
+            class="ion-margin-end"
+            v-if="adds.length"
+            :class="{ axAdd: isAdd }"
+          >
+            <ion-title class="text">{{ $t('ADDS') }}</ion-title>
+            <Select
+              :options="adds"
+              :placeholder="$t('SELECT')"
+              class="ion-margin-top"
+              @isOpen="openAdd"
+              v-model="filter.add"
+            />
+          </ion-col>
+          <ion-col
+            style="padding-right: 0"
+            v-if="axes.length"
+            :class="{ axAdd: isAx }"
+          >
+            <ion-title class="text">{{ $t('AXES') }}</ion-title>
+            <Select
+              :options="axes"
+              :placeholder="$t('SELECT')"
+              class="ion-margin-top"
+              @isOpen="openAx"
+              v-model="filter.ax"
+            />
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin">
+          <ion-col
+            style="padding-left: 0"
+            :class="{ cylinderDominant: isCylinder }"
+            class="ion-margin-end"
+            v-if="cylinders.length"
+          >
+            <ion-title class="text">{{ $t('CYLINDERS') }}</ion-title>
+            <Select
+              :options="cylinders"
+              :placeholder="$t('SELECT')"
+              class="ion-margin-top"
+              @isOpen="openCylinder"
+              v-model="filter.cylinder"
+            />
+          </ion-col>
+          <ion-col
+            style="padding-left: 0"
+            :class="{ cylinderDominant: isDominant }"
+            v-if="dominants.length"
+          >
+            <ion-title class="text">{{ $t('DOMINANT') }}</ion-title>
+            <Select
+              :options="dominants"
+              :placeholder="$t('SELECT')"
+              class="ion-margin-top"
+              @isOpen="openDominant"
+              v-model="filter.dominant"
             />
           </ion-col>
         </ion-row>
       </ion-col>
 
       <ion-row
-        :class="{ openSelect: isActive }"
+        :class="{ openSelect: isCylinder || isDominant }"
         class="ion-justify-content-center"
         v-if="
           !(
             filter.period.length ||
             filter.type.length ||
             Object.keys(filter.sphere).length ||
-            Object.keys(filter.radius).length
+            Object.keys(filter.radius).length ||
+            Object.keys(filter.add).length ||
+            Object.keys(filter.ax).length ||
+            Object.keys(filter.cylinder).length ||
+            Object.keys(filter.dominant).length
           )
         "
       >
-        <Button title="Закрыть" @click="$emit('hide')" />
+        <Button title="Закрыть" @click="$emit('hide')" class="closeBtn" />
       </ion-row>
 
       <ion-row
         class="ion-margin ion-justify-content-between"
-        :class="{ openSelect: isActive }"
+        :class="{ openSelect: isCylinder || isDominant }"
         v-if="
           !!(
             filter.period.length ||
             filter.type.length ||
             Object.keys(filter.sphere).length ||
-            Object.keys(filter.radius).length
+            Object.keys(filter.radius).length ||
+            Object.keys(filter.add).length ||
+            Object.keys(filter.ax).length ||
+            Object.keys(filter.cylinder).length ||
+            Object.keys(filter.dominant).length
           )
         "
       >
@@ -160,12 +234,21 @@ export default defineComponent({
     Popover
   },
   data: () => ({
-    isActive: false,
+    isRadius: false,
+    isSphere: false,
+    isAdd: false,
+    isAx: false,
+    isCylinder: false,
+    isDominant: false,
     filter: {
       type: [],
       period: [],
       sphere: {},
-      radius: {}
+      radius: {},
+      add: {},
+      ax: {},
+      cylinder: {},
+      dominant: {},
     },
   }),
 
@@ -175,7 +258,11 @@ export default defineComponent({
       type: 'type',
       radius: 'radius',
       sphere: 'sphere',
-      period: 'period'
+      period: 'period',
+      adds: 'adds',
+      axes: 'axes',
+      cylinders: 'cylinders',
+      dominants: 'dominants'
     }),
   },
 
@@ -187,6 +274,24 @@ export default defineComponent({
     },
     openSelect(e) {
       this.isActive = e;
+    },
+    openRadius(e) {
+      this.isRadius = e
+    },
+    openShpere(e) {
+      this.isSphere = e
+    },
+    openCylinder(e) {
+      this.isCylinder = e
+    },
+    openAx(e) {
+      this.isAx = e
+    },
+    openAdd(e) {
+      this.isAdd = e
+    },
+    openDominant(e) {
+      this.isDominant = e
     },
     closePopover( ) {
       this.SET_POPOVER({show: false, message: []})
@@ -209,11 +314,19 @@ export default defineComponent({
       this.filter.period = []
       this.filter.sphere = {}
       this.filter.radius = {}
+      this.filter.add = {},
+      this.filter.ax = {},
+      this.filter.cylinder = {},
+      this.filter.dominant = {},
       this.SET_FILTER({
         type: [],
         period: [],
         sphere: {},
-        radius: {}
+        radius: {},
+        add: {},
+        ax: {},
+        cylinder: {},
+        dominant: {},
       })
 
     }
@@ -274,6 +387,11 @@ export default defineComponent({
     border-radius: 5px;
     font-weight: 600;
     font-size: 14px;
+    margin-top: 30px;
+  }
+
+  .closeBtn {
+    margin: 0 8px;
   }
 
   .active {
@@ -292,7 +410,15 @@ export default defineComponent({
     }
   }
 
-  .activeClass {
+  .sphereRadius {
+    margin-bottom: 170px;
+  }
+
+  .axAdd {
+    margin-bottom: 170px;
+  }
+
+  .cylinderDominant {
     margin-bottom: 170px;
   }
 

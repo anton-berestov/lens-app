@@ -49,9 +49,52 @@
             v-if="Object.keys(filter.radius).length"
             @close="close"
           />
+
+          <FilterElement
+            :options="filter.add"
+            parent="add"
+            type
+            v-if="Object.keys(filter.add).length"
+            @close="close"
+          />
+          <FilterElement
+            :options="filter.ax"
+            parent="ax"
+            type
+            v-if="Object.keys(filter.ax).length"
+            @close="close"
+          />
+          <FilterElement
+            :options="filter.cylinder"
+            parent="cylinder"
+            type
+            v-if="Object.keys(filter.cylinder).length"
+            @close="close"
+          />
+          <FilterElement
+            :options="filter.dominant"
+            parent="dominant"
+            type
+            v-if="Object.keys(filter.dominant).length"
+            @close="close"
+          />
         </ion-row>
 
-        <div class="wrapper">
+        <div
+          class="wrapper"
+          v-if="
+            !(
+              filter.period.length ||
+              filter.type.length ||
+              Object.keys(filter.sphere).length ||
+              Object.keys(filter.radius).length ||
+              Object.keys(filter.add).length ||
+              Object.keys(filter.ax).length ||
+              Object.keys(filter.cylinder).length ||
+              Object.keys(filter.dominant).length
+            )
+          "
+        >
           <Product
             v-for="categorie in categories"
             :key="categorie.id"
@@ -66,6 +109,38 @@
                 name: 'Categorie',
                 params: {
                   id: categorie.id,
+                },
+              })
+            "
+          />
+        </div>
+
+        <div
+          class="wrapper"
+          v-if="
+            filter.period.length ||
+            filter.type.length ||
+            Object.keys(filter.sphere).length ||
+            Object.keys(filter.radius).length ||
+            Object.keys(filter.add).length ||
+            Object.keys(filter.ax).length ||
+            Object.keys(filter.cylinder).length ||
+            Object.keys(filter.dominant).length
+          "
+        >
+          <Product
+            v-for="product in products"
+            :key="product.id"
+            :title="product.title"
+            :price="product.price"
+            :img="product.image"
+            :discount="product.discount"
+            class="product"
+            @click="
+              $router.push({
+                name: 'Categorie',
+                params: {
+                  id: product.categorie,
                 },
               })
             "
@@ -121,15 +196,23 @@ export default defineComponent({
   },
   async mounted() {
     await this.getCategories();
-    await this.getPeriods();
-    await this.getSpheres();
-    await this.getRadiuses();
-    await this.getTyps();
+    await this.getPeriod();
+    await this.getSphere();
+    await this.getRadius();
+    await this.getTypes();
+    await this.getAdds();
+    await this.getAxes();
+    await this.getCylinders();
+    await this.getDominants();
     this.SET_FILTER({
       type: [],
       period: [],
       sphere: {},
       radius: {},
+      add: {},
+      ax: {},
+      cylinder: {},
+      dominant: {},
     });
   },
   methods: {
@@ -147,6 +230,10 @@ export default defineComponent({
       'getTypes',
       'getRadius',
       'getSphere',
+      'getAdds',
+      'getAxes',
+      'getCylinders',
+      'getDominants',
       'getPeriod',
       'filterProducts',
       'getCategories',
@@ -155,30 +242,37 @@ export default defineComponent({
     async refresh(complete = () => {}) {
       try {
         await this.getCategories();
-        await this.getPeriods();
-        await this.getSpheres();
-        await this.getRadiuses();
-        await this.getTyps();
+        await this.getPeriod();
+        await this.getSphere();
+        await this.getRadius();
+        await this.getTypes();
+        await this.getAdds();
+        await this.getAxes();
+        await this.getCylinders();
+        await this.getDominants();
       } finally {
         complete();
       }
     },
-    async getTyps() {
-      const types = await this.getTypes();
-      this.SET_TYPE(types);
-    },
-    async getRadiuses() {
-      const radiuses = await this.getRadius();
-      this.SET_RADIUS(radiuses);
-    },
-    async getSpheres() {
-      const spheres = await this.getSphere();
-      this.SET_RADIUS(spheres);
-    },
-    async getPeriods() {
-      const periods = await this.getPeriod();
-      this.SET_RADIUS(periods);
-    },
+    // async getTyps() {
+    //   const types = await this.getTypes();
+    //   // this.SET_TYPE(types);
+    // },
+    // async getRadiuses() {
+    //   const radiuses = await this.getRadius();
+    //   // this.SET_RADIUS(radiuses);
+    // },
+    // async getSpheres() {
+    //   const spheres = await this.getSphere();
+    //   // this.SET_RADIUS(spheres);
+    // },
+    // async getPeriods() {
+    //   const periods = await this.getPeriod();
+    //   // this.SET_RADIUS(periods);
+    // },
+    // async getAdds() {
+    //   const adds = await this.getAdds();
+    // },
     hide() {
       this.isFilter = false;
     },
@@ -186,7 +280,14 @@ export default defineComponent({
       this.SET_LOADING(true);
       const a = { ...this.filter };
 
-      if (el.parent === 'sphere' || el.parent === 'radius') {
+      if (
+        el.parent === 'sphere' ||
+        el.parent === 'radius' ||
+        el.parent === 'add' ||
+        el.parent === 'ax' ||
+        el.parent === 'cylinder' ||
+        el.parent === 'dominant'
+      ) {
         for (let key in a[el.parent]) {
           delete a[el.parent][key];
         }
@@ -204,14 +305,14 @@ export default defineComponent({
         this.SET_LOADING(false);
       }
 
-      if (
-        !Object.keys(a.sphere).length &&
-        !Object.keys(a.radius).length &&
-        !a.period.length &&
-        !a.type.length
-      ) {
-        this.getProducts({ populate: '*' });
-      }
+      // if (
+      //   !Object.keys(a.sphere).length &&
+      //   !Object.keys(a.radius).length &&
+      //   !a.period.length &&
+      //   !a.type.length
+      // ) {
+      //   this.getProducts({ populate: '*' });
+      // }
     },
   },
 });
@@ -245,7 +346,8 @@ export default defineComponent({
 .wrapper {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  margin: 0 8px;
 
   .product:after {
     --background: #deeeea;
