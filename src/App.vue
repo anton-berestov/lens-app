@@ -13,7 +13,7 @@ import {
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { StatusBar, Style } from '@capacitor/status-bar';
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default defineComponent({
   name: 'App',
@@ -49,6 +49,19 @@ export default defineComponent({
   },
   methods: {
     ...mapMutations(['SET_TOKEN', 'SET_USER']),
+    ...mapActions([
+      'getProducts',
+      'getTypes',
+      'getRadius',
+      'getSphere',
+      'getAdds',
+      'getAxes',
+      'getCylinders',
+      'getDominants',
+      'getPeriod',
+      'filterProducts',
+      'getCategories',
+    ]),
     async presentAlert() {
       try {
         const alert = await alertController.create({
@@ -67,6 +80,15 @@ export default defineComponent({
     },
   },
   async mounted() {
+    await this.getCategories();
+    await this.getPeriod();
+    await this.getSphere();
+    await this.getRadius();
+    await this.getTypes();
+    await this.getAdds();
+    await this.getAxes();
+    await this.getCylinders();
+    await this.getDominants();
     if (!isPlatform('mobileweb')) {
       try {
         await StatusBar.setStyle({ style: Style.Light });

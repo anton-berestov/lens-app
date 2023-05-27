@@ -195,15 +195,15 @@ export default defineComponent({
     ...mapGetters(['filter', 'products', 'loading', 'categories']),
   },
   async mounted() {
-    await this.getCategories();
-    await this.getPeriod();
-    await this.getSphere();
-    await this.getRadius();
-    await this.getTypes();
-    await this.getAdds();
-    await this.getAxes();
-    await this.getCylinders();
-    await this.getDominants();
+    // await this.getCategories();
+    // await this.getPeriod();
+    // await this.getSphere();
+    // await this.getRadius();
+    // await this.getTypes();
+    // await this.getAdds();
+    // await this.getAxes();
+    // await this.getCylinders();
+    // await this.getDominants();
     this.SET_FILTER({
       type: [],
       period: [],
@@ -254,25 +254,6 @@ export default defineComponent({
         complete();
       }
     },
-    // async getTyps() {
-    //   const types = await this.getTypes();
-    //   // this.SET_TYPE(types);
-    // },
-    // async getRadiuses() {
-    //   const radiuses = await this.getRadius();
-    //   // this.SET_RADIUS(radiuses);
-    // },
-    // async getSpheres() {
-    //   const spheres = await this.getSphere();
-    //   // this.SET_RADIUS(spheres);
-    // },
-    // async getPeriods() {
-    //   const periods = await this.getPeriod();
-    //   // this.SET_RADIUS(periods);
-    // },
-    // async getAdds() {
-    //   const adds = await this.getAdds();
-    // },
     hide() {
       this.isFilter = false;
     },
@@ -304,15 +285,6 @@ export default defineComponent({
         this.filterProducts();
         this.SET_LOADING(false);
       }
-
-      // if (
-      //   !Object.keys(a.sphere).length &&
-      //   !Object.keys(a.radius).length &&
-      //   !a.period.length &&
-      //   !a.type.length
-      // ) {
-      //   this.getProducts({ populate: '*' });
-      // }
     },
   },
 });

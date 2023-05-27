@@ -38,9 +38,7 @@
               </ion-col>
               <ion-col class="ion-margin-start" style="flex: 2">
                 <ion-row>
-                  <ion-label class="title"
-                    >{{ `${order.title} ${order.short_title}` }}
-                  </ion-label>
+                  <ion-label class="title">{{ `${order.title}` }} </ion-label>
                 </ion-row>
                 <ion-row class="ion-margin-top">
                   <ion-label class="label"
@@ -319,7 +317,6 @@ export default defineComponent({
     .card {
       width: 100%;
       margin-bottom: 0;
-      margin-top: 0;
 
       .card-content {
         padding: 12px;

@@ -14,6 +14,10 @@ export interface Product {
   period?: string;
   radius?: Array<Radius>;
   sphere?: Array<Sphere>;
+  cylinder?: Array<Cylinders>;
+  add?: Array<Adds>;
+  ax?: Array<Axes>;
+  dominant?: Array<Dominants>;
   type?: string;
   categorie?: number;
 }
@@ -75,6 +79,10 @@ export interface Cylinders {
   title: string;
 }
 
+export interface Dominants {
+  id: number;
+  title: string;
+}
 export interface Type {
   id: number;
   title: string;

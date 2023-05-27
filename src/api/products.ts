@@ -9,7 +9,11 @@ import {
   Sphere,
   Type,
   Diameter,
+  Cylinders,
   Characteristics,
+  Adds,
+  Axes,
+  Dominants,
 } from '@/interfaces/ProductInterface';
 import qs from 'qs';
 import API from './index';
@@ -190,13 +194,11 @@ export const getProduct = async (
         });
       }
     }
-    console.log(paramString);
+
     const product: Product = { title: '', short_title: '', price: '' };
     const response = await API.get(`/products?${paramString}`);
-    console.log(response.data);
     if (response.data) {
-      const p = response.data;
-      // console.log(response.data);
+      const p = response.data[0];
 
       //extract images
       const images: Image[] = [];
@@ -260,8 +262,8 @@ export const getProduct = async (
           radius.push({ id: el.id, title: el.attributes.title });
         });
       }
-      // if Product has manufacturer map to Sphere Interface
 
+      // if Product has manufacturer map to Sphere Interface
       const sphere: Sphere[] = [];
       if (Object.hasOwnProperty.call(p.attributes, 'sphere')) {
         const m = p.attributes.sphere.data || [];
@@ -269,6 +271,42 @@ export const getProduct = async (
           sphere.push({ id: el.id, title: el.attributes.title });
         });
       }
+
+      // if Product has manufacturer map to Cylinder Interface
+      const cylinder: Cylinders[] = [];
+      if (Object.hasOwnProperty.call(p.attributes, 'cylinders')) {
+        const m = p.attributes.cylinders.data || [];
+        m.map((el: any) => {
+          cylinder.push({ id: el.id, title: el.attributes.title });
+        });
+      }
+
+      // if Product has manufacturer map to Adds Interface
+      const add: Adds[] = [];
+      if (Object.hasOwnProperty.call(p.attributes, 'adds')) {
+        const m = p.attributes.adds.data || [];
+        m.map((el: any) => {
+          add.push({ id: el.id, title: el.attributes.title });
+        });
+      }
+
+      // if Product has manufacturer map to Axes Interface
+      const ax: Axes[] = [];
+      if (Object.hasOwnProperty.call(p.attributes, 'axes')) {
+        const m = p.attributes.axes.data || [];
+        m.map((el: any) => {
+          ax.push({ id: el.id, title: el.attributes.title });
+        });
+      }
+
+      const dominant: Dominants[] = [];
+      if (Object.hasOwnProperty.call(p.attributes, 'dominants')) {
+        const m = p.attributes.dominants.data || [];
+        m.map((el: any) => {
+          ax.push({ id: el.id, title: el.attributes.title });
+        });
+      }
+
       // if Product has manufacturer map to Sphere Interface
       const type: Type = { id: 0, title: '', description: '' };
       if (Object.hasOwnProperty.call(p.attributes, 'type')) {
@@ -281,7 +319,7 @@ export const getProduct = async (
       const categorie = { id: 0 };
       if (Object.hasOwnProperty.call(p.attributes, 'categorie')) {
         const m = p.attributes.categorie.data;
-        type.id = m?.id;
+        categorie.id = m?.id;
       }
 
       product.id = p.id;
@@ -297,10 +335,14 @@ export const getProduct = async (
       product.period = period.title;
       product.radius = radius;
       product.sphere = sphere;
+      product.cylinder = cylinder;
+      product.add = add;
+      product.ax = ax;
+      product.dominant = dominant;
       product.type = type.title;
       product.categorie = categorie.id;
     }
-    console.log(product);
+    // console.log(product);
     return product;
   } catch (e) {
     console.error(e);

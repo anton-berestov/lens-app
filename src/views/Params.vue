@@ -56,7 +56,6 @@
         <ion-row class="ion-margin">
           <ion-col
             style="padding-left: 0"
-            class="ion-margin-end"
             v-if="adds.length"
             :class="{ axAddClass: isAdd }"
           >
@@ -183,7 +182,6 @@
         <ion-row class="ion-margin">
           <ion-col
             style="padding-left: 0"
-            class="ion-margin-end"
             v-if="adds.length"
             :class="{ axAddClassTwo: isAddTwo }"
           >
@@ -327,18 +325,18 @@ export default defineComponent({
   },
   data() {
     return {
-      isCylinder: false,
       isAx: false,
       isAdd: false,
       isRadius: false,
       isSphere: false,
       isDominant: false,
-      isCylinderTwo: false,
+      isCylinder: false,
       isAxTwo: false,
       isAddTwo: false,
       isRadiusTwo: false,
       isSphereTwo: false,
       isDominantTwo: false,
+      isCylinderTwo: false,
       radius: [],
       sphere: [],
       fields: {
@@ -387,7 +385,7 @@ export default defineComponent({
       a.push(this.adds.length && !Object.keys(this.fields.add).length ? 'add' : '')
       a.push(this.axes.length && !Object.keys(this.fields.ax).length ? 'ax' : '')
       a.push(this.cylinders.length && !Object.keys(this.fields.cylinder).length ? 'cylinder' : '')
-      a.push(this.dominants.length && !Object.keys(this.fields.dominant).length ? 'dominants' : '')
+      a.push(this.dominants.length && !Object.keys(this.fields.dominant).length ? 'dominant' : '')
       return a
     },
     requiredFieldsTwo() {
@@ -397,18 +395,18 @@ export default defineComponent({
       a.push(this.adds.length && !Object.keys(this.fieldsTwo.add).length ? 'add' : '')
       a.push(this.axes.length && !Object.keys(this.fieldsTwo.ax).length ? 'ax' : '')
       a.push(this.cylinders.length && !Object.keys(this.fieldsTwo.cylinder).length ? 'cylinder' : '')
-      a.push(this.dominants.length && !Object.keys(this.fieldsTwo.dominant).length ? 'dominants' : '')
+      a.push(this.dominants.length && !Object.keys(this.fieldsTwo.dominant).length ? 'dominant' : '')
       return a
     },
   },
   methods: {
-    ...mapMutations(['SET_POPOVER', 'SET_ORDER_PRODUCT_DETAILS', 'SET_BASKET_COUNT', 'SET_TOTAL_AMOUNT', 'SET_TOTAL_DISCOUNT', 'SET_LOADING']),
+    ...mapMutations(['SET_POPOVER', 'SET_ORDER_PRODUCT_DETAILS', 'SET_BASKET_COUNT', 'SET_TOTAL_AMOUNT', 'SET_TOTAL_DISCOUNT', 'SET_LOADING', 'SET_PRODUCTS']),
     ...mapActions(['getProduct']),
     checkSelect,
     checkSelectTwo,
-    apply() {
+    async apply() {
       if (!this.different && !this.checkSelect()) {
-        const product  = this.getProduct({
+        const product  = await this.getProduct({
           categorie: this.id,
           radius: this.fields.radius,
           sphere: this.fields.sphere,
@@ -418,28 +416,29 @@ export default defineComponent({
           dominant: this.fields.dominant
         });
         console.log(product);
-        //
-        // const a = {
-        //   categorie: this.id,
-        //   radius: this.select.radius.id,
-        //   sphere: this.select.sphere.id,
-        //   cylinder: this.select.cylinder.id,
-        //   add: this.select.add.id,
-        //   ax: this.select.ax.id,
-        //   dominant: this.select.dominant.id,
-        //   product_count: this.countOne,
-        //   product_amount: Number(this.product.price) * this.countOne,
-        //   product_discount: discountPrice(this.product.price, this.product.discount ?? 0) * this.countOne
-        // };
-        //
-        // console.log(a);
-        // this.SET_ORDER_PRODUCT_DETAILS(a);
-        // this.SET_BASKET_COUNT();
-        // this.SET_TOTAL_AMOUNT();
-        // this.SET_TOTAL_DISCOUNT();
-        // this.$router.replace({name: 'Basket'})
+
+        const a = {
+          product: product.id,
+          categorie: product.categorie,
+          radius:product?.radius[0]?.id,
+          sphere: product?.sphere[0]?.id,
+          cylinder: product?.cylinder[0]?.id,
+          add: product?.add[0]?.id,
+          ax: product?.ax[0]?.id,
+          dominant: product?.dominant[0]?.id,
+          product_count: this.countOne,
+          product_amount: Number(product.price) * this.countOne,
+          product_discount: discountPrice(product.price, product.discount ?? 0) * this.countOne
+        };
+
+        this.SET_PRODUCTS(product)
+        this.SET_ORDER_PRODUCT_DETAILS(a);
+        this.SET_BASKET_COUNT();
+        this.SET_TOTAL_AMOUNT();
+        this.SET_TOTAL_DISCOUNT();
+        this.$router.replace({name: 'Basket'})
       } else if (this.different && !this.checkSelect() && !this.checkSelectTwo()) {
-        this.getProduct({
+        const product = await this.getProduct({
           categorie: this.id,
           radius: this.fields.radius,
           sphere: this.fields.sphere,
@@ -449,7 +448,8 @@ export default defineComponent({
           dominant: this.fields.dominant
         });
 
-        this.getProduct({
+
+        const productTwo = await this.getProduct({
           categorie: this.id,
           radius: this.fieldsTwo.radius,
           sphere: this.fieldsTwo.sphere,
@@ -458,28 +458,40 @@ export default defineComponent({
           ax: this.fieldsTwo.ax,
           dominant: this.fieldsTwo.dominant
         });
-        // const a = {
-        //   product: this.product.id,
-        //   radius: this.select.radius.id,
-        //   sphere: this.select.sphere.id,
-        //   product_count: this.countOne,
-        //   product_amount: Number(this.product.price) * this.countOne,
-        //   product_discount: discountPrice(this.product.price, this.product.discount ?? 0) * this.countOne
-        // };
-        // this.SET_ORDER_PRODUCT_DETAILS(a);
-        //
-        // const b = {
-        //   product: this.product.id,
-        //   radius: this.select.radius2.id,
-        //   sphere: this.select.sphere2.id,
-        //   product_count: this.countTwo,
-        //   product_amount: Number(this.product.price) * this.countTwo,
-        //   product_discount: discountPrice(this.product.price, this.product.discount ?? 0) * this.countTwo
-        // };
-        // this.SET_ORDER_PRODUCT_DETAILS(b);
-        // this.SET_BASKET_COUNT();
-        // this.$router.replace({ name: 'Basket' });
+        const a = {
+          product: product.id,
+          categorie: product.categorie,
+          radius:product?.radius[0]?.id,
+          sphere: product?.sphere[0]?.id,
+          cylinder: product?.cylinder[0]?.id,
+          add: product?.add[0]?.id,
+          ax: product?.ax[0]?.id,
+          dominant: product?.dominant[0]?.id,
+          product_count: this.countOne,
+          product_amount: Number(product.price) * this.countOne,
+          product_discount: discountPrice(product.price, product.discount ?? 0) * this.countOne
+        };
 
+        const b = {
+          product: productTwo.id,
+          categorie: productTwo.categorie,
+          radius:productTwo?.radius[0]?.id,
+          sphere: productTwo?.sphere[0]?.id,
+          cylinder: productTwo?.cylinder[0]?.id,
+          add: productTwo?.add[0]?.id,
+          ax: productTwo?.ax[0]?.id,
+          dominant: productTwo?.dominant[0]?.id,
+          product_count: this.countOne,
+          product_amount: Number(productTwo.price) * this.countOne,
+          product_discount: discountPrice(productTwo.price, productTwo.discount ?? 0) * this.countOne
+        };
+
+        this.SET_PRODUCTS(product)
+        this.SET_ORDER_PRODUCT_DETAILS(a);
+        this.SET_PRODUCTS(productTwo)
+        this.SET_ORDER_PRODUCT_DETAILS(b);
+        this.SET_BASKET_COUNT();
+        this.$router.replace({ name: 'Basket' });
       }
     },
     closePopover() {
@@ -525,7 +537,7 @@ export default defineComponent({
       this.isAdd = e;
     },
     openDominant(e) {
-      this.isDomonant = e;
+      this.isDominant = e;
     },
     openSphereTwo(e) {
       this.isSphereTwo = e;
@@ -543,16 +555,15 @@ export default defineComponent({
       this.isAddTwo = e;
     },
     openDominantTwo(e) {
-      this.isDomonant = e;
+      this.isDominantTwo = e;
     },
     getMeta(meta) {
-      console.log(meta);
       this.radius = meta.radiuses;
       this.sphere = meta.spheres;
+      this.adds = meta.adds;
       this.axes = meta.axis;
       this.cylinders = meta.cylinders;
       this.dominants = meta.dominants;
-      this.adds = meta.adds;
     }
   }
 });
@@ -578,7 +589,6 @@ export default defineComponent({
       font-size: 12px;
       margin: 5px;
     }
-
     .box {
       background: rgba(77, 172, 151, 0.3);
       border-radius: 2px;
@@ -610,11 +620,9 @@ export default defineComponent({
     .cylinderClass {
       margin-bottom: 170px;
     }
-
     .dominantClass {
       margin-bottom: 170px;
     }
-
     .sphereRadiusClassTwo {
       margin-bottom: 170px;
     }
@@ -630,7 +638,6 @@ export default defineComponent({
     .dominantClassTwo {
       margin-bottom: 170px;
     }
-
     .row {
       position: relative;
       left: 0;

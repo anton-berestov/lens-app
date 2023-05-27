@@ -23,7 +23,6 @@ export function checkFields(e) {
     });
   } else {
     Object.keys(this.fields).forEach((i) => {
-      console.log(Object.keys(this.fields[i]).length);
       if (
         this.requiredFields.indexOf(i) >= 0 &&
         !this.fields[i] &&
