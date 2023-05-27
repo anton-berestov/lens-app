@@ -100,7 +100,7 @@ export default createStore({
     SET_ERROR: (state, payload) => (state.error = payload),
     SET_FILTER: (state, payload) => (state.filter = payload),
     SET_CATEGORIES: (state, payload) => (state.categories = payload),
-    SET_PRODUCTS: (state, payload) => state.products.push(payload),
+    SET_PRODUCTS: (state, payload) => (state.products = payload),
     SET_ORDER_PRODUCT_DETAILS: (state, payload: OrderProductDetails) =>
       state.basket.order_product_details.push(payload),
     SET_ORDER_PRODUCT_DETAILS_FULL: (state, payload) =>

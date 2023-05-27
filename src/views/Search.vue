@@ -22,17 +22,24 @@
       />
       <ion-list class="ion-margin-top list">
         <ion-item
-          v-for="product in onProducts"
-          :key="product.id"
-          @click="$router.push({ name: 'Product', params: { id: product.id } })"
+          v-for="catalogie in onProducts"
+          :key="catalogie.id"
+          @click="
+            $router.push({
+              name: 'Categorie',
+              params: { id: catalogie.id },
+            })
+          "
         >
           <ion-thumbnail slot="start">
-            <ion-img :src="product.image[0].thumbnailUrl" />
+            <ion-img :src="catalogie.image[0].thumbnailUrl" />
           </ion-thumbnail>
 
           <ion-row class="ion-wrap">
-            <ion-label class="title"> {{ product.title }}</ion-label>
-            <ion-label class="title"> {{ product.short_title }}</ion-label>
+            <!-- <ion-label class="title"> {{ product.title }}</ion-label> -->
+            <ion-label class="title">
+              {{ catalogie.title }} {{ $t(catalogie.type) }}</ion-label
+            >
           </ion-row>
         </ion-item>
       </ion-list>
@@ -89,13 +96,13 @@ export default defineComponent({
     setTimeout(() => this.$refs.inputRef.$el.setFocus(), 20);
   },
   computed: {
-    ...mapGetters(['products']),
+    ...mapGetters(['products', 'categories']),
     onProducts() {
       return this.search.length
-          ? this.products.filter((product) =>
-              product.title.toLowerCase().includes(this.search.toLowerCase()) || product.short_title.toLowerCase().includes(this.search.toLowerCase())
+          ? this.categories.filter((categorie) =>
+          categorie.title.toLowerCase().includes(this.search.toLowerCase()) || categorie.short_title.toLowerCase().includes(this.search.toLowerCase())
           )
-          : this.products;
+          : this.categories;
     },
   },
   methods: {

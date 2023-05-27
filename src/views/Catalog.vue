@@ -195,15 +195,6 @@ export default defineComponent({
     ...mapGetters(['filter', 'products', 'loading', 'categories']),
   },
   async mounted() {
-    // await this.getCategories();
-    // await this.getPeriod();
-    // await this.getSphere();
-    // await this.getRadius();
-    // await this.getTypes();
-    // await this.getAdds();
-    // await this.getAxes();
-    // await this.getCylinders();
-    // await this.getDominants();
     this.SET_FILTER({
       type: [],
       period: [],

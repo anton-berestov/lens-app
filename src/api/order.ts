@@ -5,6 +5,7 @@ import API from '@/api/index';
 export const sendOrderDetails = async (params: any): Promise<undefined> => {
   try {
     const a = params.map((el: any) => {
+      console.log(el);
       const data = {
         product: el.product,
         product_amount: el.product_amount,
@@ -12,6 +13,11 @@ export const sendOrderDetails = async (params: any): Promise<undefined> => {
         product_discount: el.product_discount,
         sphere: el.sphere,
         radius: el.radius,
+        add: el.add,
+        axis: el.ax,
+        dominant: el.dominant,
+        cylinder: el.cylinder,
+        categorie: el.categorie,
       };
 
       return API.post(`/order-product-details`, { data })
@@ -73,6 +79,8 @@ export const getOrderById = async (params: any): Promise<undefined> => {
     // @ts-ignore
     return API.get(`/orders/${params}?populate=*`)
       .then(async ({ data }) => {
+        console.log(data);
+
         return Promise.all(
           data.attributes.order_product_details.data.map((el: any) => {
             return API.get(`/order-product-details/${el.id}?populate=*`)
@@ -84,6 +92,8 @@ export const getOrderById = async (params: any): Promise<undefined> => {
                     return e.attributes.url;
                   });
                 });
+
+                console.log(el);
 
                 return {
                   product: {
@@ -100,12 +110,35 @@ export const getOrderById = async (params: any): Promise<undefined> => {
                   price: el.data.attributes.product_discount,
                   count: el.data.attributes.product_count,
                   radius: {
-                    id: el.data.attributes.radius.data.id,
-                    title: el.data.attributes.radius.data.attributes.title,
+                    id: el.data.attributes?.radius?.data?.id,
+                    title: el.data.attributes?.radius?.data?.attributes?.title,
                   },
                   sphere: {
-                    id: el.data.attributes.sphere.data.id,
-                    title: el.data.attributes.sphere.data.attributes.title,
+                    id: el.data.attributes?.sphere?.data?.id,
+                    title: el.data.attributes?.sphere?.data?.attributes?.title,
+                  },
+                  add: {
+                    id: el.data.attributes?.add?.data?.id,
+                    title: el.data.attributes?.add?.data?.attributes?.title,
+                  },
+                  ax: {
+                    id: el.data.attributes?.axi?.data?.id,
+                    title: el.data.attributes?.axi?.data?.attributes?.title,
+                  },
+                  cylinder: {
+                    id: el.data.attributes?.cylinder?.data?.id,
+                    title:
+                      el.data.attributes?.cylinder?.data?.attributes?.title,
+                  },
+                  dominant: {
+                    id: el.data.attributes?.dominant?.data?.id,
+                    title:
+                      el.data.attributes?.dominant?.data?.attributes?.title,
+                  },
+                  categorie: {
+                    id: el.data.attributes?.categorie?.data?.id,
+                    title:
+                      el.data.attributes?.categorie?.data?.attributes?.title,
                   },
                 };
               })
@@ -116,6 +149,7 @@ export const getOrderById = async (params: any): Promise<undefined> => {
           return {
             id: data.id,
             date: data.attributes.createdAt,
+            count: results.count,
             order_product_details: results,
             total_amount: data.attributes.total_amount,
             total_discount: data.attributes.total_discount,

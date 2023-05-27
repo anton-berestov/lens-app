@@ -415,7 +415,6 @@ export default defineComponent({
           ax: this.fields.ax,
           dominant: this.fields.dominant
         });
-        console.log(product);
 
         const a = {
           product: product.id,
@@ -431,7 +430,10 @@ export default defineComponent({
           product_discount: discountPrice(product.price, product.discount ?? 0) * this.countOne
         };
 
-        this.SET_PRODUCTS(product)
+        const products = []
+        products.push(product);
+
+        this.SET_PRODUCTS(products)
         this.SET_ORDER_PRODUCT_DETAILS(a);
         this.SET_BASKET_COUNT();
         this.SET_TOTAL_AMOUNT();
@@ -486,11 +488,16 @@ export default defineComponent({
           product_discount: discountPrice(productTwo.price, productTwo.discount ?? 0) * this.countOne
         };
 
-        this.SET_PRODUCTS(product)
+        const products = []
+        products.push(product);
+        products.push(productTwo);
+
+        this.SET_PRODUCTS(products)
         this.SET_ORDER_PRODUCT_DETAILS(a);
-        this.SET_PRODUCTS(productTwo)
         this.SET_ORDER_PRODUCT_DETAILS(b);
         this.SET_BASKET_COUNT();
+        this.SET_TOTAL_AMOUNT();
+        this.SET_TOTAL_DISCOUNT();
         this.$router.replace({ name: 'Basket' });
       }
     },

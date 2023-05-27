@@ -10,7 +10,7 @@
         </ion-label>
       </ion-row>
 
-     <Badge :status="order_item.status" background="#ecebeb"/>
+      <Badge :status="order_item.status" background="#ecebeb" />
       <ion-row
         class="wrapper"
         v-for="(item, index) in order_item.order_product_details"
@@ -26,7 +26,7 @@
               <ion-col class="ion-margin-start" style="flex: 2">
                 <ion-row>
                   <ion-label class="title">
-                    {{ item.product.title }} {{ item.product.short_title }}
+                    {{ item.product.title }}
                   </ion-label>
                 </ion-row>
                 <ion-row class="ion-margin-top">
@@ -114,19 +114,19 @@ import {
   IonLabel,
 } from '@ionic/vue';
 import Header from '@/components/ui/Header.vue';
-import Loading from '@/components/ui/Loading.vue';
 import Button from '@/components/ui/Button.vue';
 import { getOrderById } from '@/api/order';
+import { getProductById } from '@/api/products';
 import { formatDate } from '@/helpers/formatter';
 import { discountPrice } from '@/helpers/discountPrice';
-import { mapActions, mapMutations } from 'vuex';
-import Badge from "@/components/ui/Badge.vue";
+import { mapActions, mapGetters, mapMutations } from 'vuex';
+import Badge from '@/components/ui/Badge.vue';
+import Loading from '@/components/ui/Loading.vue';
 
 export default defineComponent({
   name: 'OrderItemHistory',
   components: {
     Badge,
-    Loading,
     Header,
     IonPage,
     IonContent,
@@ -136,10 +136,10 @@ export default defineComponent({
     IonCol,
     IonLabel,
     Button,
+    Loading,
   },
   data() {
     return {
-      loading: false,
       order_item: null,
       products: [],
     };
@@ -148,24 +148,17 @@ export default defineComponent({
     id() {
       return this.$route.params.id;
     },
+    ...mapGetters(['loading']),
   },
   methods: {
-    ...mapActions([
-      'getProducts',
-      'getTypes',
-      'getRadius',
-      'getSphere',
-      'getPeriod',
-    ]),
+    ...mapActions(['getProduct']),
     ...mapMutations([
       'SET_ORDER_PRODUCT_DETAILS',
-      'SET_TYPE',
-      'SET_RADIUS',
-      'SET_RADIUS',
-      'SET_RADIUS',
       'SET_BASKET_COUNT',
       'SET_TOTAL_AMOUNT',
       'SET_TOTAL_DISCOUNT',
+      'SET_LOADING',
+      'SET_PRODUCTS',
     ]),
     formatDate,
     imageHandler(image) {
@@ -174,52 +167,41 @@ export default defineComponent({
         : 'assets/image/no-image.png';
     },
     async repeatOrder() {
-      this.loading = true;
-      await this.getProducts({ populate: '*' });
-      await this.getPeriods();
-      await this.getSpheres();
-      await this.getRadiuses();
-      await this.getTyps();
+      this.SET_LOADING(true);
+      const products = [];
       this.order_item.order_product_details.map(async (el) => {
+        const product = await getProductById(el.product.id);
+
         const a = {
-          product: el.product.id,
-          radius: el.radius.id,
-          sphere: el.sphere.id,
+          product: product.id,
+          categorie: product.categorie,
+          radius: product?.radius[0]?.id,
+          sphere: product?.sphere[0]?.id,
+          cylinder: product?.cylinder[0]?.id,
+          add: product?.add[0]?.id,
+          ax: product?.ax[0]?.id,
+          dominant: product?.dominant[0]?.id,
           product_count: el.count,
-          product_amount: Number(el.product.price) * el.count,
+          product_amount: Number(product.price) * el.count,
           product_discount:
-            discountPrice(el.product.price, el.product.discount ?? 0) *
-            el.count,
+            discountPrice(product.price, product.discount ?? 0) * el.count,
         };
+
+        products.push(product);
         this.SET_ORDER_PRODUCT_DETAILS(a);
-        this.SET_BASKET_COUNT();
-        this.SET_TOTAL_AMOUNT();
-        this.SET_TOTAL_DISCOUNT();
-        await this.$router.replace({ name: 'Basket' });
-        this.loading = false;
+        this.SET_LOADING(false);
       });
-    },
-    async getTyps() {
-      const types = await this.getTypes();
-      this.SET_TYPE(types);
-    },
-    async getRadiuses() {
-      const radiuses = await this.getRadius();
-      this.SET_RADIUS(radiuses);
-    },
-    async getSpheres() {
-      const spheres = await this.getSphere();
-      this.SET_RADIUS(spheres);
-    },
-    async getPeriods() {
-      const periods = await this.getPeriod();
-      this.SET_RADIUS(periods);
+      this.SET_PRODUCTS(products);
+      this.SET_BASKET_COUNT();
+      this.SET_TOTAL_AMOUNT();
+      this.SET_TOTAL_DISCOUNT();
+      await this.$router.replace({ name: 'Basket' });
     },
   },
   async created() {
-    this.loading = true;
+    this.SET_LOADING(true);
     this.order_item = await getOrderById(this.id);
-    this.loading = false;
+    this.SET_LOADING(false);
   },
 });
 </script>

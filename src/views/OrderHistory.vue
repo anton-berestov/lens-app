@@ -2,7 +2,7 @@
   <ion-page id="order-history">
     <Header back :title="$t('HISTORY-ORDER')" />
     <Loading v-if="loading" />
-    <Content id="order-history" v-if="!loading" @refresh="refresh">
+    <Content id="order-history" @refresh="refresh" v-if="!loading">
       <Info
         v-if="!history.length"
         icon="assets/icon/empty-cart.svg"
@@ -34,7 +34,7 @@ import Info from '@/components/ui/Info.vue';
 import CardOrder from '@/components/CardOrder.vue';
 import Loading from "@/components/ui/Loading.vue";
 import { getOrderHistory } from '@/api/order';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default defineComponent({
   name: 'OrderHistory',
@@ -49,14 +49,14 @@ export default defineComponent({
   data() {
     return {
       history: [],
-      loading: false
     };
   },
   computed: {
-    ...mapGetters(['user']),
+    ...mapGetters(['user', 'loading']),
 
   },
   methods: {
+    ...mapMutations(['SET_LOADING']),
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     async refresh(complete = () => {}) {
       try {
@@ -71,9 +71,9 @@ export default defineComponent({
   },
 
   async mounted() {
-    this.loading = true
+    this.SET_LOADING(true)
     this.history = await getOrderHistory(this.user.id);
-    this.loading = false
+    this.SET_LOADING(false)
   },
 });
 </script>
