@@ -18,11 +18,15 @@ npm run serev
 
 ```bash
 npm install -g @ionic/cli native-run
+```
 
+```bash
 ionic cap run android -l --external
+```
 
 or
 
+```bash
 ionic cap run ios -l --external
 ```
 
@@ -30,9 +34,11 @@ ionic cap run ios -l --external
 
 ```bash
 npm run dev
+```
 
 or
 
+```bash
 npx cap sync [options] [platform]
 ```
 
